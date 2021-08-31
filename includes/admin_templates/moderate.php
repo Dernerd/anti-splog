@@ -2,7 +2,7 @@
 global $wpdb, $current_user, $current_site, $ust_admin_url;
 
 if ( ! current_user_can( 'manage_sites' ) ) {
-	wp_die( __( 'Nice Try...', 'ust' ) );  //If accessed properly, this message doesn't appear.
+	wp_die( __( 'Netter Versuch...', 'ust' ) );  //If accessed properly, this message doesn't appear.
 }
 
 //process any actions and messages
@@ -20,7 +20,7 @@ if ( isset( $_GET['spam_user'] ) ) {
 			set_time_limit( 60 );
 		}
 		update_user_status( (int) $_GET['spam_user'], "spam", '1' );
-		$_GET['updatedmsg'] = sprintf( __( '%s blog(s) spammed for user!', 'ust' ), count( $blogs ) );
+		$_GET['updatedmsg'] = sprintf( __( '%s Blog(s) für Benutzer gespammt!', 'ust' ), count( $blogs ) );
 	}
 
 } else if ( isset( $_GET['spam_ip'] ) ) {
@@ -41,7 +41,7 @@ if ( isset( $_GET['spam_user'] ) ) {
 		update_blog_status( $blog['blog_id'], "spam", '1' );
 		set_time_limit( 60 );
 	}
-	$_GET['updatedmsg'] = sprintf( __( '%s blog(s) spammed for %s!', 'ust' ), count( $blogs ), $spam_ip );
+	$_GET['updatedmsg'] = sprintf( __( '%s Blog(s) für %s gespammt!', 'ust' ), count( $blogs ), $spam_ip );
 
 } else if ( isset( $_GET['ignore_blog'] ) ) {
 	//ignore a single blog so it doesn't show up on the possible spam list
@@ -62,22 +62,22 @@ if ( isset( $_GET['spam_user'] ) ) {
 
 } else if ( isset( $_GET['action'] ) && $_GET['action'] == 'all_notspam' ) {
 
-	$_GET['updatedmsg'] = __( 'Blogs marked as not spam.', 'ust' );
+	$_GET['updatedmsg'] = __( 'Als kein Spam markierte Blogs.', 'ust' );
 
 } else if ( isset( $_GET['action'] ) && $_GET['action'] == 'allblogs' ) {
 
 	foreach ( (array) $_POST['allblogs'] as $key => $val ) {
 		if ( $val != '0' && $val != $current_site->blog_id ) {
 			if ( isset( $_POST['allblog_ignore'] ) ) {
-				$_GET['updatedmsg'] = __( 'Selected Blogs Ignored.', 'ust' );
+				$_GET['updatedmsg'] = __( 'Ausgewählte Blogs ignoriert.', 'ust' );
 				ust_blog_ignore( $val );
 				set_time_limit( 60 );
 			} else if ( isset( $_POST['allblog_unignore'] ) ) {
-				$_GET['updatedmsg'] = __( 'Selected Blogs Un-ignored.', 'ust' );
+				$_GET['updatedmsg'] = __( 'Ausgewählte Blogs nicht ignoriert.', 'ust' );
 				ust_blog_unignore( $val );
 				set_time_limit( 60 );
 			} else if ( isset( $_POST['allblog_spam'] ) ) {
-				$_GET['updatedmsg'] = __( 'Blogs marked as spam.', 'ust' );
+				$_GET['updatedmsg'] = __( 'Als Spam markierte Blogs.', 'ust' );
 				update_blog_status( $val, "spam", '1' );
 				set_time_limit( 60 );
 			}
@@ -86,7 +86,7 @@ if ( isset( $_GET['spam_user'] ) ) {
 
 } else if ( isset( $_GET['action'] ) && $_GET['action'] == 'delete' ) {
 
-	$_GET['updatedmsg'] = __( 'Blog Deleted!', 'ust' );
+	$_GET['updatedmsg'] = __( 'Blog gelöscht!', 'ust' );
 
 }
 
@@ -103,8 +103,8 @@ if ( isset( $_GET['updated'] ) && $_GET['updatedmsg'] ) {
 		$tab = ( ! empty( $_GET['tab'] ) ) ? $_GET['tab'] : 'queue';
 
 		$tabs    = array(
-			'splogs'  => __( 'Recent Splogs', 'ust' ),
-			'ignored' => __( 'Ignored Blogs', 'ust' )
+			'splogs'  => __( 'Letzte Splogs', 'ust' ),
+			'ignored' => __( 'Ignorierte Blogs', 'ust' )
 		);
 		$tabhtml = array();
 
@@ -112,7 +112,7 @@ if ( isset( $_GET['updated'] ) && $_GET['updatedmsg'] ) {
 		$tabs = apply_filters( 'ust_tabs', $tabs );
 
 		$class     = ( 'queue' == $tab ) ? ' nav-tab-active' : '';
-		$tabhtml[] = '	<a href="' . $ust_admin_url . '" class="nav-tab' . $class . '">' . __( 'Suspected Blogs', 'ust' ) . '</a>';
+		$tabhtml[] = '	<a href="' . $ust_admin_url . '" class="nav-tab' . $class . '">' . __( 'Verdächtige Blogs', 'ust' ) . '</a>';
 
 		foreach ( $tabs as $stub => $title ) {
 			$class     = ( $stub == $tab ) ? ' nav-tab-active' : '';
@@ -128,7 +128,7 @@ switch ( $tab ) {
 	//---------------------------------------------------//
 	case "queue":
 
-		?><h3><?php _e( 'Suspected Blogs', 'ust' ) ?></h3><?php
+		?><h3><?php _e( 'Verdächtige Blogs', 'ust' ) ?></h3><?php
 
 		$ust_settings = get_site_option( "ust_settings" );
 		$expire       = get_site_option( "ust_key_dismiss" );
