@@ -27,6 +27,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+require 'includes/plugin-update-checker/plugin-update-checker.php';
+$MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://n3rds.work//wp-update-server/?action=get_metadata&slug=anti-splog', 
+	__FILE__, 
+	'anti-splog' 
+);
+
+
 //------------------------------------------------------------------------//
 
 //---Config---------------------------------------------------------------//
@@ -1187,12 +1195,12 @@ function ust_pre_signup_user_check( $content ) {
 			$error = false;
 			if ( $pattern['type'] == 'username' ) { //check username
 				if ( preg_match( $pattern['regex'], trim( $content['user_name'] ) ) ) {
-					$content['errors']->add( 'user_name', __( "If you are not a spammer please try again with a different username.", 'ust' ) );
+					$content['errors']->add( 'user_name', __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einem anderen Benutzernamen.", 'ust' ) );
 					$error = true;
 				}
 			} else if ( $pattern['type'] == 'email' ) { //check username
 				if ( preg_match( $pattern['regex'], trim( $content['user_email'] ) ) ) {
-					$content['errors']->add( 'user_email', __( "We think you might be a spambot. If you are not a spammer please contact us or use a different email address.", 'ust' ) );
+					$content['errors']->add( 'user_email', __( "Wir denken, Du könntest ein Spambot sein. Wenn Du kein Spammer bist, kontaktiere uns bitte oder verwende eine andere E-Mail-Adresse.", 'ust' ) );
 					$error = true;
 				}
 			}
@@ -1217,7 +1225,7 @@ function ust_pre_signup_check( $content ) {
 		$date = date( 'Y-m-d H:i:s', strtotime( '-1 day', time() ) );
 		$ips  = $wpdb->get_var( "SELECT COUNT(ID) FROM {$wpdb->registration_log} WHERE IP = '{$_SERVER['REMOTE_ADDR']}' AND date_registered >= '$date'" );
 		if ( $ips > $ust_settings['num_signups'] ) {
-			$content['errors']->add( 'blogname', __( "A limited number of signups can be done in a short period of time from your Internet connection. If you are not a spammer please try again in 24 hours.", 'ust' ) );
+			$content['errors']->add( 'blogname', __( "Eine begrenzte Anzahl von Anmeldungen kann in kurzer Zeit über Deine Internetverbindung durchgeführt werden. Wenn Du kein Spammer bist, versuche es bitte in 24 Stunden erneut.", 'ust' ) );
 		}
 	}
 
@@ -1225,7 +1233,7 @@ function ust_pre_signup_check( $content ) {
 	if ( $ust_settings['ip_blocking'] ) {
 		$ip_splogs = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->registration_log} l LEFT JOIN {$wpdb->blogs} b ON l.blog_id = b.blog_id WHERE l.IP = '{$_SERVER['REMOTE_ADDR']}' AND b.spam = 1" );
 		if ( $ip_splogs >= $ust_settings['ip_blocking'] ) {
-			$content['errors']->add( 'blogname', __( "Our automated systems think you might be a spambot. If you are not a spammer please contact us and give us this IP: ", 'ust' ) . $_SERVER['REMOTE_ADDR'] );
+			$content['errors']->add( 'blogname', __( "Unsere automatisierten Systeme halten Dich für einen Spambot. Wenn Du kein Spammer bist, kontaktiere uns bitte und gib uns diese IP: ", 'ust' ) . $_SERVER['REMOTE_ADDR'] );
 		}
 	}
 
@@ -1239,22 +1247,22 @@ function ust_pre_signup_check( $content ) {
 			$error = false;
 			if ( $pattern['type'] == 'domain' ) { //check domain
 				if ( preg_match( $pattern['regex'], trim( $content['blogname'] ) ) ) {
-					$content['errors']->add( 'blogname', __( "If you are not a spammer please try again with a different domain.", 'ust' ) );
+					$content['errors']->add( 'blogname', __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einer anderen Domain.", 'ust' ) );
 					$error = true;
 				}
 			} else if ( $pattern['type'] == 'title' ) { //check title
 				if ( preg_match( $pattern['regex'], trim( $content['blog_title'] ) ) ) {
-					$content['errors']->add( 'blog_title', __( "If you are not a spammer please try again with a different title.", 'ust' ) );
+					$content['errors']->add( 'blog_title', __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einem anderen Titel.", 'ust' ) );
 					$error = true;
 				}
 			} else if ( $pattern['type'] == 'username' && isset( $_POST["user_name"] ) ) { //check username
 				if ( preg_match( $pattern['regex'], trim( $_POST["user_name"] ) ) ) {
-					$content['errors']->add( 'blogname', __( "If you are not a spammer please try again with a different username.", 'ust' ) );
+					$content['errors']->add( 'blogname', __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einem anderen Benutzernamen.", 'ust' ) );
 					$error = true;
 				}
 			} else if ( $pattern['type'] == 'email' && isset( $_POST["user_email"] ) ) { //check username
 				if ( preg_match( $pattern['regex'], trim( $_POST["user_email"] ) ) ) {
-					$content['errors']->add( 'blogname', __( "We think you might be a spambot. If you are not a spammer please contact us or use a different email address.", 'ust' ) );
+					$content['errors']->add( 'blogname', __( "Wir denken, Du könntest ein Spambot sein. Wenn Du kein Spammer bist, kontaktiere uns bitte oder verwende eine andere E-Mail-Adresse.", 'ust' ) );
 					$error = true;
 				}
 			}
@@ -1278,7 +1286,7 @@ function ust_pre_signup_check_bp() {
 		$date = date( 'Y-m-d H:i:s', strtotime( '-1 day', time() ) );
 		$ips  = $wpdb->get_var( "SELECT COUNT(ID) FROM {$wpdb->registration_log} WHERE IP = '{$_SERVER['REMOTE_ADDR']}' AND date_registered >= '$date'" );
 		if ( $ips > $ust_settings['num_signups'] ) {
-			$bp->signup->errors['multicheck'] = __( "A limited number of signups can be done in a short period of time from your Internet connection. If you are not a spammer please try again in 24 hours.", 'ust' );
+			$bp->signup->errors['multicheck'] = __( "Eine begrenzte Anzahl von Anmeldungen kann in kurzer Zeit über Deine Internetverbindung durchgeführt werden. Wenn Du kein Spammer bist, versuche es bitte in 24 Stunden erneut.", 'ust' );
 		}
 	}
 
@@ -1286,7 +1294,7 @@ function ust_pre_signup_check_bp() {
 	if ( $ust_settings['ip_blocking'] ) {
 		$ip_splogs = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->registration_log} l LEFT JOIN {$wpdb->blogs} b ON l.blog_id = b.blog_id WHERE l.IP = '{$_SERVER['REMOTE_ADDR']}' AND b.spam = 1" );
 		if ( $ip_splogs >= $ust_settings['ip_blocking'] ) {
-			$bp->signup->errors['multicheck'] = __( "Our automated systems think you might be a spambot. If you are not a spammer please contact us and give us this IP: ", 'ust' ) . $_SERVER['REMOTE_ADDR'];
+			$bp->signup->errors['multicheck'] = __( "Unsere automatisierten Systeme halten Dich für einen Spambot. Wenn Du kein Spammer bist, kontaktiere uns bitte und gib uns diese IP: ", 'ust' ) . $_SERVER['REMOTE_ADDR'];
 		}
 	}
 
@@ -1305,22 +1313,22 @@ function ust_pre_signup_check_bp() {
 			$error = false;
 			if ( $pattern['type'] == 'domain' && isset( $_POST["signup_blog_url"] ) ) { //check domain
 				if ( preg_match( $pattern['regex'], trim( $_POST["signup_blog_url"] ) ) ) {
-					$bp->signup->errors['blogname'] = __( "If you are not a spammer please try again with a different domain.", 'ust' );
+					$bp->signup->errors['blogname'] = __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einer anderen Domain.", 'ust' );
 					$error                          = true;
 				}
 			} else if ( $pattern['type'] == 'title' && isset( $_POST["signup_blog_title"] ) ) { //check title
 				if ( preg_match( $pattern['regex'], trim( $_POST["signup_blog_title"] ) ) ) {
-					$bp->signup->errors['blog_title'] = __( "If you are not a spammer please try again with a different title.", 'ust' );
+					$bp->signup->errors['blog_title'] = __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einem anderen Titel.", 'ust' );
 					$error                            = true;
 				}
 			} else if ( $pattern['type'] == 'username' && isset( $_POST["signup_username"] ) ) { //check username
 				if ( preg_match( $pattern['regex'], trim( $_POST["signup_username"] ) ) ) {
-					$bp->signup->errors['signup_username'] = __( "If you are not a spammer please try again with a different username.", 'ust' );
+					$bp->signup->errors['signup_username'] = __( "Wenn Du kein Spammer bist, versuche es bitte erneut mit einem anderen Benutzernamen.", 'ust' );
 					$error                                 = true;
 				}
 			} else if ( $pattern['type'] == 'email' && isset( $_POST["signup_email"] ) ) { //check username
 				if ( preg_match( $pattern['regex'], trim( $_POST["signup_email"] ) ) ) {
-					$bp->signup->errors['signup_email'] = __( "We think you might be a spambot. If you are not a spammer please contact us or use a different email address.", 'ust' );
+					$bp->signup->errors['signup_email'] = __( "Wir denken, Du könntest ein Spambot sein. Wenn Du kein Spammer bist, kontaktiere uns bitte oder verwende eine andere E-Mail-Adresse.", 'ust' );
 					$error                              = true;
 				}
 			}
@@ -1372,17 +1380,17 @@ function ust_newblog_notify_siteadmin( $blog_id, $deprecated = '' ) {
 	$ust_url          = esc_url( $ust_admin_url );
 	$options_site_url = esc_url( network_admin_url( "admin.php" ) );
 
-	$msg = sprintf( __( "New Blog: %1s
+	$msg = sprintf( __( "Neuer Blog: %1s
 URL: %2s
 Remote IP: %3s
 
-Spam this blog: %4s
-View suspected splog queue: %5s
+Spam diesen Blog: %4s
+Vermutete Splog-Warteschlange anzeigen: %5s
 
-Disable these notifications: %6s", 'ust' ), $blogname, $siteurl, $_SERVER['REMOTE_ADDR'], $spam_url, $ust_url, $options_site_url );
+Deaktiviere diese Benachrichtigungen: %6s", 'ust' ), $blogname, $siteurl, $_SERVER['REMOTE_ADDR'], $spam_url, $ust_url, $options_site_url );
 	$msg = apply_filters( 'newblog_notify_siteadmin', $msg );
 
-	wp_mail( $email, sprintf( __( "New Blog Registration: %s" ), $siteurl ), $msg );
+	wp_mail( $email, sprintf( __( "Neue Blog-Registrierung: %s" ), $siteurl ), $msg );
 
 	return true;
 }
@@ -1413,7 +1421,7 @@ function ust_api_warning() {
 	$ust_settings = get_site_option( "ust_settings" );
 	$expire       = get_site_option( "ust_key_dismiss" );
 	if ( ! $ust_settings['api_key'] && ! isset( $_GET['dismiss'] ) && ! ( $expire && $expire > time() ) ) {
-		echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'Anti-Splog is not fully enabled. You must <a href="%1$s">enter your WPMU DEV Premium API key</a> to enable the powerful blog and signup checking. <a href="%2$s">More info&raquo;</a>', 'ust' ), "$ust_admin_url-settings", 'http://premium.wpmudev.org/project/anti-splog' ) . ' <a style="float:right;" title="' . __( 'Dismiss this notice for one month', 'ust' ) . '" href="' . $ust_admin_url . '-settings&dismiss=1"><small>' . __( 'Dismiss', 'ust' ) . "</small></a></p></div>";
+		echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'Anti-Splog ist nicht vollständig aktiviert. Sie müssen <a href="%1$s">Deinen WMS N@W API-Schlüssel eingeben</a>, um die leistungsstarke Blog- und Registrierungsprüfung zu aktivieren. <a href="%2$s">Mehr Info&raquo;</a>', 'ust' ), "$ust_admin_url-settings", 'http://premium.wpmudev.org/project/anti-splog' ) . ' <a style="float:right;" title="' . __( 'Dismiss this notice for one month', 'ust' ) . '" href="' . $ust_admin_url . '-settings&dismiss=1"><small>' . __( 'Dismiss', 'ust' ) . "</small></a></p></div>";
 	}
 }
 
@@ -1447,7 +1455,7 @@ function ust_signup_fields( $errors ) {
 		$recaptcha = get_site_option( 'ust_recaptcha' );
 
 		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-		echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
+		echo '<label>' . __( 'Menschliche Verifikation:', 'ust' ) . '</label>';
 		if ( $errmsg = $errors->get_error_message( 'recaptcha' ) ) {
 			echo '<p class="error">' . $errmsg . '</p>';
 		}
@@ -1456,7 +1464,7 @@ function ust_signup_fields( $errors ) {
 
 	} else if ( $ust_settings['signup_protect'] == 'asirra' ) {
 
-		echo '<p><label>' . __( 'Human Verification:', 'ust' ) . '</label></p>';
+		echo '<p><label>' . __( 'Menschliche Verifikation:', 'ust' ) . '</label></p>';
 		if ( $errmsg = $errors->get_error_message( 'asirra' ) ) {
 			echo '<p class="error">' . $errmsg . '</p>';
 		} else {
@@ -1481,7 +1489,7 @@ function ust_signup_fields( $errors ) {
           function HumanCheckComplete(isHuman) {
             if (!isHuman) {
               asirraError = document.getElementById("asirraError");
-              asirraError.innerHTML = \'<div class="error">' . __( 'Please try to correctly identify the cats again.', 'ust' ) . '</div>\';
+              asirraError.innerHTML = \'<div class="error">' . __( 'Bitte versuche erneut, die Katzen richtig zu identifizieren.', 'ust' ) . '</div>\';
               return false;
             } else {
               passThroughFormSubmit = true;
@@ -1502,13 +1510,13 @@ function ust_signup_fields( $errors ) {
 			$datesalt   = strtotime( date( 'Y-m-d H:00:00' ) );
 			$field_name = 'qa_' . md5( $qkey . $salt . $datesalt );
 
-			echo '<p><label>' . __( 'Human Verification:', 'ust' ) . '</label>';
+			echo '<p><label>' . __( 'Menschliche Verifikation:', 'ust' ) . '</label>';
 			if ( $errmsg = $errors->get_error_message( 'qa' ) ) {
 				echo '<p class="error">' . $errmsg . '</p>';
 			}
 			echo stripslashes( $ust_qa[ $qkey ][0] );
 			echo '<br /><input type="text" id="qa" name="' . $field_name . '" value="' . htmlentities( $_POST[ $field_name ] ) . '" />';
-			echo '<br /><small>' . __( 'NOTE: Answers are not case sensitive.', 'ust' ) . '</small>';
+			echo '<br /><small>' . __( 'HINWEIS: Bei den Antworten wird die Groß-/Kleinschreibung nicht beachtet.', 'ust' ) . '</small>';
 			echo '</p>&nbsp;<br />';
 		}
 
@@ -1524,7 +1532,7 @@ function ust_signup_fields_bp() {
 		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 
 		echo '<div class="register-section" id="blog-details-section">';
-		echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
+		echo '<label>' . __( 'Menschliche Verifikation:', 'ust' ) . '</label>';
 		do_action( 'bp_recaptcha_errors' );
 		echo '<div class="g-recaptcha" data-sitekey="' . esc_attr( $recaptcha['pubkey'] ) . '" data-theme="' . esc_attr( $recaptcha['theme'] ) . '"></div>';
 		echo '</div>';
@@ -1532,7 +1540,7 @@ function ust_signup_fields_bp() {
 	} else if ( $ust_settings['signup_protect'] == 'asirra' ) {
 
 		echo '<div class="register-section" id="blog-details-section">';
-		echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
+		echo '<label>' . __( 'Menschliche Verifikation:', 'ust' ) . '</label>';
 		do_action( 'bp_asirra_errors' );
 		echo '<div id="asirraError"></div>';
 		echo '<script type="text/javascript" src="http://challenge.asirra.com/js/AsirraClientSide.js"></script>';
@@ -1554,7 +1562,7 @@ function ust_signup_fields_bp() {
           function HumanCheckComplete(isHuman) {
             if (!isHuman) {
               asirraError = document.getElementById("asirraError");
-              asirraError.innerHTML = \'<div class="error">' . __( 'Please try to correctly identify the cats again.', 'ust' ) . '</div>\';
+              asirraError.innerHTML = \'<div class="error">' . __( 'Bitte versuche erneut, die Katzen richtig zu identifizieren.', 'ust' ) . '</div>\';
               return false;
             } else {
               passThroughFormSubmit = true;
@@ -1580,11 +1588,11 @@ function ust_signup_fields_bp() {
 			$field_value = isset($_POST[ $field_name ]) ? esc_attr( $_POST[ $field_name ] ) : '';
 
 			echo '<div class="register-section" id="antisplog">';
-			echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
+			echo '<label>' . __( 'Menschliche Verifikation:', 'ust' ) . '</label>';
 			do_action( 'bp_qa_errors' );
 			echo stripslashes( $ust_qa[ $qkey ][0] );
 			echo '<br /><input type="text" id="qa" name="' . $field_name . '" value="' . $field_value . '" />';
-			echo '<br /><small>' . __( 'NOTE: Answers are not case sensitive.', 'ust' ) . '</small>';
+			echo '<br /><small>' . __( 'HINWEIS: Bei den Antworten wird die Groß-/Kleinschreibung nicht beachtet.', 'ust' ) . '</small>';
 			echo '</div>';
 		}
 
@@ -1662,10 +1670,10 @@ function ust_admin_help() {
 
 	$current_screen->add_help_tab( array(
 		'id'      => 'overview',
-		'title'   => __( 'Overview' ),
-		'content' => __( "<h3>The plugin works in 3 phases:</h3>
+		'title'   => __( 'Überblick' ),
+		'content' => __( "<h3>Das Plugin funktioniert in 3 Phasen:</h3>
           <ol>
-          <li><b>Signup prevention</b> - these measures are mainly to stop bots. User friendly error messages are shown to users if any of these prevent signup. They are all optional and include:</li>
+          <li><b>Anmeldungsverhinderung</b> - these measures are mainly to stop bots. User friendly error messages are shown to users if any of these prevent signup. They are all optional and include:</li>
             <ul style=\"margin-left:20px;\">
               <li><b>Limiting the number of signups per IP per 24 hours</b> (this can slow down human spammers too if the site clientele supports it. Probably not edublogs though as it caters to schools which may need to make a large number of blogs from one IP)</li>
               <li><b>Changing the signup page location every 24 hours</b> - this is one of the most effective yet still user-friendly methods to stop bots dead. </li>
@@ -1687,9 +1695,9 @@ function ust_admin_help() {
 	$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 	get_current_screen()->set_help_sidebar(
-		'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-		'<p><a href="http://premium.wpmudev.org/project/anti-splog/" target="_blank">' . __( 'Usage Instructions', 'ust' ) . '</a></p>' .
-		'<p><a href="' . $register_url . '" target="_blank">' . __( 'Register Site', 'ust' ) . '</a></p>'
+		'<p><strong>' . __( 'Für mehr Informationen:' ) . '</strong></p>' .
+		'<p><a href="https://n3rds.work/docs/anti-splog-handbuch/" target="_blank">' . __( 'Handbuch', 'ust' ) . '</a></p>' .
+		'<p><a href="' . $register_url . '" target="_blank">' . __( 'Webseite registrieren', 'ust' ) . '</a></p>'
 	);
 }
 
@@ -1701,7 +1709,7 @@ function ust_test_regex() {
 	if ( false === @preg_match( stripslashes( $_POST['regex'] ), 'thisisjustateststring' ) ) {
 		die( json_encode( array(
 				'status' => 0,
-				'data'   => __( 'Please enter a valid PCRE Regular Expression with delimiters.', 'ust' )
+				'data'   => __( 'Bitte gib einen gültigen regulären PCRE-Ausdruck mit Trennzeichen ein.', 'ust' )
 			) ) );
 	}
 
@@ -1714,7 +1722,7 @@ function ust_test_regex() {
 			$i        = 1;
 			foreach ( $result as $value ) {
 				if ( $i >= 50 ) {
-					$response .= '<li><em>' . sprintf( __( '%s results not shown...', 'ust' ), number_format_i18n( count( $result ) - $i ) ) . '</em></li>';
+					$response .= '<li><em>' . sprintf( __( '%s Ergebnisse werden nicht angezeigt...', 'ust' ), number_format_i18n( count( $result ) - $i ) ) . '</em></li>';
 					break;
 				}
 				$response .= '<li>' . $value . '</li>';
@@ -1722,7 +1730,7 @@ function ust_test_regex() {
 			}
 			$response .= '</ul>';
 		} else {
-			$response = __( 'Your test search returned no results out of the last 10,000 registered domains.', 'ust' );
+			$response = __( 'Deine Testsuche ergab keine Ergebnisse von den letzten 10.000 registrierten Domains.', 'ust' );
 		}
 		die( json_encode( array( 'status' => 1, 'data' => $response ) ) );
 
@@ -1735,7 +1743,7 @@ function ust_test_regex() {
 			$i        = 1;
 			foreach ( $result as $value ) {
 				if ( $i >= 50 ) {
-					$response .= '<li><em>' . sprintf( __( '%s results not shown...', 'ust' ), number_format_i18n( count( $result ) - $i ) ) . '</em></li>';
+					$response .= '<li><em>' . sprintf( __( '%s Ergebnisse werden nicht angezeigt...', 'ust' ), number_format_i18n( count( $result ) - $i ) ) . '</em></li>';
 					break;
 				}
 				$response .= '<li>' . $value . '</li>';
@@ -1743,7 +1751,7 @@ function ust_test_regex() {
 			}
 			$response .= '</ul>';
 		} else {
-			$response = __( 'Your test search returned no results out of the last 10,000 registered users.', 'ust' );
+			$response = __( 'Deine Testsuche ergab keine Ergebnisse von den letzten 10.000 registrierten Benutzern.', 'ust' );
 		}
 		die( json_encode( array( 'status' => 1, 'data' => $response ) ) );
 
@@ -1756,7 +1764,7 @@ function ust_test_regex() {
 			$i        = 1;
 			foreach ( $result as $value ) {
 				if ( $i >= 50 ) {
-					$response .= '<li><em>' . sprintf( __( '%s results not shown...', 'ust' ), number_format_i18n( count( $result ) - $i ) ) . '</em></li>';
+					$response .= '<li><em>' . sprintf( __( '%s Ergebnisse werden nicht angezeigt...', 'ust' ), number_format_i18n( count( $result ) - $i ) ) . '</em></li>';
 					break;
 				}
 				$response .= '<li>' . $value . '</li>';
@@ -1764,14 +1772,14 @@ function ust_test_regex() {
 			}
 			$response .= '</ul>';
 		} else {
-			$response = __( 'Your test search returned no results out of the last 10,000 registered users.', 'ust' );
+			$response = __( 'Deine Testsuche ergab keine Ergebnisse von den letzten 10.000 registrierten Benutzern.', 'ust' );
 		}
 		die( json_encode( array( 'status' => 1, 'data' => $response ) ) );
 
 	} else {
 		die( json_encode( array(
 				'status' => 0,
-				'data'   => __( 'Sorry, you may not do live tests on site titles.', 'ust' )
+				'data'   => __( 'Entschuldigung, Du darfst keine Live-Tests für Webseiten-Titel durchführen.', 'ust' )
 			) ) );
 	}
 }
@@ -1824,9 +1832,9 @@ class UST_Widget extends WP_Widget {
 	function __construct() {
 		$widget_ops = array(
 			'classname'   => 'ust_widget',
-			'description' => __( 'Displays counts of site blogs and splogs caught by the Anti-Splog.', 'ust' )
+			'description' => __( 'Zeigt die Anzahl der Seiten-Blogs und Splogs an, die vom Anti-Splog erfasst wurden.', 'ust' )
 		);
-		parent::__construct( 'ust_widget', __( 'Splog Statistics', 'ust' ), $widget_ops );
+		parent::__construct( 'ust_widget', __( 'Splog-Statistiken', 'ust' ), $widget_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -1844,7 +1852,7 @@ class UST_Widget extends WP_Widget {
 		<ul>
 			<li><?php _e( 'Blogs: ', 'ust' );
 				echo get_blog_count(); ?></li>
-			<li><?php _e( 'Splogs Caught: ', 'ust' );
+			<li><?php _e( 'Gefangene Splogs: ', 'ust' );
 				echo number_format_i18n( (int)get_site_option( 'ust_spam_count' ) ); ?></li>
 		</ul>
 
@@ -1860,29 +1868,13 @@ class UST_Widget extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => __( 'Splog Statistics', 'ust' ) ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => __( 'Splog-Statistiken', 'ust' ) ) );
 		$title    = strip_tags( $instance['title'] );
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'ust' ) ?> <input
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Titel:', 'ust' ) ?> <input
 					class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
 					name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
 					value="<?php echo esc_attr( $title ); ?>"/></label></p>
 	<?php
 	}
-}
-
-//load dashboard notice
-if ( file_exists( dirname( __FILE__ ) . '/includes/dash-notice/wpmudev-dash-notification.php' ) ) {
-	global $wpmudev_notices;
-	$wpmudev_notices[] = array(
-		'id'      => 120,
-		'name'    => 'Anti-Splog',
-		'screens' => array(
-			'toplevel_page_ust-network',
-			'anti-splog_page_ust-stats-network',
-			'anti-splog_page_ust-patterns-network',
-			'anti-splog_page_ust-settings-network'
-		)
-	);
-	include_once( dirname( __FILE__ ) . '/includes/dash-notice/wpmudev-dash-notification.php' );
 }

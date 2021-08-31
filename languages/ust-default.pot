@@ -190,7 +190,7 @@ msgstr ""
 
 #: anti-splog.php:1451 anti-splog.php:1460 anti-splog.php:1506
 #: anti-splog.php:1528 anti-splog.php:1536 anti-splog.php:1584
-msgid "Human Verification:"
+msgid "Menschliche Verifikation:"
 msgstr ""
 
 #: anti-splog.php:1485 anti-splog.php:1558
