@@ -141,7 +141,8 @@ function ust_show_widget() {
 	global $current_site, $blog_id;
 
 	if ( $current_site->blog_id == $blog_id ) {
-		add_action( 'widgets_init', create_function( '', 'return register_widget("UST_Widget");' ) );
+		//add_action( 'widgets_init', create_function( '', 'return register_widget("UST_Widget");' ) );
+		add_action( 'widgets_init', function() {return register_widget("UST_Widget");} );
 	}
 }
 
@@ -437,8 +438,11 @@ function ust_wpsignup_init() {
 	//if on main blog
 	if ( is_main_site() ) {
 		$ust_signup = get_site_option( 'ust_signup' );
-		if ( ! $ust_signup['active'] ) {
-			return;
+		/*if ( ! $ust_signup['active'] ) {
+			return;*/
+		//Bool-Fix?
+		if ( ! $ust_signup['active']??='ust_signup') {
+			return $ust_signup['active'];
 		}
 
 		add_filter( 'root_rewrite_rules', 'ust_wpsignup_rewrite' );
@@ -1432,7 +1436,9 @@ function ust_wpsignup_url( $echo = true ) {
 	$new_slug     = defined( 'UST_OVERRIDE_SIGNUP_SLUG' ) ? UST_OVERRIDE_SIGNUP_SLUG : $ust_signup['slug'];
 	$new_url      = network_home_url( trailingslashit( $new_slug ) );
 
-	if ( ! $ust_signup['active'] ) {
+	//if ( ! $ust_signup['active'] ) {
+	// Bool Fix?
+	if ( ! $ust_signup['active']??='ust_signup') {
 		if ( $echo ) {
 			echo $original_url;
 		} else {
