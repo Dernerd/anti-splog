@@ -98,154 +98,93 @@ if ( ! $ust_settings['api_key'] ) {
 
 ?>
 <div class="wrap">
-<h2><?php _e( 'Anti-Splog Settings', 'ust' ) ?></h2>
+<h2><?php _e( 'Anti-Splog Einstellungen', 'ust' ) ?></h2>
 
 <div id="poststuff" class="metabox-holder">
 <form method="post" action="">
 <input type="hidden" name="ust_settings" value="1"/>
 
 <div class="postbox">
-	<h3 class='hndle'><span><?php _e( 'API Settings', 'ust' ) ?></span></h3>
-
-	<div class="inside">
-		<p><?php _e( "You must enter an API key and register the WordPress Multisite Domain (<strong>$domain</strong>) of this server to enable live splog checking. <a href='$register_url' target='_blank'>Get your API key and register your server here.</a> You must be a current WPMU DEV Premium subscriber to use our API.", 'ust' ) ?></p>
-
-		<p><?php _e( "<strong>How It Works</strong> - When a user completes the signup for a blog (email activated) or publishes a blog post it will send all kinds of blog and signup info to our server here where we will rate it based on our secret ever-adjusting logic. Our API will then return a splog Certainty number (0%-100%) to your server. If that number is greater than the sensitivity preference you set in the plugin settings (80% default) then the blog gets auto-spammed. Since the blog was actually created, it will still show up in the site admin (as spammed) so you can unspam later if there was a mistake (and our service will learn from that). The API (especially the post checking part) has proven to be more than 98% effective at removing splogs. Enable it today to save countless hours managing your network!", 'ust' ) ?></p>
-		<table class="form-table">
-			<tr valign="top">
-				<th scope="row"><?php _e( 'API Key', 'ust' ) ?>*</th>
-				<td><input type="text" name="ust[api_key]"<?php echo $style; ?> size="45"
-				           value="<?php echo stripslashes( $ust_settings['api_key'] ); ?>"/><input class="button-secondary" type="submit"
-				                                                                                   name="check_key"
-				                                                                                   value="<?php _e( 'Check Key &raquo;', 'ust' ) ?>"/>
-				</td>
-			</tr>
-			<!--
-				<tr valign="top">
-				<th scope="row"><?php _e( 'Blog Signup Blocking Certainty', 'ust' ) ?></th>
-				<td><select name="ust[block_certainty]">
-				<?php
-			for ( $counter = 50; $counter <= 100; $counter += 1 ) {
-				echo '<option value="' . $counter . '"' . ( ( isset($ust_settings['block_certainty']) && $ust_settings['block_certainty'] == $counter ) ? ' selected="selected"' : '' ) . '>' . $counter . '%</option>' . "\n";
-			}
-			echo '<option value=""' . ( empty( $ust_settings['block_certainty'] ) ? ' selected="selected"' : '' ) . '>' . __( "Don't Block", 'ust' ) . '</option>' . "\n";
-			?>
-				</select>
-				<br /><em><?php _e( 'Blog signups that return a certainty number greater than or equal to this will be blocked from being able to be created. Use carefully!', 'ust' ); ?></em></td>
-				</tr>
-				-->
-			<tr valign="top">
-				<th scope="row"><?php _e( 'Blog Signup Splog Certainty', 'ust' ) ?></th>
-				<td><select name="ust[certainty]">
-						<?php
-						for ( $counter = 50; $counter <= 100; $counter += 1 ) {
-							echo '<option value="' . $counter . '"' . ( $ust_settings['certainty'] == $counter ? ' selected="selected"' : '' ) . '>' . $counter . '%</option>' . "\n";
-						}
-						echo '<option value="999"' . ( $ust_settings['certainty'] == 999 ? ' selected="selected"' : '' ) . '>' . __( "Don't Spam", 'ust' ) . '</option>' . "\n";
-						?>
-					</select>
-					<br/><em><?php _e( 'Blog signups that return a certainty number greater than or equal to this will automatically be marked as spam.', 'ust' ); ?></em>
-				</td>
-			</tr>
-
-			<tr valign="top">
-				<th scope="row"><?php _e( 'Posting Splog Certainty', 'ust' ) ?></th>
-				<td><select name="ust[post_certainty]">
-						<?php
-						for ( $counter = 50; $counter <= 100; $counter += 1 ) {
-							echo '<option value="' . $counter . '"' . ( $ust_settings['post_certainty'] == $counter ? ' selected="selected"' : '' ) . '>' . $counter . '%</option>' . "\n";
-						}
-						echo '<option value="999"' . ( $ust_settings['post_certainty'] == 999 ? ' selected="selected"' : '' ) . '>' . __( "Don't Spam", 'ust' ) . '</option>' . "\n";
-						?>
-					</select>
-					<br/><em><?php _e( 'If a post from a new blog is checked by the API and returns a certainty number greater than or equal to this, it will automatically be marked as spam.', 'ust' ); ?></em>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
-
-<div class="postbox">
-	<h3 class='hndle'><span><?php _e( 'General Settings', 'ust' ) ?></span> - <span
-			class="description"><?php _e( 'These protections will work even without an API key.', 'ust' ) ?></span></h3>
+	<h3 class='hndle'><span><?php _e( 'Allgemeine Einstellungen', 'ust' ) ?></span> - <span
+			class="description"><?php _e( 'Diese Schutzmaßnahmen helfen dabei Spam-Blogs und Registrierungen zu minimieren.', 'ust' ) ?></span></h3>
 
 	<div class="inside">
 		<table class="form-table">
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Limit Blog Signups Per Day', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Blog-Anmeldungen pro Tag begrenzen', 'ust' ) ?></th>
 				<td><select name="ust[num_signups]">
 						<?php
 						for ( $counter = 1; $counter <= 250; $counter += 1 ) {
 							echo '<option value="' . $counter . '"' . ( $ust_settings['num_signups'] == $counter ? ' selected="selected"' : '' ) . '>' . $counter . '</option>' . "\n";
 						}
-						echo '<option value=""' . ( $ust_settings['num_signups'] == '' ? ' selected="selected"' : '' ) . '>' . __( 'Unlimited', 'ust' ) . '</option>' . "\n";
+						echo '<option value=""' . ( $ust_settings['num_signups'] == '' ? ' selected="selected"' : '' ) . '>' . __( 'Unbegrenzt', 'ust' ) . '</option>' . "\n";
 						?>
 					</select>
-					<br/><em><?php _e( 'Splog bots and users often register a large number of blogs in a short amount of time. This setting will limit the number of blog signups per 24 hours per IP, which can drastically reduce the splogs you have to deal with if they get past other filters (human sploggers). Remember that an IP is not necessarily tied to a single user. For example employees behind a company firewall may share a single IP.', 'ust' ); ?></em>
+					<br/><em><?php _e( 'Splog-Bots und -Benutzer registrieren oft in kurzer Zeit eine große Anzahl von Blogs. Diese Einstellung begrenzt die Anzahl der Blog-Anmeldungen pro 24 Stunden pro IP, was die Splogs, mit denen Du umgehen musst, drastisch reduzieren kann, wenn sie an anderen Filtern (menschlichen Sploggern) vorbeikommen. Denke daran, dass eine IP nicht unbedingt an einen einzelnen Benutzer gebunden ist. Zum Beispiel können sich Mitarbeiter hinter einer Firmen-Firewall eine einzelne IP teilen.', 'ust' ); ?></em>
 				</td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Blacklist Splogger IPs', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Splogger-IPs auf die schwarze Liste setzen', 'ust' ) ?></th>
 				<td><select name="ust[ip_blocking]">
 						<?php
-						echo '<option value="0"' . ( $ust_settings['ip_blocking'] == '' ? ' selected="selected"' : '' ) . '>' . __( 'Never Block', 'ust' ) . '</option>' . "\n";
+						echo '<option value="0"' . ( $ust_settings['ip_blocking'] == '' ? ' selected="selected"' : '' ) . '>' . __( 'Nie blockieren', 'ust' ) . '</option>' . "\n";
 						for ( $counter = 1; $counter <= 250; $counter += 1 ) {
 							echo '<option value="' . $counter . '"' . ( $ust_settings['ip_blocking'] == $counter ? ' selected="selected"' : '' ) . '>' . $counter . '</option>' . "\n";
 						}
 						?>
 					</select>
-					<br/><em><?php _e( 'This setting will block signups from IPs that are associated with blog signups you have marked as spam. A strict setting of "1" is usually ok, unless you want to weaken the check in case of false spam marking. Remember that an IP is not necessarily tied to a single user. For example employees behind a company firewall may share a single IP.', 'ust' ); ?></em>
+					<br/><em><?php _e( 'Diese Einstellung blockiert Anmeldungen von IPs, die mit Blog-Anmeldungen verknüpft sind, die Du als Spam markiert hast. Eine strikte Einstellung von "1" ist normalerweise in Ordnung, es sei denn, Du möchtest die Prüfung bei falscher Spam-Markierung abschwächen. Denke daran, dass eine IP nicht unbedingt an einen einzelnen Benutzer gebunden ist. Zum Beispiel können sich Mitarbeiter hinter einer Firmen-Firewall eine einzelne IP teilen.', 'ust' ); ?></em>
 				</td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Rename wp-signup.php', 'ust' ) ?>
+				<th scope="row"><?php _e( 'wp-signup.php umbenennen', 'ust' ) ?>
 					<br/><em>
-						<small><?php _e( '(Not Buddypress compatible)', 'ust' ) ?></small>
+						<small><?php _e( '(Nicht Buddypress-kompatibel)', 'ust' ) ?></small>
 					</em>
 				</th>
 				<td>
 					<label for="ust_signup"><input type="checkbox" name="ust_signup"
 					                               id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e( 'Move wp-signup.php', 'ust' ) ?>
 					</label>
-					<br/><?php _e( 'Current Signup URL:', 'ust' ) ?> <strong><a target="_blank"
+					<br/><?php _e( 'Aktuelle Anmelde-URL:', 'ust' ) ?> <strong><a target="_blank"
 					                                                            href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
-					<br/><em><?php _e( "Checking this option will disable the wp-signup.php form and change the signup url automatically every 24 hours. It will look something like <strong>http://$domain/signup-XXX/</strong>. To use this you may need to make some slight edits to your main theme's template files. Replace any hardcoded links to wp-signup.php with this function: <strong>&lt;?php ust_wpsignup_url(); ?&gt;</strong> Within post or page content you can insert the <strong>[ust_wpsignup_url]</strong> shortcode, usually in the href of a link.", 'ust' ); ?></em>
+					<br/><em><?php _e( "Wenn Du diese Option aktivierst, wird das Formular wp-signup.php deaktiviert und die Anmelde-URL automatisch alle 24 Stunden geändert. Es sieht etwa so aus wie <strong>http://$domain/signup-XXX/</strong>. Um dies zu verwenden, musst Du möglicherweise einige geringfügige Änderungen an den Vorlagendateien Deines Hauptthemes vornehmen. Ersetze alle hartcodierten Links zu wp-signup.php durch diese Funktion: <strong>&lt;?php ust_wpsignup_url(); ?&gt;</strong> Im Inhalt eines Beitrags oder einer Seite kannst Du den Shortcode <strong>[ust_wpsignup_url]</strong> einfügen, normalerweise in die href eines Links.", 'ust' ); ?></em>
 				</td>
 				</td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Spam/Unspam Blog Users', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Spam/Unspam-Blog-Benutzer', 'ust' ) ?></th>
 				<td>
 					<select name="ust[spam_blog_users]">
 						<?php
-						echo '<option value="1"' . ( isset( $ust_settings['spam_blog_users']) && $ust_settings['spam_blog_users'] == 1 ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'ust' ) . '</option>' . "\n";
-						echo '<option value="0"' . ( ! isset( $ust_settings['spam_blog_users'] ) || $ust_settings['spam_blog_users'] != 1 ? ' selected="selected"' : '' ) . '>' . __( 'No', 'ust' ) . '</option>' . "\n";
+						echo '<option value="1"' . ( isset( $ust_settings['spam_blog_users']) && $ust_settings['spam_blog_users'] == 1 ? ' selected="selected"' : '' ) . '>' . __( 'Ja', 'ust' ) . '</option>' . "\n";
+						echo '<option value="0"' . ( ! isset( $ust_settings['spam_blog_users'] ) || $ust_settings['spam_blog_users'] != 1 ? ' selected="selected"' : '' ) . '>' . __( 'Nein', 'ust' ) . '</option>' . "\n";
 						?>
-					</select><br/><em><?php _e( "Enable this to spam/unspam all of a blog's users when the blog is spammed/unspammed. Does not spam Super Admins.", 'ust' ); ?></em>
+					</select><br/><em><?php _e( "Aktiviere diese Option, um alle Benutzer eines Blogs zu spammen/zu entspammen, wenn das Blog gespammt/gespamt wurde. Kein Spam an Super Admins.", 'ust' ); ?></em>
 				</td>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Hide Admin Bar Button', 'ust' ); ?></th>
+				<th scope="row"><?php _e( 'Schaltfläche in der Admin-Leiste ausblenden', 'ust' ); ?></th>
 				<td><label><input type="checkbox" name="ust[hide_adminbar]"
 				                  value="1"<?php checked( $ust_settings['hide_adminbar'] ); ?> />
-						<?php _e( 'Remove the Anti-Splog actions menu button from the admin bar', 'ust' ); ?></label>
+						<?php _e( 'Entferne die Menüschaltfläche Anti-Splog-Aktionen aus der Admin-Leiste', 'ust' ); ?></label>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Queue Display Preferences', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Warteschlangen-Anzeigeeinstellungen', 'ust' ) ?></th>
 				<td>
-					<?php _e( 'Strip Images From Post Previews:', 'ust' ) ?>
+					<?php _e( 'Bilder aus Post-Vorschauen entfernen:', 'ust' ) ?>
 					<select name="ust[strip]">
 						<?php
-						echo '<option value="1"' . ( $ust_settings['strip'] == 1 ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'ust' ) . '</option>' . "\n";
-						echo '<option value="0"' . ( $ust_settings['strip'] == 0 ? ' selected="selected"' : '' ) . '>' . __( 'No', 'ust' ) . '</option>' . "\n";
+						echo '<option value="1"' . ( $ust_settings['strip'] == 1 ? ' selected="selected"' : '' ) . '>' . __( 'Ja', 'ust' ) . '</option>' . "\n";
+						echo '<option value="0"' . ( $ust_settings['strip'] == 0 ? ' selected="selected"' : '' ) . '>' . __( 'Nein', 'ust' ) . '</option>' . "\n";
 						?>
 					</select><br/>
-					<?php _e( 'Blogs Per Page:', 'ust' ) ?>
+					<?php _e( 'Blogs pro Seite:', 'ust' ) ?>
 					<select name="ust[paged_blogs]">
 						<?php
 						for ( $counter = 5; $counter <= 100; $counter += 5 ) {
@@ -253,7 +192,7 @@ if ( ! $ust_settings['api_key'] ) {
 						}
 						?>
 					</select><br/>
-					<?php _e( 'Post Previews Per Blog:', 'ust' ) ?>
+					<?php _e( 'Post-Vorschauen pro Blog:', 'ust' ) ?>
 					<select name="ust[paged_posts]">
 						<?php
 						for ( $counter = 1; $counter <= 20; $counter += 1 ) {
@@ -265,30 +204,30 @@ if ( ! $ust_settings['api_key'] ) {
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Spam Keyword Search', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Spam-Keyword-Suche', 'ust' ) ?></th>
 				<td>
-					<em><?php _e( 'Enter one word or phrase per line. Keywords are not case sensitive and may match any part of a word. Example: "Ugg" would match "s<strong>ugg</strong>estion".', 'ust' ); ?></em><br/>
+					<em><?php _e( 'Gib ein Wort oder einen Satz pro Zeile ein. Bei Schlüsselwörtern wird die Groß-/Kleinschreibung nicht beachtet und sie können mit jedem Teil eines Wortes übereinstimmen. Beispiel: "Ugg" würde "s<strong>ugg</strong>estion" entsprechen.', 'ust' ); ?></em><br/>
 					<?php if ( ! class_exists( 'postindexermodel' ) ) { ?>
-						<p class="error"><?php _e( 'You must install the <a target="_blank" href="http://premium.wpmudev.org/project/post-indexer">Post Indexer</a> plugin to enable keyword flagging.', 'ust' ); ?></p>
+						<p class="error"><?php _e( 'Du musst das <a target="_blank" href="https://n3rds.work/piestingtal_source/multisite-beitragsindex-plugin/">Multisite Beitragsindex</a>-Plugin installieren, um die Schlüsselwortkennzeichnung zu aktivieren.', 'ust' ); ?></p>
 						<textarea name="ust[keywords]" style="width:200px" rows="4"
 						          disabled="disabled"><?php echo stripslashes( implode( "\n", (array) $ust_settings['keywords'] ) ); ?></textarea>
 					<?php } else { ?>
 						<textarea name="ust[keywords]" style="width:200px"
 						          rows="4"><?php echo stripslashes( implode( "\n", (array) $ust_settings['keywords'] ) ); ?></textarea>
 					<?php } ?>
-					<br/><strong><em><?php _e( 'This feature is designed to work in conjunction with our Post Indexer plugin to help you find old and inactive splogs that the API service would no longer catch. Blogs that have these keywords in posts will be temporarily flagged and added to the potential splogs queue. Keywords should only be added here temporarily while searching for splogs. CAUTION: Do not enter more than a few (2-4) keywords at a time or it may slow down or timeout the Suspected Blogs page depending on the number of site-wide posts and server speed.', 'ust' ); ?></em></strong>
+					<br/><strong><em><?php _e( 'Diese Funktion wurde entwickelt, um in Verbindung mit unserem Multisite Beitragsindex-Plugin zu arbeiten, um Dir zu helfen, alte und inaktive Splogs zu finden. Blogs, die diese Keywords in Posts enthalten, werden vorübergehend markiert und der Warteschlange für potenzielle Splogs hinzugefügt. Schlüsselwörter sollten hier nur vorübergehend hinzugefügt werden, während Du nach Splogs suchst. VORSICHT: Gib nicht mehr als ein paar (2-4) Schlüsselwörter gleichzeitig ein, da dies die Seite "Verdächtige Blogs" je nach Anzahl der Beiträge auf der gesamten Webseite und der Servergeschwindigkeit verlangsamen oder eine Zeitüberschreitung verursachen kann.', 'ust' ); ?></em></strong>
 				</td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Additional Signup Protection', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Zusätzlicher Anmeldeschutz', 'ust' ) ?></th>
 				<td>
 					<select name="ust[signup_protect]" id="ust_signup_protect">
-						<option value="none" <?php selected( $ust_settings['signup_protect'], 'none' ); ?>><?php _e( 'None', 'ust' ) ?></option>
-                        <option value="recaptcha" <?php selected( $ust_settings['signup_protect'], 'recaptcha' ); ?>><?php _e( 'reCAPTCHA - Advanced Captcha', 'ust' ) ?></option>
-						<option value="questions" <?php selected( $ust_settings['signup_protect'], 'questions' ); ?>><?php _e( 'Admin Defined Questions', 'ust' ) ?></option>
+						<option value="none" <?php selected( $ust_settings['signup_protect'], 'none' ); ?>><?php _e( 'Keine', 'ust' ) ?></option>
+                        <option value="recaptcha" <?php selected( $ust_settings['signup_protect'], 'recaptcha' ); ?>><?php _e( 'reCAPTCHA - Erweitertes Captcha', 'ust' ) ?></option>
+						<option value="questions" <?php selected( $ust_settings['signup_protect'], 'questions' ); ?>><?php _e( 'Vom Administrator definierte Fragen', 'ust' ) ?></option>
 					</select>
-					<br/><em><?php _e( 'These options are designed to prevent automated spam bot signups, so will have limited effect in stopping human sploggers. Be cautious using these options as it is important to find a balance between stopping bots and not annoying your users.', 'ust' ); ?></em>
+					<br/><em><?php _e( 'Diese Optionen wurden entwickelt, um automatisierte Spam-Bot-Anmeldungen zu verhindern, haben also eine begrenzte Wirkung beim Stoppen menschlicher Splogger. Sei bei der Verwendung dieser Optionen vorsichtig, da es wichtig ist, ein Gleichgewicht zwischen dem Stoppen von Bots und dem Vermeiden von Belästigungen Deiner Benutzer zu finden.', 'ust' ); ?></em>
 				</td>
 				</td>
 			</tr>
@@ -299,28 +238,28 @@ if ( ! $ust_settings['api_key'] ) {
 </div>
 
 <div class="postbox">
-	<h3 class='hndle'><span><?php _e( 'reCAPTCHA Options', 'ust' ) ?></span></h3>
+	<h3 class='hndle'><span><?php _e( 'reCAPTCHA-Optionen', 'ust' ) ?></span></h3>
 
 	<div class="inside">
-		<p><?php _e( 'reCAPTCHA asks someone to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot while also correcting the automatic scans of old books. So you get less spam, and the world gets accurately digitized books. Everybody wins! For details, visit the <a href="https://www.google.com/recaptcha/intro/">reCAPTCHA website</a>.', 'ust' ) ?></p>
+		<p><?php _e( 'reCAPTCHA fordert jemanden heraus, zu beweisen, dass es sich um einen Menschen handelt. Dies bestätigt, dass es sich nicht um Spambots handelt. So erhältst Du weniger Spam! Weitere Informationen findest Du auf der <a href="https://www.google.com/recaptcha/intro/">reCAPTCHA-Webseite</a>.', 'ust' ) ?></p>
 
-		<p><?php _e( '<strong>NOTE</strong>: Even if you don\'t use reCAPTCHA on the signup form, you should setup an API key anyway to prevent spamming from the splog review forms.', 'ust' ) ?></p>
+		<p><?php _e( '<strong>HINWEIS</strong>: Auch wenn Du reCAPTCHA im Anmeldeformular nicht verwendest, solltest Du trotzdem einen API-Schlüssel einrichten, um Spam aus den Splog-Überprüfungsformularen zu verhindern.', 'ust' ) ?></p>
 		<table class="form-table">
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Keys', 'ust' ) ?>*</th>
+				<th scope="row"><?php _e( 'reCaptcha V2 Schlüssel', 'ust' ) ?>*</th>
 				<td>
-					<?php _e( 'reCAPTCHA requires an API key for each domain, consisting of a "site" and a "secret" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin" target="_blank">free reCAPTCHA key</a>.', 'ust' ) ?>
+					<?php _e( 'reCAPTCHA benötigt für jede Domain einen API-Schlüssel, bestehend aus einem „Site“- und einem „Secret“-Schlüssel. Du kannst Dich für einen <a href="https://www.google.com/recaptcha/admin" target="_blank">kostenlosen reCAPTCHA-Schlüssel</a> anmelden.', 'ust' ) ?>
 					<br/>
 
 					<p class="re-keys">
 						<!-- reCAPTCHA public key -->
 						<label class="which-key"
-						       for="recaptcha_pubkey"><?php _e( 'Site Key:&nbsp;&nbsp;', 'ust' ) ?></label>
+						       for="recaptcha_pubkey"><?php _e( 'Webseiten-Schlüssel:&nbsp;&nbsp;', 'ust' ) ?></label>
 						<input name="recaptcha[pubkey]" id="recaptcha_pubkey" size="40"
 						       value="<?php echo stripslashes( $ust_recaptcha['pubkey'] ); ?>"/>
 						<br/>
 						<!-- reCAPTCHA private key -->
-						<label class="which-key" for="recaptcha_privkey"><?php _e( 'Secret Key:', 'ust' ) ?></label>
+						<label class="which-key" for="recaptcha_privkey"><?php _e( 'Geheimer Schlüssel:', 'ust' ) ?></label>
 						<input name="recaptcha[privkey]" id="recaptcha_privkey" size="40"
 						       value="<?php echo stripslashes( $ust_recaptcha['privkey'] ); ?>"/>
 					</p>
@@ -334,11 +273,11 @@ if ( ! $ust_settings['api_key'] ) {
 						<select name="recaptcha[theme]" id="recaptcha_theme">
 							<option value="light" <?php if ( $ust_recaptcha['theme'] == 'light' ) {
 								echo 'selected="selected"';
-							} ?>>Light
+							} ?>>Hell
 							</option>
 							<option value="dark" <?php if ( $ust_recaptcha['theme'] == 'dark' ) {
 								echo 'selected="selected"';
-							} ?>>Dark
+							} ?>>Dunkel
 							</option>
 						</select>
 					</div>
@@ -349,23 +288,23 @@ if ( ! $ust_settings['api_key'] ) {
 </div>
 
 <div class="postbox">
-	<h3 class='hndle'><span><?php _e( 'Defined Questions Options', 'ust' ) ?></span></h3>
+	<h3 class='hndle'><span><?php _e( 'Definierte Fragenoptionen', 'ust' ) ?></span></h3>
 
 	<div class="inside">
-		<p><?php _e( 'Displays a random question from the list, and the user must enter the correct answer. It is best to create a large pool of questions that have one-word answers. Answers are not case-sensitive.', 'ust' ) ?></p>
+		<p><?php _e( 'Zeigt eine zufällige Frage aus der Liste an und der Benutzer muss die richtige Antwort eingeben. Am besten erstelle einen großen Fragenpool mit Ein-Wort-Antworten. Bei den Antworten wird die Groß-/Kleinschreibung nicht beachtet.', 'ust' ) ?></p>
 		<table class="form-table">
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Questions and Answers', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Fragen und Antworten', 'ust' ) ?></th>
 				<td>
 					<table>
 						<tr>
 							<td style="width:75%">
-								<?php _e( 'Questions (one per row)', 'ust' ) ?>
+								<?php _e( 'Fragen (eine pro Zeile)', 'ust' ) ?>
 								<textarea name="ust_qa[questions]" style="width:100%"
 								          rows="10"><?php echo stripslashes( implode( "\n", $questions ) ); ?></textarea>
 							</td>
 							<td style="width:25%">
-								<?php _e( 'Answers (one per row)', 'ust' ) ?>
+								<?php _e( 'Antworten (eine pro Zeile)', 'ust' ) ?>
 								<textarea name="ust_qa[answers]" style="width:100%"
 								          rows="10"><?php echo stripslashes( implode( "\n", $answers ) ); ?></textarea>
 							</td>
@@ -378,7 +317,7 @@ if ( ! $ust_settings['api_key'] ) {
 </div>
 
 <p class="submit">
-	<input type="submit" name="Submit" value="<?php _e( 'Save Changes', 'ust' ) ?>" class="button-primary"/>
+	<input type="submit" name="Submit" value="<?php _e( 'Änderungen speichern', 'ust' ) ?>" class="button-primary"/>
 </p>
 </form>
 </div>

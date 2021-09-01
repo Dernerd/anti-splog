@@ -5,7 +5,7 @@ Plugin URI: https://premium.wpmudev.org/project/anti-splog/
 Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs in WordPress Multisite und BuddyPress
 Author: WMS N@W
 Author URI: https://n3rds.work
-Version: 2.2.1
+Version: 2.2.8
 Network: true
 */
 
@@ -41,7 +41,7 @@ $MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.1.8';
+$ust_current_version = '2.2.8';
 /*$ust_api_url         = 'https://n3rds.work/wp-json/psmitgliedschaften/v1';*/
 
 //------------------------------------------------------------------------//
@@ -132,7 +132,7 @@ function ust_install_notice() {
 	if ( ! file_exists( WP_CONTENT_DIR . '/blog-suspended.php' ) ) {
 		?>
 		<div class="error fade">
-		<p><?php _e( 'Bitte verschieben Sie die Datei blog-suspended.php aus dem Anti-Splog-Plugin in das Verzeichnis /wp-content/.', 'ust' ); ?></p>
+		<p><?php _e( 'Bitte verschiebe die Datei blog-suspended.php aus dem Anti-Splog-Plugin in das Verzeichnis /wp-content/.', 'ust' ); ?></p>
 		</div><?php
 	}
 }
@@ -1415,7 +1415,7 @@ function ust_trim_title( $title ) {
 
 //------------------------------------------------------------------------//
 
-function ust_api_warning() {
+/*function ust_api_warning() {
 	global $ust_admin_url;
 
 	if ( ! is_super_admin() ) {
@@ -1427,7 +1427,7 @@ function ust_api_warning() {
 	if ( ! $ust_settings['api_key'] && ! isset( $_GET['dismiss'] ) && ! ( $expire && $expire > time() ) ) {
 		echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'Anti-Splog ist nicht vollständig aktiviert. Du musst <a href="%1$s">Deinen WMS N@W API-Schlüssel eingeben</a>, um die leistungsstarke Blog- und Registrierungsprüfung zu aktivieren. <a href="%2$s">Mehr Info&raquo;</a>', 'ust' ), "$ust_admin_url-settings", 'http://premium.wpmudev.org/project/anti-splog' ) . ' <a style="float:right;" title="' . __( 'Dismiss this notice for one month', 'ust' ) . '" href="' . $ust_admin_url . '-settings&dismiss=1"><small>' . __( 'Dismiss', 'ust' ) . "</small></a></p></div>";
 	}
-}
+}*/
 
 function ust_wpsignup_url( $echo = true ) {
 	global $current_site;

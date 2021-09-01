@@ -1,6 +1,6 @@
 <?php
 if ( ! current_user_can( 'manage_network_options' ) ) {
-	wp_die( 'You dont have permissions for this page' );
+	wp_die( 'Du hast keine Berechtigungen für diese Seite' );
 }
 
 $patterns = get_site_option( 'ust_patterns' );
@@ -17,7 +17,7 @@ if ( isset( $_POST['allpattern_delete'] ) ) {
 
 		update_site_option( 'ust_patterns', $patterns );
 		//display message confirmation
-		echo '<div class="updated fade"><p>' . __( 'Pattern(s) succesfully deleted.', 'ust' ) . '</p></div>';
+		echo '<div class="updated fade"><p>' . __( 'Muster erfolgreich gelöscht.', 'ust' ) . '</p></div>';
 	}
 }
 
@@ -27,7 +27,7 @@ if ( isset( $_POST['submit_settings'] ) ) {
 	$error = false;
 
 	if ( false === @preg_match( stripslashes( $_POST['regex'] ), 'thisisjustateststring' ) ) {
-		$error = __( 'Please enter a valid PCRE Regular Expression with delimiters.', 'ust' );
+		$error = __( 'Bitte gib einen gültigen regulären PCRE-Ausdruck mit Trennzeichen ein.', 'ust' );
 	}
 
 	if ( ! $error ) {
@@ -49,7 +49,7 @@ if ( isset( $_POST['submit_settings'] ) ) {
 		unset( $_POST );
 		unset( $_GET );
 		$new_pattern_code = '';
-		echo '<div class="updated fade"><p>' . __( 'Pattern successfully saved.', 'ust' ) . '</p></div>';
+		echo '<div class="updated fade"><p>' . __( 'Muster erfolgreich gespeichert.', 'ust' ) . '</p></div>';
 	} else {
 		echo '<div class="error"><p>' . $error . '</p></div>';
 	}
@@ -79,11 +79,11 @@ $pattern_navigation = paginate_links( array(
 $page_link          = ( $apage > 1 ) ? '&amp;apage=' . $apage : '';
 ?>
 <div class="wrap">
-<h2><?php _e( 'Anti-Splog Pattern Matching', 'ust' ) ?></h2>
+<h2><?php _e( 'Anti-Splog-Musterabgleich', 'ust' ) ?></h2>
 
 <form method="post" action="">
 
-<p><?php _e( "Pattern matching is an advanced feature that allows you to create powerful custom rules to foil spam bots. In almost all cases when you are getting a series of splogs created by a bot, it is possible to recognize patterns in their chosen domains, site titles, emails, or usernames. You can then write and instantly test regular expressions here to block future signups that match those patterns.", 'ust' ) ?></p>
+<p><?php _e( "Pattern Matching ist eine erweiterte Funktion, mit der Sie leistungsstarke benutzerdefinierte Regeln erstellen können, um Spam-Bots zu verhindern. In fast allen Fällen, in denen Du eine Reihe von Splogs erhältst, die von einem Bot erstellt wurden, ist es möglich, Muster in den ausgewählten Domains, Seiten-Titeln, E-Mails oder Benutzernamen zu erkennen. Du kannst dann hier reguläre Ausdrücke schreiben und sofort testen, um zukünftige Anmeldungen, die diesen Mustern entsprechen, zu blockieren.", 'ust' ) ?></p>
 
 <div class="tablenav">
 	<?php if ( $pattern_navigation ) {
@@ -91,7 +91,7 @@ $page_link          = ( $apage > 1 ) ? '&amp;apage=' . $apage : '';
 	} ?>
 
 	<div class="alignleft">
-		<input type="submit" value="<?php _e( 'Delete', 'ust' ) ?>" name="allpattern_delete"
+		<input type="submit" value="<?php _e( 'Löschen', 'ust' ) ?>" name="allpattern_delete"
 		       class="button-secondary delete"/>
 		<br class="clear"/>
 	</div>
@@ -102,11 +102,11 @@ $page_link          = ( $apage > 1 ) ? '&amp;apage=' . $apage : '';
 <?php
 // define the columns to display, the syntax is 'internal name' => 'display name'
 $posts_columns = array(
-	'regex'   => __( 'Regular Expression', 'ust' ),
-	'type'    => __( 'Check', 'ust' ),
-	'action'  => __( 'Action', 'ust' ),
-	'matched' => __( 'Matched', 'ust' ),
-	'edit'    => __( 'Edit', 'ust' )
+	'regex'   => __( 'Regulären Ausdruck', 'ust' ),
+	'type'    => __( 'Prüfen', 'ust' ),
+	'action'  => __( 'Aktionen', 'ust' ),
+	'matched' => __( 'Abgestimmt', 'ust' ),
+	'edit'    => __( 'Bearbeiten', 'ust' )
 );
 ?>
 
@@ -150,13 +150,13 @@ $posts_columns = array(
 						<th scope="row">
 							<?php
 							if ( $pattern['type'] == 'title' ) {
-								_e( 'Site Title', 'ust' );
+								_e( 'Seitentitel', 'ust' );
 							} else if ( $pattern['type'] == 'username' ) {
-								_e( 'Username', 'ust' );
+								_e( 'Nutzername', 'ust' );
 							} else if ( $pattern['type'] == 'email' ) {
 								_e( 'Email', 'ust' );
 							} else {
-								_e( 'Site Domain', 'ust' );
+								_e( 'Seiten-Domain', 'ust' );
 							}
 							?>
 						</th>
@@ -166,7 +166,7 @@ $posts_columns = array(
 					case 'action':
 						?>
 						<th scope="row">
-							<?php echo ( isset( $pattern['action'] ) && $pattern['action'] == 'block' ) ? __( 'Block Signup', 'ust' ) : __( 'Mark as Splog', 'ust' ); ?>
+							<?php echo ( isset( $pattern['action'] ) && $pattern['action'] == 'block' ) ? __( 'Anmeldung blockieren', 'ust' ) : __( 'Als Splog markieren', 'ust' ); ?>
 						</th>
 						<?php
 						break;
@@ -182,7 +182,7 @@ $posts_columns = array(
 					case 'edit':
 						?>
 						<th scope="row">
-							<a href="admin.php?page=ust-patterns<?php echo $page_link; ?>&amp;id=<?php echo $pattern_code; ?>#add_pattern"><?php _e( 'Edit', 'ust' ) ?>&raquo;</a>
+							<a href="admin.php?page=ust-patterns<?php echo $page_link; ?>&amp;id=<?php echo $pattern_code; ?>#add_pattern"><?php _e( 'Bearbeiten', 'ust' ) ?>&raquo;</a>
 						</th>
 						<?php
 						break;
@@ -196,7 +196,7 @@ $posts_columns = array(
 	} else {
 		?>
 		<tr style='background-color: <?php echo $bgcolor; ?>'>
-			<td colspan="9"><?php _e( 'No patterns yet.', 'ust' ) ?></td>
+			<td colspan="9"><?php _e( 'Noch keine Muster.', 'ust' ) ?></td>
 		</tr>
 	<?php
 	} // end if patterns
@@ -227,9 +227,9 @@ $posts_columns = array(
 		<h3 class='hndle'><span>
 	<?php
 	if ( isset( $_GET['id'] ) || $error ) {
-		_e( 'Edit Pattern', 'ust' );
+		_e( 'Muster bearbeiten', 'ust' );
 	} else {
-		_e( 'Add Pattern', 'ust' );
+		_e( 'Muster hinzufügen', 'ust' );
 	}
 	?></span></h3>
 
@@ -254,16 +254,16 @@ $posts_columns = array(
 				<thead>
 				<tr>
 					<th>
-						<?php _e( 'Regular Expression', 'ust' ) ?>
+						<?php _e( 'Regulären Ausdruck', 'ust' ) ?>
 					</th>
 					<th>
-						<?php _e( 'Description', 'ust' ) ?>
+						<?php _e( 'Beschreibung', 'ust' ) ?>
 					</th>
 					<th>
-						<?php _e( 'Check', 'ust' ) ?>
+						<?php _e( 'Prüfen', 'ust' ) ?>
 					</th>
 					<th>
-						<?php _e( 'Action', 'ust' ) ?>
+						<?php _e( 'Aktionen', 'ust' ) ?>
 					</th>
 					<th></th>
 				</tr>
@@ -279,11 +279,11 @@ $posts_columns = array(
 					<td>
 						<select name="type" id="type">
 							<option
-								value="domain"<?php selected( $type, 'domain' ) ?>><?php _e( 'Site Domain', 'ust' ); ?></option>
+								value="domain"<?php selected( $type, 'domain' ) ?>><?php _e( 'Seiten-Domain', 'ust' ); ?></option>
 							<option
-								value="title"<?php selected( $type, 'title' ) ?>><?php _e( 'Site Title', 'ust' ); ?></option>
+								value="title"<?php selected( $type, 'title' ) ?>><?php _e( 'Seitentitel', 'ust' ); ?></option>
 							<option
-								value="username"<?php selected( $type, 'username' ) ?>><?php _e( 'Username', 'ust' ); ?></option>
+								value="username"<?php selected( $type, 'username' ) ?>><?php _e( 'Nutzername', 'ust' ); ?></option>
 							<option
 								value="email"<?php selected( $type, 'email' ) ?>><?php _e( 'Email', 'ust' ); ?></option>
 						</select>
@@ -291,9 +291,9 @@ $posts_columns = array(
 					<td>
 						<select name="action">
 							<option
-								value="splog"<?php selected( $action, 'splog' ) ?>><?php _e( 'Mark as Splog', 'ust' ); ?></option>
+								value="splog"<?php selected( $action, 'splog' ) ?>><?php _e( 'Als Splog markieren', 'ust' ); ?></option>
 							<option
-								value="block"<?php selected( $action, 'block' ) ?>><?php _e( 'Block Signup', 'ust' ); ?></option>
+								value="block"<?php selected( $action, 'block' ) ?>><?php _e( 'Anmeldung blockieren', 'ust' ); ?></option>
 						</select>
 					</td>
 					<td>
@@ -304,22 +304,22 @@ $posts_columns = array(
 				</tbody>
 			</table>
 			<span
-				class="description"><?php _e( 'Regular Expressions must be in a <a href="http://php.net/manual/en/book.pcre.php" target="_blank">valid delimited PCRE format</a>. Regex can be very complicated, so it\'s recommended to use an online tool like <a href="http://gskinner.com/RegExr/" target="_blank">RegExr</a> to build and test them. It is also recommended in most cases to use the "Mark as Splog" action rather than block. This will make it much harder for spammers to learn how to get around your pattern rules, and will also allow the Anti-Splog API to learn from these detected spammers.', 'ust' ) ?></span>
+				class="description"><?php _e( 'Reguläre Ausdrücke müssen in einem <a href="http://php.net/manual/en/book.pcre.php" target="_blank">gültigen PCRE-Format mit Trennzeichen</a> vorliegen. Regex kann sehr kompliziert sein, daher wird empfohlen, ein Online-Tool wie <a href="http://gskinner.com/RegExr/" target="_blank">RegExr</a> zu verwenden, um sie zu erstellen und zu testen . Es wird in den meisten Fällen auch empfohlen, die Aktion "Als Splog markieren" zu verwenden, anstatt zu blockieren. Dadurch wird es für Spammer viel schwieriger zu lernen, wie sie Deine Musterregeln umgehen können.', 'ust' ) ?></span>
 
 			<p class="submit">
 				<input type="submit" name="submit_settings" class="button-primary"
-				       value="<?php _e( 'Save Pattern', 'ust' ) ?>"/>
+				       value="<?php _e( 'Muster speichern', 'ust' ) ?>"/>
 			</p>
 		</div>
 	</div>
 
 	<div class="postbox" id="test-results" style="display:none;">
-		<h3 class='hndle'><span><?php _e( 'Test Results:', 'ust' ); ?></span> <span class="description"></span></h3>
+		<h3 class='hndle'><span><?php _e( 'Testergebnisse:', 'ust' ); ?></span> <span class="description"></span></h3>
 
 		<div class="inside">
 			<div id="results"></div>
 			<p style="text-align:center;"><img
-					src="<?php echo admin_url( 'images/loading.gif' ); ?>"/> <?php _e( 'Loading...', 'ust' ); ?></p>
+					src="<?php echo admin_url( 'images/loading.gif' ); ?>"/> <?php _e( 'Wird geladen...', 'ust' ); ?></p>
 		</div>
 	</div>
 
