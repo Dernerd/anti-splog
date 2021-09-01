@@ -130,11 +130,11 @@ switch ( $tab ) {
 
 		?><h3><?php _e( 'Verdächtige Blogs', 'ust' ) ?></h3><?php
 
-		$ust_settings = get_site_option( "ust_settings" );
+		/*$ust_settings = get_site_option( "ust_settings" );
 		$expire       = get_site_option( "ust_key_dismiss" );
 		if ( ! $ust_settings['api_key'] ) {
 			echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'You must enable the Anti-Splog API by <a href="%1$s">entering your WPMU DEV Premium API key</a> to be able to use this feature of the plugin.', 'ust' ), "$ust_admin_url&tab=settings" ) . "</p></div>";
-		}
+		}*/
 
 		_e( '<p>This is the moderation queue for suspicious blogs. When you are sure a blog is spam, mark it so. If it is definitely a valid blog you should "ignore" it. It is best to leave blogs in here until you are sure whether they are spam or not spam, as the system learns from both actions.</p>', 'ust' );
 
