@@ -83,7 +83,8 @@ $page_link          = ( $apage > 1 ) ? '&amp;apage=' . $apage : '';
 
 <form method="post" action="">
 
-<p><?php _e( "Pattern Matching ist eine erweiterte Funktion, mit der Sie leistungsstarke benutzerdefinierte Regeln erstellen können, um Spam-Bots zu verhindern. In fast allen Fällen, in denen Du eine Reihe von Splogs erhältst, die von einem Bot erstellt wurden, ist es möglich, Muster in den ausgewählten Domains, Seiten-Titeln, E-Mails oder Benutzernamen zu erkennen. Du kannst dann hier reguläre Ausdrücke schreiben und sofort testen, um zukünftige Anmeldungen, die diesen Mustern entsprechen, zu blockieren.", 'ust' ) ?></p>
+<p><?php _e( 'Pattern Matching ist eine erweiterte Funktion, mit der Sie leistungsstarke benutzerdefinierte Regeln erstellen können, um Spam-Bots zu verhindern. In fast allen Fällen, in denen Du eine Reihe von Splogs erhältst, die von einem Bot erstellt wurden, ist es möglich, Muster in den ausgewählten Domains, Seiten-Titeln, E-Mails oder Benutzernamen zu erkennen. Du kannst dann hier reguläre Ausdrücke schreiben und sofort testen, um zukünftige Anmeldungen, die diesen Mustern entsprechen, zu blockieren.
+			 Um Dir das Leben etwas zu erleichtern findest Du eine Sammlung hilfreicher Muster <a href="https://n3rds.work/docs/spamliste-fuer-mail-domains/" target="_blank">HIER</a> zum hinzufügen.', 'ust' ) ?></p>
 
 <div class="tablenav">
 	<?php if ( $pattern_navigation ) {
