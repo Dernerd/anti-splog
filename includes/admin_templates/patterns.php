@@ -111,7 +111,7 @@ $posts_columns = array(
 );
 ?>
 
-<table width="100%" cellpadding="3" cellspacing="3" class="widefat">
+<table width="100%" style="word-break: break-word;" cellpadding="3" cellspacing="3" class="widefat">
 	<thead>
 	<tr>
 		<th scope="col" class="check-column"><input type="checkbox"/></th>
