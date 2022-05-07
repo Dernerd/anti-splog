@@ -267,7 +267,7 @@ foreach ( $history as $stat ) {
 <div class="wrap">
 	<h2><?php _e( 'Anti-Splog-Statistiken', 'ust' ) ?></h2>
 
-	<p><?php _e( "Dies sind Webseiten-Erstellungsstatistiken für Deinee Multisite-Installation.", 'ust' ) ?></p>
+	<p><?php _e( "Dies sind Webseiten-Erstellungsstatistiken für Deine Multisite-Installation.", 'ust' ) ?></p>
 
 	<div class="metabox-holder">
 

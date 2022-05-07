@@ -150,7 +150,7 @@ switch ( $tab ) {
 			$order_by = 'u.certainty DESC, b.last_updated DESC';
 		}
 
-		$blogname_columns = is_subdomain_install() ? __( 'Domain' ) : __( 'Path' );
+		$blogname_columns = is_subdomain_install() ? __( 'Domain' ) : __( 'Pfad' );
 
 		if ( is_array( $ust_settings['keywords'] ) && count( $ust_settings['keywords'] ) ) {
 			foreach ( $ust_settings['keywords'] as $word ) {
@@ -568,7 +568,7 @@ switch ( $tab ) {
 
 		<?php
 		// define the columns to display, the syntax is 'internal name' => 'display name'
-		$blogname_columns = is_subdomain_install() ? __( 'Domain' ) : __( 'Path' );
+		$blogname_columns = is_subdomain_install() ? __( 'Domain' ) : __( 'Pfad' );
 		$posts_columns    = array(
 			'id'         => __( 'ID' ),
 			'blogname'   => $blogname_columns,
@@ -899,7 +899,7 @@ switch ( $tab ) {
 
 		<?php
 		// define the columns to display, the syntax is 'internal name' => 'display name'
-		$blogname_columns = is_subdomain_install() ? __( 'Domain' ) : __( 'Path' );
+		$blogname_columns = is_subdomain_install() ? __( 'Domain' ) : __( 'Pfad' );
 		$posts_columns    = array(
 			'id'          => __( 'ID' ),
 			'blogname'    => $blogname_columns,

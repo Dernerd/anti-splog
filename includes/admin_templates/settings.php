@@ -146,7 +146,7 @@ if ( ! $ust_settings['api_key'] ) {
 				</th>
 				<td>
 					<label for="ust_signup"><input type="checkbox" name="ust_signup"
-					                               id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e( 'Move wp-signup.php', 'ust' ) ?>
+					                               id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e( 'wp-signup.php verschieben', 'ust' ) ?>
 					</label>
 					<br/><?php _e( 'Aktuelle Anmelde-URL:', 'ust' ) ?> <strong><a target="_blank"
 					                                                            href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
