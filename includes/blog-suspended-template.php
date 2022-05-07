@@ -7,7 +7,7 @@ if ( $current_blog->archived == '1' ) {
 	if ( file_exists( WP_CONTENT_DIR . '/blog-suspended.php' ) )
 		return WP_CONTENT_DIR . '/blog-suspended.php';
 	else
-		wp_die( __( 'This site has been archived or suspended.' ), '', array( 'response' => 410 ) );
+		wp_die( __( 'Diese Website wurde archiviert oder gesperrt.' ), '', array( 'response' => 410 ) );
 }
 
 require_once( ABSPATH . WPINC . '/pluggable.php' );
@@ -25,7 +25,7 @@ if ( isset( $_POST['wp-submit'] ) && ! get_option( 'ust_email_sent' ) ) {
 	$reason = wp_filter_nohtml_kses( stripslashes( trim( $_POST['reason'] ) ) );
 
 	if ( strlen( $reason ) < 20 ) {
-		$error1 = '<p class="error">' . __( "Please enter a valid reason.", 'ust' ) . '</p>';
+		$error1 = '<p class="error">' . __( "Bitte gib einen triftigen Grund ein.", 'ust' ) . '</p>';
 	}
 
 	//check reCAPTCHA
@@ -33,7 +33,7 @@ if ( isset( $_POST['wp-submit'] ) && ! get_option( 'ust_email_sent' ) ) {
 	if ( $recaptcha['privkey'] ) {
 		$resp = ust_recaptcha_check_answer( $recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["g-recaptcha-response"] );
 		if ( ! $resp ) {
-			$error2 = '<p class="error">' . __( "The reCAPTCHA wasn't entered correctly. Please try again.", 'ust' ) . '</p>';
+			$error2 = '<p class="error">' . __( "Das reCAPTCHA wurde nicht korrekt eingegeben. Bitte versuche es erneut.", 'ust' ) . '</p>';
 		}
 	}
 
@@ -43,9 +43,9 @@ if ( isset( $_POST['wp-submit'] ) && ! get_option( 'ust_email_sent' ) ) {
 		$user_email      = get_option( 'admin_email' );
 		$review_url      = $ust_admin_url . "&tab=splogs&bid=$blog_id";
 		$message_headers = "MIME-Version: 1.0\n" . "From: $user_email\n" . "Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n";
-		$subject         = sprintf( __( 'Splog Review Request: %s', 'ust' ), get_bloginfo( 'url' ) );
-		$message         = sprintf( __( "Someone is disputing the spam status for the blog %s (%s).\nHere is their reason:\n_______________________\n\n%s\n\n_______________________\n", 'ust' ), get_bloginfo( 'name' ), get_bloginfo( 'url' ), $reason );
-		$message .= sprintf( __( "Review: %s\n", 'ust' ), $review_url );
+		$subject         = sprintf( __( 'Anfrage zur Splog-Überprüfung: %s', 'ust' ), get_bloginfo( 'url' ) );
+		$message         = sprintf( __( "Jemand bestreitet den Spam-Status für den Blog %s (%s).\nHier ist der Grund:\n_______________________\n\n%s\n\n_______________________\n", 'ust' ), get_bloginfo( 'name' ), get_bloginfo( 'url' ), $reason );
+		$message .= sprintf( __( "Überprüfung: %s\n", 'ust' ), $review_url );
 		wp_mail( $admin_email, $subject, $message, $message_headers );
 
 		//save that the email was sent
@@ -269,22 +269,22 @@ login_header( __( 'Blog Spammed' ) );
 
 	<?php if ( $email_sent ) { ?>
 
-        <p><?php _e( 'Your message has been sent. We will review it shortly.', 'ust' ); ?></p>
+        <p><?php _e( 'Deine Nachricht wurde gesendet. Wir werden es in Kürze überprüfen.', 'ust' ); ?></p>
 
 	<?php } else { ?>
 		<?php if ( $auto_spammed ) { ?>
-            <p><?php _e( 'Our automated filters have determined that this blog signup looks like it could be by a spammer. Because of this, to complete you registration please describe in one or two sentences what you intend to use this blog for in the form below and we will review your request. Thank you for your cooperation!', 'ust' ); ?></p>
+            <p><?php _e( 'Unsere automatisierten Filter haben festgestellt, dass diese Blog-Anmeldung so aussieht, als ob sie von einem Spammer stammen könnte. Um Deine Registrierung abzuschließen, beschreibe aus diesem Grund bitte in ein oder zwei Sätzen, wofür Du diesen Blog verwenden möchtest, und wir werden Deine Anfrage prüfen. Danke für Deine Kooperation!', 'ust' ); ?></p>
 		<?php } else { ?>
-            <p><?php _e( 'Sorry, but this blog has been marked as spam as defined in our Terms of Service.', 'ust' ); ?></p>
+            <p><?php _e( 'Entschuldigung, aber dieser Blog wurde gemäß unseren Nutzungsbedingungen als Spam markiert.', 'ust' ); ?></p>
 		<?php } ?>
 
 		<?php if ( ! get_option( 'ust_email_sent' ) ) { ?>
 			<?php if ( ! $auto_spammed ) { ?>
-                <p><?php _e( 'If you believe this decision was made in error you may contact us with your <strong>detailed</strong> reasons using the form below:', 'ust' ); ?></p>
+                <p><?php _e( 'Wenn Du der Meinung bist, dass diese Entscheidung irrtümlich getroffen wurde, kannst Du uns mit Deinen <strong>detaillierten</strong> Gründen über das folgende Formular kontaktieren:', 'ust' ); ?></p>
 			<?php }
 			echo $error1; ?>
             <p>
-                <label><?php _e( 'Reason:', 'ust' ) ?><br/>
+                <label><?php _e( 'Grund:', 'ust' ) ?><br/>
                     <textarea name="reason" style="width: 100%" rows="5"
                               tabindex="20"><?php echo esc_textarea( $reason ); ?></textarea></label>
             </p>
@@ -301,9 +301,9 @@ login_header( __( 'Blog Spammed' ) );
             <br class="clear"/>
             <p class="submit"><input type="submit" name="wp-submit" id="wp-submit"
                                      class="button button-primary button-large"
-                                     value="<?php _e( 'Submit', 'ust' ); ?>"/></p>
+                                     value="<?php _e( 'Einreichen', 'ust' ); ?>"/></p>
 		<?php } else { ?>
-            <p><?php _e( 'The admin has already been contacted to review.', 'ust' ); ?></p>
+            <p><?php _e( 'Der Administrator wurde bereits zur Überprüfung kontaktiert.', 'ust' ); ?></p>
 			<?php
 		}
 	} ?>

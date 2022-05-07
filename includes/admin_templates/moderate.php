@@ -130,13 +130,13 @@ switch ( $tab ) {
 
 		?><h3><?php _e( 'Verdächtige Blogs', 'ust' ) ?></h3><?php
 
-		/*$ust_settings = get_site_option( "ust_settings" );
-		$expire       = get_site_option( "ust_key_dismiss" );
+		$ust_settings = get_site_option( "ust_settings" );
+		/*$expire       = get_site_option( "ust_key_dismiss" );
 		if ( ! $ust_settings['api_key'] ) {
 			echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'You must enable the Anti-Splog API by <a href="%1$s">entering your WPMU DEV Premium API key</a> to be able to use this feature of the plugin.', 'ust' ), "$ust_admin_url&tab=settings" ) . "</p></div>";
 		}*/
 
-		_e( '<p>This is the moderation queue for suspicious blogs. When you are sure a blog is spam, mark it so. If it is definitely a valid blog you should "ignore" it. It is best to leave blogs in here until you are sure whether they are spam or not spam, as the system learns from both actions.</p>', 'ust' );
+		_e( '<p>Dies ist die Moderationswarteschlange für verdächtige Blogs. Wenn Du sicher bist, dass es sich bei einem Blog um Spam handelt, markiere ihn als Spam. Wenn es sich definitiv um einen gültigen Blog handelt, solltest Du ihn "ignorieren". Blogs lasse am besten so lange drin, bis Du sicher bist, ob es sich um Spam handelt oder nicht, da das System aus beiden Aktionen lernt.</p>', 'ust' );
 
 		$apage     = isset( $_GET['apage'] ) ? intval( $_GET['apage'] ) : 1;
 		$num       = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $ust_settings['paged_blogs'];
@@ -188,12 +188,12 @@ switch ( $tab ) {
 				'id'          => __( 'ID', 'ust' ),
 				'blogname'    => $blogname_columns,
 				'ips'         => __( 'IPs', 'ust' ),
-				'users'       => __( 'Blog Users', 'ust' ),
-				'keywords'    => __( 'Keywords', 'ust' ),
-				'certainty'   => __( 'Splog Certainty', 'ust' ),
-				'lastupdated' => __( 'Last Updated' ),
-				'registered'  => __( 'Registered' ),
-				'posts'       => __( 'Recent Posts', 'ust' )
+				'users'       => __( 'Blog-Benutzer', 'ust' ),
+				'keywords'    => __( 'Schlüsselwörter', 'ust' ),
+				'certainty'   => __( 'Splog Gewissheit', 'ust' ),
+				'lastupdated' => __( 'Letzte Aktualisierung' ),
+				'registered'  => __( 'Regisitriert' ),
+				'posts'       => __( 'Kürzliche Posts', 'ust' )
 			);
 
 		} else { //no post indexer
@@ -221,11 +221,11 @@ switch ( $tab ) {
 				'id'          => __( 'ID', 'ust' ),
 				'blogname'    => $blogname_columns,
 				'ips'         => __( 'IPs', 'ust' ),
-				'users'       => __( 'Blog Users', 'ust' ),
-				'certainty'   => __( 'Splog Certainty', 'ust' ),
-				'lastupdated' => '<a href="' . $ust_admin_url . $page_link . '&orderby=lastupdated">' . __( 'Last Updated' ) . '</a>',
-				'registered'  => '<a href="' . $ust_admin_url . $page_link . '&orderby=registered">' . __( 'Registered' ) . '</a>',
-				'posts'       => __( 'Recent Posts', 'ust' )
+				'users'       => __( 'Blog-Benutzer', 'ust' ),
+				'certainty'   => __( 'Splog Gewissheit', 'ust' ),
+				'lastupdated' => '<a href="' . $ust_admin_url . $page_link . '&orderby=lastupdated">' . __( 'Letzte Aktualisierung' ) . '</a>',
+				'registered'  => '<a href="' . $ust_admin_url . $page_link . '&orderby=registered">' . __( 'Registriert' ) . '</a>',
+				'posts'       => __( 'Kürzliche Posts', 'ust' )
 			);
 		}
 
@@ -253,9 +253,9 @@ switch ( $tab ) {
 			} ?>
 
 			<div class="alignleft">
-				<input type="submit" value="<?php _e( 'Ignore', 'ust' ) ?>" name="allblog_ignore"
+				<input type="submit" value="<?php _e( 'Ignorieren', 'ust' ) ?>" name="allblog_ignore"
 				       class="button-secondary allblog_ignore"/>
-				<input type="submit" value="<?php _e( 'Mark as Spam' ) ?>" name="allblog_spam"
+				<input type="submit" value="<?php _e( 'Als Spam markieren' ) ?>" name="allblog_spam"
 				       class="button-secondary allblog_spam"/>
 				<br class="clear"/>
 			</div>
@@ -302,15 +302,15 @@ switch ( $tab ) {
 							case 'blogname':
 								?>
 								<td valign="top">
-									<a title="<?php _e( 'Preview', 'ust' ); ?>"
+									<a title="<?php _e( 'Vorschau', 'ust' ); ?>"
 									   href="http://<?php echo $blog['domain'] . $blog['path']; ?>?KeepThis=true&TB_iframe=true&height=450&width=900"
 									   class="thickbox"><?php echo $blogname; ?></a>
 									<br/>
 
 									<div class="row-actions">
-										<?php echo '<a class="delete ust_ignore" href="' . $ust_admin_url . $page_link . '&amp;ignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog Ignored!', 'ust' ) ) . '">' . __( 'Ignore', 'ust' ) . '</a>'; ?>
+										<?php echo '<a class="delete ust_ignore" href="' . $ust_admin_url . $page_link . '&amp;ignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog ignoriert!', 'ust' ) ) . '">' . __( 'Ignorieren', 'ust' ) . '</a>'; ?>
 										|
-										<?php echo '<a class="delete ust_spam" href="' . $ust_admin_url . $page_link . '&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog marked as spam!', 'ust' ) ) . '">' . __( 'Spam' ) . '</a>'; ?>
+										<?php echo '<a class="delete ust_spam" href="' . $ust_admin_url . $page_link . '&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog als Spam markiert!', 'ust' ) ) . '">' . __( 'Spam' ) . '</a>'; ?>
 									</div>
 								</td>
 								<?php
@@ -322,33 +322,33 @@ switch ( $tab ) {
 								$user_spam  = $result->spam;
 								?>
 								<td valign="top">
-									Registered: <a title="<?php _e( 'Search for IP', 'ust' ) ?>"
+									Registered: <a title="<?php _e( 'Suche nach IP', 'ust' ) ?>"
 									               href="sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1"
 									               class="edit"><?php echo $blog['IP']; ?></a>
 									<small class="row-actions"><a class="ust_spamip"
-									                              title="<?php _e( 'Spam all blogs tied to this IP', 'ust' ) ?>"
+									                              title="<?php _e( 'Spam alle Blogs, die an diese IP gebunden sind', 'ust' ) ?>"
 									                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 									</small>
 									<br/>
 									<?php if ( $blog['last_user_id'] ) : ?>
 										<?php $spm_class = ( $user_spam ) ? ' style="color:red;"' : ''; ?>
 										Last User: <a<?php echo $spm_class ?>
-											title="<?php _e( 'Search for User Blogs', 'ust' ) ?>"
+											title="<?php _e( 'Suche nach Benutzerblogs', 'ust' ) ?>"
 											href="users.php?s=<?php echo $user_login; ?>"
 											class="edit"><?php echo $user_login; ?></a>
 										<?php if ( $user_spam == 0 ) : ?>
 											<small class="row-actions"><a class="ust_spamuser"
-											                              title="<?php _e( 'Spam all blogs tied to this User', 'ust' ) ?>"
+											                              title="<?php _e( 'Spam alle Blogs, die mit diesem Benutzer verknüpft sind', 'ust' ) ?>"
 											                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 											</small><?php endif; ?>
 										<br/>
 									<?php endif; ?>
 									<?php if ( $blog['last_ip'] ) : ?>
-										Last IP: <a title="<?php _e( 'Search for IP', 'ust' ) ?>"
+										Last IP: <a title="<?php _e( 'Suche nach IP', 'ust' ) ?>"
 										            href="sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1"
 										            class="edit"><?php echo $blog['last_ip']; ?></a>
 										<small class="row-actions"><a class="ust_spamip"
-										                              title="<?php _e( 'Spam all blogs tied to this IP', 'ust' ) ?>"
+										                              title="<?php _e( 'Spam alle Blogs, die an diese IP gebunden sind', 'ust' ) ?>"
 										                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 										</small>
 									<?php endif; ?>
@@ -366,14 +366,14 @@ switch ( $tab ) {
 										$blogusers_warning = '';
 										if ( count( $blogusers ) > 5 ) {
 											$blogusers         = array_slice( $blogusers, 0, 5 );
-											$blogusers_warning = __( 'Only showing first 5 users.' ) . ' <a href="http://' . $blog['domain'] . $blog['path'] . 'wp-admin/users.php">' . __( 'More' ) . '</a>';
+											$blogusers_warning = __( 'Es werden nur die ersten 5 Benutzer angezeigt.' ) . ' <a href="http://' . $blog['domain'] . $blog['path'] . 'wp-admin/users.php">' . __( 'Mehr' ) . '</a>';
 										}
 										foreach ( $blogusers as $key => $val ) {
 											$spm_class = ( $val->spam ) ? ' style="color:red;"' : '';
 											echo '<a' . $spm_class . ' title="Edit User: ' . $val->display_name . ' (' . $val->user_email . ')" href="user-edit.php?user_id=' . $val->user_id . '">' . $val->user_login . '</a> ';
-											echo '<small class="row-actions"><a title="' . __( 'All Blogs of User', 'ust' ) . '" href="users.php?s=' . $val->user_login . '">' . __( 'Blogs', 'ust' ) . '</a>';
+											echo '<small class="row-actions"><a title="' . __( 'Alle Blogs des Benutzers', 'ust' ) . '" href="users.php?s=' . $val->user_login . '">' . __( 'Blogs', 'ust' ) . '</a>';
 											if ( $val->spam == 0 ) {
-												echo ' | <a class="ust_spamuser" title="' . __( 'Spam all blogs tied to this User', 'ust' ) . '" href="' . $ust_admin_url . $page_link . '&updated=1&spam_user=' . $val->user_id . '">' . __( 'Spam', 'ust' ) . '</a></small>';
+												echo ' | <a class="ust_spamuser" title="' . __( 'Spam alle Blogs, die mit diesem Benutzer verknüpft sind', 'ust' ) . '" href="' . $ust_admin_url . $page_link . '&updated=1&spam_user=' . $val->user_id . '">' . __( 'Spam', 'ust' ) . '</a></small>';
 											}
 											echo '<br />';
 										}
@@ -405,7 +405,7 @@ switch ( $tab ) {
 							case 'lastupdated':
 								?>
 								<td valign="top">
-									<?php echo ( $blog['last_updated'] == '0000-00-00 00:00:00' ) ? __( "Never" ) : mysql2date( __( 'Y-m-d \<\b\r \/\> g:i:s a' ), $blog['last_updated'] ); ?>
+									<?php echo ( $blog['last_updated'] == '0000-00-00 00:00:00' ) ? __( "Niemals" ) : mysql2date( __( 'Y-m-d \<\b\r \/\> g:i:s a' ), $blog['last_updated'] ); ?>
 								</td>
 								<?php
 								break;
@@ -429,7 +429,7 @@ switch ( $tab ) {
 											$post_preview[ $preview_id ] = $post['post_content'];
 											$link                        = '#TB_inline?height=440&width=600&inlineId=post_preview_' . $preview_id;
 											if ( empty( $post['post_title'] ) ) {
-												$title = __( 'No Title', 'ust' );
+												$title = __( 'Kein Titel', 'ust' );
 											} else {
 												$title = htmlentities( $post['post_title'] );
 											}
@@ -437,7 +437,7 @@ switch ( $tab ) {
 											$preview_id ++;
 										}
 									} else {
-										_e( 'No Posts', 'ust' );
+										_e( 'Keine Beiträge', 'ust' );
 									}
 									?>
 								</td>
@@ -454,7 +454,7 @@ switch ( $tab ) {
 			} else {
 				?>
 				<tr>
-					<td colspan="8"><?php _e( 'No blogs found.' ) ?></td>
+					<td colspan="8"><?php _e( 'Keine Blogs gefunden.' ) ?></td>
 				</tr>
 			<?php
 			} // end if ($blogs)
@@ -479,9 +479,9 @@ switch ( $tab ) {
 			} ?>
 
 			<div class="alignleft">
-				<input type="submit" value="<?php _e( 'Ignore', 'ust' ) ?>" name="allblog_ignore"
+				<input type="submit" value="<?php _e( 'Ignorieren', 'ust' ) ?>" name="allblog_ignore"
 				       class="button-secondary allblog_ignore"/>
-				<input type="submit" value="<?php _e( 'Mark as Spam' ) ?>" name="allblog_spam"
+				<input type="submit" value="<?php _e( 'Als Spam markieren' ) ?>" name="allblog_spam"
 				       class="button-secondary allblog_spam"/>
 				<br class="clear"/>
 			</div>
@@ -507,9 +507,9 @@ switch ( $tab ) {
 	//---------------------------------------------------//
 	case "splogs":
 
-		?><h3><?php _e( 'Recent Splogs', 'ust' ) ?></h3><?php
+		?><h3><?php _e( 'Aktuelle Splogs', 'ust' ) ?></h3><?php
 
-		_e( '<p>These are all the blogs that have been marked as spam in order of when they were spammed. You can instantly preview any of these splogs or their last posts, and unspam them if there has been a mistake.</p>', 'ust' );
+		_e( '<p>Dies sind alle Blogs, die als Spam markiert wurden, in der Reihenfolge, in der sie gespammt wurden. Du kannst diese Splogs oder ihre letzten Posts sofort in der Vorschau anzeigen und sie entspammen, wenn ein Fehler aufgetreten ist.</p>', 'ust' );
 
 		$ust_settings = get_site_option( 'ust_settings' );
 		$apage        = isset( $_GET['apage'] ) ? intval( $_GET['apage'] ) : 1;
@@ -553,9 +553,9 @@ switch ( $tab ) {
 
 			<div class="alignleft">
 				<select name="action">
-					<option selected="selected" value="-1"><?php _e( 'Bulk Actions' ) ?></option>
-					<option value="delete"><?php _e( 'Delete' ) ?></option>
-					<option value="notspam"><?php _e( 'Not Spam' ) ?></option>
+					<option selected="selected" value="-1"><?php _e( 'Massenaktionen' ) ?></option>
+					<option value="delete"><?php _e( 'Löschen' ) ?></option>
+					<option value="notspam"><?php _e( 'Kein Spam' ) ?></option>
 				</select>
 				<input type="submit" value="Apply" class="button-secondary action" id="doaction" name="doaction">
 				<?php wp_nonce_field( 'bulk-sites' ); ?>
@@ -573,12 +573,12 @@ switch ( $tab ) {
 			'id'         => __( 'ID' ),
 			'blogname'   => $blogname_columns,
 			'ips'        => __( 'IPs', 'ust' ),
-			'users'      => __( 'Blog Users', 'ust' ),
-			'certainty'  => __( 'Splog Certainty', 'ust' ),
-			'method'     => __( 'Method' ),
+			'users'      => __( 'Blog-Benutzer', 'ust' ),
+			'certainty'  => __( 'Splog Gewissheit', 'ust' ),
+			'method'     => __( 'Methode' ),
 			'spammed'    => __( 'Spammed', 'ust' ),
-			'registered' => __( 'Registered' ),
-			'posts'      => __( 'Last Posts', 'ust' )
+			'registered' => __( 'Registriert' ),
+			'posts'      => __( 'Letzte Beiträge', 'ust' )
 		);
 
 		?>
@@ -622,14 +622,14 @@ switch ( $tab ) {
 							case 'blogname':
 								?>
 								<td valign="top">
-									<a title="<?php _e( 'Preview', 'ust' ); ?>"
+									<a title="<?php _e( 'Vorschau', 'ust' ); ?>"
 									   href="http://<?php echo $blog['domain'] . $blog['path']; ?>?KeepThis=true&TB_iframe=true&height=450&width=900"
 									   class="thickbox"><?php echo $blogname; ?></a>
 									<br/>
 									<?php
 									$controlActions   = array();
-									$controlActions[] = '<a class="delete ust_unspam" href="' . $ust_admin_url . '&amp;tab=splogs' . $page_link . '&amp;unspam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog marked as not spam!', 'ust' ) ) . '">' . __( 'Not Spam' ) . '</a>';
-									$controlActions[] = '<a class="delete" href="' . wp_nonce_url( 'sites.php?action=confirm&amp;action2=deleteblog&amp;id=' . $blog['blog_id'] . '&amp;msg=' . urlencode( sprintf( __( "You are about to delete the blog %s" ), $blogname ) ) . '&amp;updatedmsg=' . urlencode( __( 'Blog Deleted!', 'ust' ) ), 'confirm' ) . '">' . __( "Delete" ) . '</a>';
+									$controlActions[] = '<a class="delete ust_unspam" href="' . $ust_admin_url . '&amp;tab=splogs' . $page_link . '&amp;unspam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog als kein Spam markiert!', 'ust' ) ) . '">' . __( 'Kein Spam' ) . '</a>';
+									$controlActions[] = '<a class="delete" href="' . wp_nonce_url( 'sites.php?action=confirm&amp;action2=deleteblog&amp;id=' . $blog['blog_id'] . '&amp;msg=' . urlencode( sprintf( __( "Du bist im Begriff, den Blog %s zu löschen" ), $blogname ) ) . '&amp;updatedmsg=' . urlencode( __( 'Blog gelöscht!', 'ust' ) ), 'confirm' ) . '">' . __( "Löschen" ) . '</a>';
 									?>
 
 									<?php if ( count( $controlActions ) ) : ?>
@@ -647,33 +647,33 @@ switch ( $tab ) {
 								$user_spam  = $result->spam;
 								?>
 								<td valign="top">
-									Registered: <a title="<?php _e( 'Search for IP', 'ust' ) ?>"
+									Registered: <a title="<?php _e( 'Suche nach IP', 'ust' ) ?>"
 									               href="sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1"
 									               class="edit"><?php echo $blog['IP']; ?></a>
 									<small class="row-actions"><a class="ust_spamip"
-									                              title="<?php _e( 'Spam all blogs tied to this IP', 'ust' ) ?>"
+									                              title="<?php _e( 'Spam alle Blogs, die an diese IP gebunden sind', 'ust' ) ?>"
 									                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 									</small>
 									<br/>
 									<?php if ( $blog['last_user_id'] ) : ?>
 										<?php $spm_class = ( $user_spam ) ? ' style="color:red;"' : ''; ?>
 										Last User: <a<?php echo $spm_class ?>
-											title="<?php _e( 'Search for User Blogs', 'ust' ) ?>"
+											title="<?php _e( 'Suche nach Benutzerblogs', 'ust' ) ?>"
 											href="users.php?s=<?php echo $user_login; ?>"
 											class="edit"><?php echo $user_login; ?></a>
 										<?php if ( $user_spam == 0 ) : ?>
 											<small class="row-actions"><a class="ust_spamuser"
-											                              title="<?php _e( 'Spam all blogs tied to this User', 'ust' ) ?>"
+											                              title="<?php _e( 'Spam alle Blogs, die mit diesem Benutzer verknüpft sind', 'ust' ) ?>"
 											                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 											</small><?php endif; ?>
 										<br/>
 									<?php endif; ?>
 									<?php if ( $blog['last_ip'] ) : ?>
-										Last IP: <a title="<?php _e( 'Search for IP', 'ust' ) ?>"
+										Last IP: <a title="<?php _e( 'Suche nach IP', 'ust' ) ?>"
 										            href="sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1"
 										            class="edit"><?php echo $blog['last_ip']; ?></a>
 										<small class="row-actions"><a class="ust_spamip"
-										                              title="<?php _e( 'Spam all blogs tied to this IP', 'ust' ) ?>"
+										                              title="<?php _e( 'Spam alle Blogs, die an diese IP gebunden sind', 'ust' ) ?>"
 										                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 										</small>
 									<?php endif; ?>
@@ -691,14 +691,14 @@ switch ( $tab ) {
 										$blogusers_warning = '';
 										if ( count( $blogusers ) > 5 ) {
 											$blogusers         = array_slice( $blogusers, 0, 5 );
-											$blogusers_warning = __( 'Only showing first 5 users.' ) . ' <a href="http://' . $blog['domain'] . $blog['path'] . 'wp-admin/users.php">' . __( 'More' ) . '</a>';
+											$blogusers_warning = __( 'Es werden nur die ersten 5 Benutzer angezeigt.' ) . ' <a href="http://' . $blog['domain'] . $blog['path'] . 'wp-admin/users.php">' . __( 'More' ) . '</a>';
 										}
 										foreach ( $blogusers as $key => $val ) {
 											$spm_class = ( $val->spam ) ? ' style="color:red;"' : '';
 											echo '<a' . $spm_class . ' title="Edit User: ' . $val->display_name . ' (' . $val->user_email . ')" href="user-edit.php?user_id=' . $val->user_id . '">' . $val->user_login . '</a> ';
-											echo '<small class="row-actions"><a title="' . __( 'All Blogs of User', 'ust' ) . '" href="users.php?s=' . $val->user_login . '">' . __( 'Blogs', 'ust' ) . '</a>';
+											echo '<small class="row-actions"><a title="' . __( 'Alle Blogs des Benutzers', 'ust' ) . '" href="users.php?s=' . $val->user_login . '">' . __( 'Blogs', 'ust' ) . '</a>';
 											if ( $val->spam == 0 ) {
-												echo ' | <a class="ust_spamuser" title="' . __( 'Spam all blogs tied to this User', 'ust' ) . '" href="' . $ust_admin_url . $page_link . '&updated=1&spam_user=' . $val->user_id . '">' . __( 'Spam', 'ust' ) . '</a></small>';
+												echo ' | <a class="ust_spamuser" title="' . __( 'Spam alle Blogs, die mit diesem Benutzer verknüpft sind', 'ust' ) . '" href="' . $ust_admin_url . $page_link . '&updated=1&spam_user=' . $val->user_id . '">' . __( 'Spam', 'ust' ) . '</a></small>';
 											}
 											echo '<br />';
 										}
@@ -728,7 +728,7 @@ switch ( $tab ) {
 									} else if ( get_blog_option( $blog['blog_id'], 'ust_post_auto_spammed' ) ) {
 										_e( 'Auto: Post', 'ust' );
 									} else {
-										_e( 'Manual', 'ust' );
+										_e( 'Manuell', 'ust' );
 									}
 									?>
 								</td>
@@ -738,7 +738,7 @@ switch ( $tab ) {
 							case 'spammed':
 								?>
 								<td valign="top">
-									<?php echo ( $blog['spammed'] == '0000-00-00 00:00:00' ) ? __( "Never" ) : mysql2date( __( 'Y-m-d \<\b\r \/\> g:i:s a' ), $blog['spammed'] ); ?>
+									<?php echo ( $blog['spammed'] == '0000-00-00 00:00:00' ) ? __( "Niemals" ) : mysql2date( __( 'Y-m-d \<\b\r \/\> g:i:s a' ), $blog['spammed'] ); ?>
 								</td>
 								<?php
 								break;
@@ -762,7 +762,7 @@ switch ( $tab ) {
 											$post_preview[ $preview_id ] = $post['post_content'];
 											$link                        = '#TB_inline?height=440&width=600&inlineId=post_preview_' . $preview_id;
 											if ( empty( $post['post_title'] ) ) {
-												$title = __( 'No Title', 'ust' );
+												$title = __( 'Kein Titel', 'ust' );
 											} else {
 												$title = htmlentities( $post['post_title'] );
 											}
@@ -770,7 +770,7 @@ switch ( $tab ) {
 											$preview_id ++;
 										}
 									} else {
-										_e( 'No Posts', 'ust' );
+										_e( 'Keine Beiträge', 'ust' );
 									}
 									?>
 								</td>
@@ -786,7 +786,7 @@ switch ( $tab ) {
 			} else {
 				?>
 				<tr style='background-color: <?php echo $bgcolor; ?>'>
-					<td colspan="8"><?php _e( 'No blogs found.' ) ?></td>
+					<td colspan="8"><?php _e( 'Keine Blogs gefunden.' ) ?></td>
 				</tr>
 			<?php
 			} // end if ($blogs)
@@ -812,9 +812,9 @@ switch ( $tab ) {
 
 			<div class="alignleft">
 				<select name="action2">
-					<option selected="selected" value="-1"><?php _e( 'Bulk Actions' ) ?></option>
-					<option value="delete"><?php _e( 'Delete' ) ?></option>
-					<option value="notspam"><?php _e( 'Not Spam' ) ?></option>
+					<option selected="selected" value="-1"><?php _e( 'Massenaktionen' ) ?></option>
+					<option value="delete"><?php _e( 'Löschen' ) ?></option>
+					<option value="notspam"><?php _e( 'Kein Spam' ) ?></option>
 				</select>
 				<input type="submit" value="Apply" class="button-secondary action" id="doaction2" name="doaction2">
 				<br class="clear"/>
@@ -841,9 +841,9 @@ switch ( $tab ) {
 	//---------------------------------------------------//
 	case "ignored":
 
-		?><h3><?php _e( 'Ignored Blogs', 'ust' ) ?></h3><?php
+		?><h3><?php _e( 'Ignorierte Blogs', 'ust' ) ?></h3><?php
 
-		_e( '<p>These are suspicious blogs that you have decided are valid. If you have made a mistake you can send them back to the Suspected Blogs queue or spam them.</p>', 'ust' );
+		_e( '<p>Dies sind verdächtige Blogs, die Sie für gültig befunden haben. Wenn Du einen Fehler gemacht hast, kannst Du sie zurück in die Warteschlange für verdächtige Blogs schicken oder sie spammen.</p>', 'ust' );
 
 		$ust_settings = get_site_option( 'ust_settings' );
 		$apage        = isset( $_GET['apage'] ) ? intval( $_GET['apage'] ) : 1;
@@ -887,9 +887,9 @@ switch ( $tab ) {
 			} ?>
 
 			<div class="alignleft">
-				<input type="submit" value="<?php _e( 'Un-ignore', 'ust' ) ?>" name="allblog_unignore"
+				<input type="submit" value="<?php _e( 'Nicht ignorieren', 'ust' ) ?>" name="allblog_unignore"
 				       class="button-secondary allblog_unignore"/>
-				<input type="submit" value="<?php _e( 'Mark as Spam' ) ?>" name="allblog_spam"
+				<input type="submit" value="<?php _e( 'Als Spam markieren' ) ?>" name="allblog_spam"
 				       class="button-secondary allblog_spam"/>
 				<br class="clear"/>
 			</div>
@@ -904,11 +904,11 @@ switch ( $tab ) {
 			'id'          => __( 'ID' ),
 			'blogname'    => $blogname_columns,
 			'ips'         => __( 'IPs', 'ust' ),
-			'users'       => __( 'Blog Users', 'ust' ),
-			'certainty'   => __( 'Splog Certainty', 'ust' ),
-			'lastupdated' => __( 'Last Updated' ),
-			'registered'  => __( 'Registered' ),
-			'posts'       => __( 'Recent Posts', 'ust' )
+			'users'       => __( 'Blog-Benutzer', 'ust' ),
+			'certainty'   => __( 'Splog Gewissheit', 'ust' ),
+			'lastupdated' => __( 'Letzte Aktualisierung' ),
+			'registered'  => __( 'Registriert' ),
+			'posts'       => __( 'Kürzliche Posts', 'ust' )
 		);
 
 		?>
@@ -952,15 +952,15 @@ switch ( $tab ) {
 							case 'blogname':
 								?>
 								<td valign="top">
-									<a title="<?php _e( 'Preview', 'ust' ); ?>"
+									<a title="<?php _e( 'Vorschau', 'ust' ); ?>"
 									   href="http://<?php echo $blog['domain'] . $blog['path']; ?>?KeepThis=true&TB_iframe=true&height=450&width=900"
 									   class="thickbox"><?php echo $blogname; ?></a>
 									<br/>
 
 									<div class="row-actions">
-										<?php echo '<a class="delete ust_unignore" href="' . $ust_admin_url . '&amp;tab=ignored' . $page_link . '&amp;unignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog Un-ignored!', 'ust' ) ) . '">' . __( 'Un-ignore', 'ust' ) . '</a>'; ?>
+										<?php echo '<a class="delete ust_unignore" href="' . $ust_admin_url . '&amp;tab=ignored' . $page_link . '&amp;unignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog Nicht-Ignoriert!', 'ust' ) ) . '">' . __( 'Nicht ignorieren', 'ust' ) . '</a>'; ?>
 										|
-										<?php echo '<a class="delete ust_spam" href="' . $ust_admin_url . '&amp;tab=ignored' . $page_link . '&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog marked as spam!', 'ust' ) ) . '">' . __( 'Spam' ) . '</a>'; ?>
+										<?php echo '<a class="delete ust_spam" href="' . $ust_admin_url . '&amp;tab=ignored' . $page_link . '&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __( 'Blog als Spam markiert!', 'ust' ) ) . '">' . __( 'Spam' ) . '</a>'; ?>
 									</div>
 								</td>
 								<?php
@@ -972,33 +972,33 @@ switch ( $tab ) {
 								$user_spam  = $result->spam;
 								?>
 								<td valign="top">
-									Registered: <a title="<?php _e( 'Search for IP', 'ust' ) ?>"
+									Registered: <a title="<?php _e( 'Suche nach IP', 'ust' ) ?>"
 									               href="sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1"
 									               class="edit"><?php echo $blog['IP']; ?></a>
 									<small class="row-actions"><a class="ust_spamip"
-									                              title="<?php _e( 'Spam all blogs tied to this IP', 'ust' ) ?>"
+									                              title="<?php _e( 'Spam alle Blogs, die an diese IP gebunden sind', 'ust' ) ?>"
 									                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 									</small>
 									<br/>
 									<?php if ( $blog['last_user_id'] ) : ?>
 										<?php $spm_class = ( $user_spam ) ? ' style="color:red;"' : ''; ?>
 										Last User: <a<?php echo $spm_class ?>
-											title="<?php _e( 'Search for User Blogs', 'ust' ) ?>"
+											title="<?php _e( 'Suche nach Benutzerblogs', 'ust' ) ?>"
 											href="users.php?s=<?php echo $user_login; ?>"
 											class="edit"><?php echo $user_login; ?></a>
 										<?php if ( $user_spam == 0 ) : ?>
 											<small class="row-actions"><a class="ust_spamuser"
-											                              title="<?php _e( 'Spam all blogs tied to this User', 'ust' ) ?>"
+											                              title="<?php _e( 'Spam alle Blogs, die mit diesem Benutzer verknüpft sind', 'ust' ) ?>"
 											                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 											</small><?php endif; ?>
 										<br/>
 									<?php endif; ?>
 									<?php if ( $blog['last_ip'] ) : ?>
-										Last IP: <a title="<?php _e( 'Search for IP', 'ust' ) ?>"
+										Last IP: <a title="<?php _e( 'Suche nach IP', 'ust' ) ?>"
 										            href="sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1"
 										            class="edit"><?php echo $blog['last_ip']; ?></a>
 										<small class="row-actions"><a class="ust_spamip"
-										                              title="<?php _e( 'Spam all blogs tied to this IP', 'ust' ) ?>"
+										                              title="<?php _e( 'Spam alle Blogs, die an diese IP gebunden sind', 'ust' ) ?>"
 										                              href="<?php echo $ust_admin_url . $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e( 'Spam', 'ust' ) ?></a>
 										</small>
 									<?php endif; ?>
@@ -1016,14 +1016,14 @@ switch ( $tab ) {
 										$blogusers_warning = '';
 										if ( count( $blogusers ) > 5 ) {
 											$blogusers         = array_slice( $blogusers, 0, 5 );
-											$blogusers_warning = __( 'Only showing first 5 users.' ) . ' <a href="http://' . $blog['domain'] . $blog['path'] . 'wp-admin/users.php">' . __( 'More' ) . '</a>';
+											$blogusers_warning = __( 'Es werden nur die ersten 5 Benutzer angezeigt.' ) . ' <a href="http://' . $blog['domain'] . $blog['path'] . 'wp-admin/users.php">' . __( 'More' ) . '</a>';
 										}
 										foreach ( $blogusers as $key => $val ) {
 											$spm_class = ( $val->spam ) ? ' style="color:red;"' : '';
 											echo '<a' . $spm_class . ' title="Edit User: ' . $val->display_name . ' (' . $val->user_email . ')" href="user-edit.php?user_id=' . $val->user_id . '">' . $val->user_login . '</a> ';
-											echo '<small class="row-actions"><a title="' . __( 'All Blogs of User', 'ust' ) . '" href="users.php?s=' . $val->user_login . '">' . __( 'Blogs', 'ust' ) . '</a>';
+											echo '<small class="row-actions"><a title="' . __( 'Alle Blogs des Benutzers', 'ust' ) . '" href="users.php?s=' . $val->user_login . '">' . __( 'Blogs', 'ust' ) . '</a>';
 											if ( $val->spam == 0 ) {
-												echo ' | <a class="ust_spamuser" title="' . __( 'Spam all blogs tied to this User', 'ust' ) . '" href="' . $ust_admin_url . $page_link . '&updated=1&spam_user=' . $val->user_id . '">' . __( 'Spam', 'ust' ) . '</a></small>';
+												echo ' | <a class="ust_spamuser" title="' . __( 'Spam alle Blogs, die mit diesem Benutzer verknüpft sind', 'ust' ) . '" href="' . $ust_admin_url . $page_link . '&updated=1&spam_user=' . $val->user_id . '">' . __( 'Spam', 'ust' ) . '</a></small>';
 											}
 											echo '<br />';
 										}
@@ -1047,7 +1047,7 @@ switch ( $tab ) {
 							case 'lastupdated':
 								?>
 								<td valign="top">
-									<?php echo ( $blog['last_updated'] == '0000-00-00 00:00:00' ) ? __( "Never" ) : mysql2date( __( 'Y-m-d \<\b\r \/\> g:i:s a' ), $blog['last_updated'] ); ?>
+									<?php echo ( $blog['last_updated'] == '0000-00-00 00:00:00' ) ? __( "Niemals" ) : mysql2date( __( 'Y-m-d \<\b\r \/\> g:i:s a' ), $blog['last_updated'] ); ?>
 								</td>
 								<?php
 								break;
@@ -1071,7 +1071,7 @@ switch ( $tab ) {
 											$post_preview[ $preview_id ] = $post['post_content'];
 											$link                        = '#TB_inline?height=440&width=600&inlineId=post_preview_' . $preview_id;
 											if ( empty( $post['post_title'] ) ) {
-												$title = __( 'No Title', 'ust' );
+												$title = __( 'Kein Titel', 'ust' );
 											} else {
 												$title = htmlentities( $post['post_title'] );
 											}
@@ -1079,7 +1079,7 @@ switch ( $tab ) {
 											$preview_id ++;
 										}
 									} else {
-										_e( 'No Posts', 'ust' );
+										_e( 'Keine Beiträge', 'ust' );
 									}
 									?>
 								</td>
@@ -1096,7 +1096,7 @@ switch ( $tab ) {
 			} else {
 				?>
 				<tr style='background-color: <?php echo $bgcolor; ?>'>
-					<td colspan="8"><?php _e( 'No blogs found.' ) ?></td>
+					<td colspan="8"><?php _e( 'Keine Blogs gefunden.' ) ?></td>
 				</tr>
 			<?php
 			} // end if ($blogs)
@@ -1121,9 +1121,9 @@ switch ( $tab ) {
 			} ?>
 
 			<div class="alignleft">
-				<input type="submit" value="<?php _e( 'Un-ignore', 'ust' ) ?>" name="allblog_unignore"
+				<input type="submit" value="<?php _e( 'Nicht ignorieren', 'ust' ) ?>" name="allblog_unignore"
 				       class="button-secondary allblog_unignore"/>
-				<input type="submit" value="<?php _e( 'Mark as Spam' ) ?>" name="allblog_spam"
+				<input type="submit" value="<?php _e( 'Als Spam markieren' ) ?>" name="allblog_spam"
 				       class="button-secondary allblog_spam"/>
 				<br class="clear"/>
 			</div>

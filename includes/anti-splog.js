@@ -177,7 +177,7 @@ jQuery(document).ready(function ($) {
 		//preview results
 		$.post(ajaxurl, data, function (response) {
 			if (response.num) {
-				var answer = confirm("You are about to mark " + response.num + " blog(s) as spam! There are currently " + response.numspam + " blog(s) already marked as spam for this IP (" + response.ip + ").\n\nAre you sure you want to do this?");
+				var answer = confirm("Sie sind dabei, Blog(s) von " + response.num + " als Spam zu markieren! Derzeit sind " + response.numspam + " Blogs für diese IP bereits als Spam markiert (" + response.ip + ").\n\nBist Du sicher, dass Du dies tun möchtest?");
 				if (answer) {
 					//create post data
 					var data2 = {
@@ -202,7 +202,7 @@ jQuery(document).ready(function ($) {
 	//spam a user's blogs
 	$("a.ust_spamuser").click(function () {
 
-		var answer = confirm("You are about to spam all blogs this user is a member of! Are you sure you want to do this?");
+		var answer = confirm("Du bist dabei, alle Blogs zu spammen, in denen dieser Benutzer Mitglied ist! Bist Du sicher, dass Du dies tun möchtest?");
 		if (answer) {
 			//create post data
 			var data = {

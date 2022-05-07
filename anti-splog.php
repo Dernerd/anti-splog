@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: Anti-Splog
-Plugin URI: https://premium.wpmudev.org/project/anti-splog/
+Plugin URI: https://n3rds.work/docs/anti-splog-handbuch/
 Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs in WordPress Multisite und BuddyPress
 Author: WMS N@W
 Author URI: https://n3rds.work
-Version: 2.2.8
+Version: 2.2.9
 Network: true
 */
 
 /*
-Copyright 2017-2021 WMS N@W (https://n3rds.work)
+Copyright 2017-2022 WMS N@W (https://n3rds.work)
 Author: DerN3rd
 
 This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-require 'includes/plugin-update-checker/plugin-update-checker.php';
+require 'psource/psource-plugin-update/psource-plugin-updater.php';
 $MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://n3rds.work//wp-update-server/?action=get_metadata&slug=anti-splog', 
 	__FILE__, 
@@ -41,7 +41,7 @@ $MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.2.8';
+$ust_current_version = '2.2.9';
 /*$ust_api_url         = 'https://n3rds.work/wp-json/psmitgliedschaften/v1';*/
 
 //------------------------------------------------------------------------//
@@ -441,7 +441,10 @@ function ust_wpsignup_init() {
 		/*if ( ! $ust_signup['active'] ) {
 			return;*/
 		//Bool-Fix?
-		if ( ! $ust_signup['active']??='ust_signup') {
+		/*if ( ! $ust_signup['active']??='ust_signup') {
+			return $ust_signup['active'];
+		}*/
+		if ( ! $ust_signup['active']<=>'ust_signup') {
 			return $ust_signup['active'];
 		}
 
@@ -1438,7 +1441,8 @@ function ust_wpsignup_url( $echo = true ) {
 
 	//if ( ! $ust_signup['active'] ) {
 	// Bool Fix?
-	if ( ! $ust_signup['active']??='ust_signup') {
+	/*if ( ! $ust_signup['active']??='ust_signup') {*/
+	if ( ! $ust_signup['active']<=>'ust_signup') {
 		if ( $echo ) {
 			echo $original_url;
 		} else {
@@ -1696,8 +1700,8 @@ function ust_admin_help() {
 		             '<p style="text-align:center;"><img src="' . plugins_url('/includes/anti-splog.gif', __FILE__) . '" /></p>'
 	) );
 
-	$domain       = $current_site->domain;
-	$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
+	/*$domain       = $current_site->domain;
+	$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";*/
 
 	get_current_screen()->set_help_sidebar(
 		'<p><strong>' . __( 'Für mehr Informationen:' ) . '</strong></p>' .

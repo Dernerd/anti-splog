@@ -1,10 +1,10 @@
 <?php
 if ( ! current_user_can( 'manage_network_options' ) ) {
-	wp_die( 'You dont have permissions for this page' );
+	wp_die( 'Du hast keine Berechtigungen für diese Seite' );
 }
 
 global $current_site;
-$domain       = $current_site->domain;
+/*$domain       = $current_site->domain;
 $register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 function ust_trim_array( $input ) {
@@ -65,7 +65,7 @@ if ( isset( $_POST['ust_settings'] ) ) {
 	do_action( 'ust_settings_process' );
 
 	echo '<div id="message" class="updated fade"><p>' . __( 'Settings Saved!', 'ust' ) . '</p></div>';
-}
+}*/
 
 $ust_settings  = get_site_option( "ust_settings" );
 $ust_signup    = get_site_option( 'ust_signup' );
@@ -73,8 +73,8 @@ $ust_recaptcha = get_site_option( "ust_recaptcha" );
 $ust_qa        = get_site_option( "ust_qa" );
 if ( ! $ust_qa ) {
 	$ust_qa = array(
-		array( 'What is the answer to "Ten times Two" in word form?', 'Twenty' ),
-		array( 'What is the last name of the current US president?', 'Obama' )
+		array( 'Was ist die Antwort auf „Zehn mal Zwei“ in Wortform?', 'Zwanzig' ),
+		array( 'Wie lautet der Nachname des aktuellen US-Präsidenten?', 'Biden' )
 	);
 }
 
@@ -156,7 +156,7 @@ if ( ! $ust_settings['api_key'] ) {
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Spam/Unspam-Blog-Benutzer', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Blog-Benutzer Spam/Unspam', 'ust' ) ?></th>
 				<td>
 					<select name="ust[spam_blog_users]">
 						<?php
