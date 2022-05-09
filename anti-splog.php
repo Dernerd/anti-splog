@@ -208,6 +208,14 @@ function ust_make_current() {
 					'action'  => 'splog',
 					'matched' => 0,
 				),
+			5 =>
+				array(
+					'regex'   => '/\b(actices|afractalreality|autorambler|aquadivingaccessories|asiavirtualsolutions|bangkokhotelhub|bangkokremovals|bettereyesight|browndecorationlights|blurelizer|bk|bizml|brandisdream|carmanial|ce6launch|ceramiccoffecups|cheapgreenteabags|chiefdan|coolyarddecorations|cottonsleepingbags|compaltd|crossandgarlic|dizaer|dobunny|drypipe|dynamailbox|electrostaticdisinfectantsprayers|erpin|extravagandideas|fancycarnavalmasks|feidnepra|freeinvestoradvice|freephotoretouch|freshbreadcrumbs|frienced|genericimages|goinglownow|goodiploms|hamstercage|homeimprovements|italiancarairbags|intained|instambox|japantravel|junkcarsfloridamiami|kellergy|kiyoakari|kogobee|lampartist|leatherdocumentbags|leathermenshoes|linkbuilding|linkbuildingtools|loanme|lowendjunk|m8sbeingm8s|makingdomes|mareinvestment|martinandgang|melverly|menterprise|midmico|mixwi|nestmoon|newpochta|newfishingaccessories|nicewoodenbaskets|nymega|onebyair|onstir|partcafe|pancingqueen|petsplit|plasticvouchercards|phdsearchandselection|psmscientific|portablespeaker|ragnortheblue|raytoy|realbloggroup|relucius|resistingmoney|roastedtastyfood|rowrowleft|scoldly|softtoiletpaper|softhandscream|silkwomenshirts|silkbeachtowels|sfxmailbox|swmail|spicysallads|tastyarabicacoffee|toddard|ualusa|uiscape|usamami|usgeek|universallightkeys|varsidesk|vaulker|vipitv|visagency|warboardplace|wedfb|westrb|wholesalehomefurniture|wikibacklinks|wirelax|wirelesschargers|vyaa5|yandex|yoshisad|zqbld)\b/i',
+					'desc'    => __( 'PSOURCE Killerliste SPAMMAILS:', 'ust' ),
+					'type'    => 'email',
+					'action'  => 'block',
+					'matched' => 0,
+				),
 		);
 		update_site_option( 'ust_patterns', $default_patterns );
 
@@ -538,7 +546,7 @@ function ust_wpsignup_kill() {
 	  */
 
 	header( "HTTP/1.0 404 Not Found" );
-	die( __( 'Der Speicherort der Anmeldeseite wurde geändert.', 'ust' ) );
+	die( __( 'Der Pfad der Anmeldeseite wurde geändert.', 'ust' ) );
 }
 
 function ust_wpsignup_filter() {
@@ -869,28 +877,36 @@ function ust_blog_updated( $blog_id ) {
 	}
 }
 
-function ust_plug_pages() {
-	global $ust_admin_url, $wp_version;
-
-	$page = add_menu_page( __( 'Anti-Splog', 'ust' ), __( 'Anti-Splog', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate', 'dashicons-shield' );
-	$page = add_submenu_page( 'ust', __( 'Seiten-Moderation', 'ust' ), __( 'Moderation', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate' );
-
-	/* Using registered $page handle to hook script load */
-	add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
-	add_action( 'admin_print_styles-' . $page, 'ust_admin_style' );
-	add_action( 'load-' . $page, 'ust_admin_help' );
-
-	$page = add_submenu_page( 'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
-	add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
-	add_action( 'load-' . $page, 'ust_admin_help' );
-
-	$page = add_submenu_page( 'ust', __( 'Anti-Splog-Musterabgleich', 'ust' ), __( 'Musterabgleich', 'ust' ), 'manage_network_options', 'ust-patterns', 'ust_admin_patterns' );
-	add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
-	add_action( 'load-' . $page, 'ust_admin_help' );
-
-	$page = add_submenu_page( 'ust', __( 'Anti-Splog-Einstellungen', 'ust' ), __( 'Einstellungen', 'ust' ), 'manage_network_options', 'ust-settings', 'ust_admin_settings' );
-	add_action( 'load-' . $page, 'ust_admin_help' );
+if ( function_exists( '\add_security_page' ) ) {
+	add_security_page(
+		'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
+		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
+		add_action( 'load-' . $page, 'ust_admin_help' );
+} else {
+	function ust_plug_pages() {
+		global $ust_admin_url, $wp_version;
+	
+		$page = add_menu_page( __( 'Anti-Splog', 'ust' ), __( 'Anti-Splog', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate', 'dashicons-shield' );
+		$page = add_submenu_page( 'ust', __( 'Seiten-Moderation', 'ust' ), __( 'Moderation', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate' );
+	
+		/* Using registered $page handle to hook script load */
+		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
+		add_action( 'admin_print_styles-' . $page, 'ust_admin_style' );
+		add_action( 'load-' . $page, 'ust_admin_help' );
+	
+		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
+		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
+		add_action( 'load-' . $page, 'ust_admin_help' );
+	
+		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Musterabgleich', 'ust' ), __( 'Musterabgleich', 'ust' ), 'manage_network_options', 'ust-patterns', 'ust_admin_patterns' );
+		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
+		add_action( 'load-' . $page, 'ust_admin_help' );
+	
+		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Einstellungen', 'ust' ), __( 'Einstellungen', 'ust' ), 'manage_network_options', 'ust-settings', 'ust_admin_settings' );
+		add_action( 'load-' . $page, 'ust_admin_help' );
+	}
 }
+
 
 function ust_do_ajax() {
 	global $wpdb, $current_site;
@@ -1887,3 +1903,5 @@ class UST_Widget extends WP_Widget {
 	<?php
 	}
 }
+
+

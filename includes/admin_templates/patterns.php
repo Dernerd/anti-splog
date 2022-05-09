@@ -106,7 +106,7 @@ $posts_columns = array(
 	'regex'   => __( 'Regulären Ausdruck', 'ust' ),
 	'type'    => __( 'Prüfen', 'ust' ),
 	'action'  => __( 'Aktionen', 'ust' ),
-	'matched' => __( 'Abgestimmt', 'ust' ),
+	'matched' => __( 'Erwischt', 'ust' ),
 	'edit'    => __( 'Bearbeiten', 'ust' )
 );
 ?>
