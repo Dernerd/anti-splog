@@ -877,13 +877,7 @@ function ust_blog_updated( $blog_id ) {
 	}
 }
 
-if ( function_exists( '\add_security_page' ) ) {
-	add_security_page(
-		'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
-		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
-		add_action( 'load-' . $page, 'ust_admin_help' );
-} else {
-	function ust_plug_pages() {
+function ust_plug_pages() {
 		global $ust_admin_url, $wp_version;
 	
 		$page = add_menu_page( __( 'Anti-Splog', 'ust' ), __( 'Anti-Splog', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate', 'dashicons-shield' );
@@ -904,7 +898,6 @@ if ( function_exists( '\add_security_page' ) ) {
 	
 		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Einstellungen', 'ust' ), __( 'Einstellungen', 'ust' ), 'manage_network_options', 'ust-settings', 'ust_admin_settings' );
 		add_action( 'load-' . $page, 'ust_admin_help' );
-	}
 }
 
 
