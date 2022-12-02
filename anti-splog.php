@@ -1686,12 +1686,12 @@ function ust_admin_scripts_init() {
 
 function ust_admin_script_flot() {
 	global $ust_current_version;
-	wp_enqueue_script( 'flot', plugins_url( '/anti-splog/includes/js/jquery.flot.js' ), array( 'jquery' ), $ust_current_version );
-	wp_enqueue_script( 'flot-excanvas', plugins_url( '/anti-splog/includes/js/excanvas.pack.js' ), array(
+	wp_enqueue_script( 'flot', plugins_url( '/anti-splog/includes/js/jquery.flot.min.js' ), array( 'jquery' ), $ust_current_version );
+	wp_enqueue_script( 'flot-excanvas', plugins_url( '/anti-splog/includes/js/excanvas.pack.min.js' ), array(
 			'jquery',
 			'flot'
 		), $ust_current_version );
-	wp_enqueue_script( 'flot-stack', plugins_url( '/anti-splog/includes/js/jquery.flot.stack.js' ), array(
+	wp_enqueue_script( 'flot-stack', plugins_url( '/anti-splog/includes/js/jquery.flot.stack.min.js' ), array(
 			'jquery',
 			'flot'
 		), $ust_current_version );

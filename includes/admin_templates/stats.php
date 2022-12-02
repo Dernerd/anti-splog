@@ -219,7 +219,7 @@ foreach ( $history as $stat ) {
 		}
 
 		var previousPoint = null;
-		$("#blog_stats_month").bind("plothover", function (event, pos, item) {
+		$("#blog_stats_month").on("plothover", function (event, pos, item) {
 			if (item) {
 				if (previousPoint != item.datapoint) {
 					previousPoint = item.datapoint;
@@ -241,7 +241,7 @@ foreach ( $history as $stat ) {
 				previousPoint = null;
 			}
 		});
-		$("#blog_stats_year").bind("plothover", function (event, pos, item) {
+		$("#blog_stats_year").on("plothover", function (event, pos, item) {
 			if (item) {
 				if (previousPoint != item.datapoint) {
 					previousPoint = item.datapoint;
