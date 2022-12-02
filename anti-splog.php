@@ -5,7 +5,7 @@ Plugin URI: https://n3rds.work/docs/anti-splog-handbuch/
 Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs in WordPress Multisite und BuddyPress
 Author: WMS N@W
 Author URI: https://n3rds.work
-Version: 2.2.9
+Version: 2.3.0
 Network: true
 */
 
@@ -41,7 +41,7 @@ $MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.2.9';
+$ust_current_version = '2.3.0';
 /*$ust_api_url         = 'https://n3rds.work/wp-json/psmitgliedschaften/v1';*/
 
 //------------------------------------------------------------------------//
@@ -74,7 +74,7 @@ add_action( 'init', 'ust_admin_url' );
 add_action( 'admin_init', 'ust_admin_scripts_init' );
 add_action( 'save_post', 'ust_check_post' );
 add_action( 'network_admin_menu', 'ust_plug_pages' );
-add_action( 'network_admin_notices', 'ust_api_warning' );
+//add_action( 'network_admin_notices', 'ust_api_warning' );
 add_action( 'network_admin_notices', 'ust_install_notice' );
 
 add_action( 'signup_blogform', 'ust_signup_fields', 50 );
@@ -452,7 +452,7 @@ function ust_wpsignup_init() {
 		/*if ( ! $ust_signup['active']??='ust_signup') {
 			return $ust_signup['active'];
 		}*/
-		if ( ! $ust_signup['active']<=>'ust_signup') {
+		if ( ! $ust_signup['active'] ??= 'ust_signup') {
 			return $ust_signup['active'];
 		}
 
@@ -877,7 +877,13 @@ function ust_blog_updated( $blog_id ) {
 	}
 }
 
-function ust_plug_pages() {
+if ( function_exists( '\add_security_page' ) ) {
+	add_security_page(
+		'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
+		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
+		add_action( 'load-' . $page, 'ust_admin_help' );
+} else {
+	function ust_plug_pages() {
 		global $ust_admin_url, $wp_version;
 	
 		$page = add_menu_page( __( 'Anti-Splog', 'ust' ), __( 'Anti-Splog', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate', 'dashicons-shield' );
@@ -898,6 +904,7 @@ function ust_plug_pages() {
 	
 		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Einstellungen', 'ust' ), __( 'Einstellungen', 'ust' ), 'manage_network_options', 'ust-settings', 'ust_admin_settings' );
 		add_action( 'load-' . $page, 'ust_admin_help' );
+	}
 }
 
 
@@ -1652,17 +1659,17 @@ function ust_admin_scripts_init() {
 	global $ust_current_version;
 
 	/* Register our scripts. */
-	wp_register_script( 'anti-splog', WP_PLUGIN_URL . '/anti-splog/includes/anti-splog.js', array( 'jquery' ), $ust_current_version );
+	wp_register_script( 'anti-splog', WP_PLUGIN_URL . '/anti-splog/includes/js/anti-splog.js', array( 'jquery' ), $ust_current_version );
 }
 
 function ust_admin_script_flot() {
 	global $ust_current_version;
-	wp_enqueue_script( 'flot', plugins_url( '/anti-splog/includes/jquery.flot.min.js' ), array( 'jquery' ), $ust_current_version );
-	wp_enqueue_script( 'flot-xcanvas', plugins_url( '/anti-splog/includes/excanvas.pack.js' ), array(
+	wp_enqueue_script( 'flot', plugins_url( '/anti-splog/includes/js/jquery.flot.js' ), array( 'jquery' ), $ust_current_version );
+	wp_enqueue_script( 'flot-excanvas', plugins_url( '/anti-splog/includes/js/excanvas.pack.js' ), array(
 			'jquery',
 			'flot'
 		), $ust_current_version );
-	wp_enqueue_script( 'flot-stack', plugins_url( '/anti-splog/includes/jquery.flot.stack.min.js' ), array(
+	wp_enqueue_script( 'flot-stack', plugins_url( '/anti-splog/includes/js/jquery.flot.stack.js' ), array(
 			'jquery',
 			'flot'
 		), $ust_current_version );
@@ -1701,21 +1708,20 @@ function ust_admin_help() {
             </ul>
           <li><b>Die Moderations-Warteschlange</b> - Für bestehende Blogs oder Blogs, die andere Filter umgehen, bietet die Warteschlange eine kontinuierliche Möglichkeit, Blogs und Spam zu überwachen oder sie einfacher als gültig zu kennzeichnen (ignorieren), da sie mit neuen Beiträgen aktualisiert werden. Auch wenn ein Benutzer versucht, einen Spam-Blog zu besuchen, wird jetzt eine benutzerfreundliche Nachricht und ein Formular angezeigt, um den Administrator zur Überprüfung zu kontaktieren, wenn er dies für gültig hält. Die E-Mail enthält Links, um einfach den Spam zu entfernen oder die letzten Beiträge aufzurufen. Die gesamte Warteschlange ist AJAX-basiert, sodass Du Blogs mit unglaublicher Geschwindigkeit moderieren kannst.</li>
             <ul style=\"margin-left:20px;\">
-              <li><b>Verdächtige Blogs</b> - Diese Liste enthält alle Blogs, die das Plugin für Splogs hält. Es zieht Blogs ein, die eine Sicherheit von mehr als 0 % haben, wie sie zuvor von unserer API zurückgegeben wurden, und solche, die mindestens 1 Keyword in den letzten Posts aus der von Dir definierten Keyword-Liste enthalten. Die Liste versucht, die am häufigsten verdächtigten Blogs an die Spitze zu bringen, sortiert nach Anzahl der Keyword-Übereinstimmungen, dann % Splog-Sicherheit (wie von der API zurückgegeben) und schließlich nach der letzten Aktualisierung. Die Liste enthält eine Reihe von Verbesserungen für die Moderation, einschließlich der letzten Benutzer-ID, der letzten Benutzer-IP, Links zum Suchen oder Spam nach Benutzern und ihren Blogs oder Blogs, die an eine IP-Adresse gebunden sind (seien Sie vorsichtig mit dieser!), Möglichkeit zum Ignorieren (Ablehnen) ) gültige Blogs aus der Warteschlange und eine Liste der letzten Beiträge und eine sofortige Vorschau ihres Inhalts, ohne die Seite zu verlassen (die zeitsparendste Funktion von allen!)</li>
+              <li><b>Verdächtige Blogs</b> - Diese Liste enthält alle Blogs, die das Plugin für Splogs hält. Es zieht Blogs ein, die mindestens 1 Keyword in den letzten Posts aus der von Dir definierten Keyword-Liste enthalten. Die Liste versucht, die am häufigsten verdächtigten Blogs an die Spitze zu bringen, sortiert nach Anzahl der Keyword-Übereinstimmungen und schließlich nach der letzten Aktualisierung. Die Liste enthält eine Reihe von Verbesserungen für die Moderation, einschließlich der letzten Benutzer-ID, der letzten Benutzer-IP, Links zum Suchen oder Spam nach Benutzern und ihren Blogs oder Blogs, die an eine IP-Adresse gebunden sind (seien Sie vorsichtig mit dieser!), Möglichkeit zum Ignorieren (Ablehnen) ) gültige Blogs aus der Warteschlange und eine Liste der letzten Beiträge und eine sofortige Vorschau ihres Inhalts, ohne die Seite zu verlassen (die zeitsparendste Funktion von allen!)</li>
               <li><b>Letzte Splogs</b> - Dies ist einfach eine Liste aller Blogs, die jemals auf der Webseite gespamt wurden, in der Reihenfolge der Spam-Zeit. Die Idee hier ist, dass Du, wenn Du einen Fehler machst, hierher zurückkehren kannst, um ihn rückgängig zu machen. Auch wenn sich ein Benutzer beschwert, dass ein gültiger Blog gespammt wurde, kannst Du ihn schnell hier aufrufen und eine Vorschau der neuesten Beiträge zur Bestätigung anzeigen (normalerweise kannst Du den Blog-Inhalt überhaupt nicht sehen).</li>
               <li><b>Ignorierte Blogs</b> - Wenn ein gültiger Blog in der Liste der Verdächtigen auftaucht, markiere ihn einfach als ignoriert, um ihn dort zu entfernen. Es wird dann in der ignorierten Liste angezeigt, nur für den Fall, dass Du es rückgängig machen musst.</li>
             </ul>
-          </ol>", 'ust' ) .
-		             '<p style="text-align:center;"><img src="' . plugins_url('/includes/anti-splog.gif', __FILE__) . '" /></p>'
+          </ol>", 'ust' ) 
 	) );
 
-	/*$domain       = $current_site->domain;
-	$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";*/
+	//$domain       = $current_site->domain;
+	$spamlist_url = "https://n3rds.work/docs/spamliste-fuer-mail-domains/";
 
 	get_current_screen()->set_help_sidebar(
 		'<p><strong>' . __( 'Für mehr Informationen:' ) . '</strong></p>' .
 		'<p><a href="https://n3rds.work/docs/anti-splog-handbuch/" target="_blank">' . __( 'Handbuch', 'ust' ) . '</a></p>' .
-		'<p><a href="' . $register_url . '" target="_blank">' . __( 'Webseite registrieren', 'ust' ) . '</a></p>'
+		'<p><a href="' . $spamlist_url . '" target="_blank">' . __( 'Spamlisten', 'ust' ) . '</a></p>'
 	);
 }
 

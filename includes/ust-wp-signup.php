@@ -85,7 +85,7 @@ function show_blog_form($blogname = '', $blog_title = '', $errors = '') {
 			$site = $current_site->domain . $current_site->path . __( 'sitename' );
 		else
 			$site = __( 'domain' ) . '.' . $site_domain . $current_site->path;
-		echo '<p>(<strong>' . sprintf( __('Your address will be %s.'), $site ) . '</strong>) ' . __( 'Muss mindestens 4 Zeichen lang sein, nur Buchstaben und Zahlen. Es kann nicht geändert werden, also wähle sorgfältig!' ) . '</p>';
+		echo '<p>(<strong>' . sprintf( __('Deine Adresse wird %s sein.'), $site ) . '</strong>) ' . __( 'Muss mindestens 4 Zeichen lang sein, nur Buchstaben und Zahlen. Es kann nicht geändert werden, also wähle sorgfältig!' ) . '</p>';
 	}
 
 	// Blog Title
@@ -221,7 +221,7 @@ function validate_another_blog_signup() {
 
 function confirm_another_blog_signup($domain, $path, $blog_title, $user_name, $user_email = '', $meta = '') {
 	?>
-	<h2><?php printf( __( 'Die Website %s gehört Dir.' ), "<a href='http://{$domain}{$path}'>{$blog_title}</a>" ) ?></h2>
+	<h2><?php printf( __( 'Die Webseite %s gehört Dir.' ), "<a href='http://{$domain}{$path}'>{$blog_title}</a>" ) ?></h2>
 	<p>
 		<?php printf( __( '<a href="http://%1$s">http://%2$s</a> ist Deine neue Webseite.  <a href="%3$s">Melde Dich an</a> als &#8220;%4$s&#8221; mit Deinem bestehenden Passwort.' ), $domain.$path, $domain.$path, "http://" . $domain.$path . "wp-login.php", $user_name ) ?>
 	</p>

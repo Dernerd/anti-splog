@@ -105,8 +105,8 @@ $page_link          = ( $apage > 1 ) ? '&amp;apage=' . $apage : '';
 $posts_columns = array(
 	'regex'   => __( 'Regulären Ausdruck', 'ust' ),
 	'type'    => __( 'Prüfen', 'ust' ),
-	'action'  => __( 'Aktionen', 'ust' ),
-	'matched' => __( 'Erwischt', 'ust' ),
+	'action'  => __( 'Aktion', 'ust' ),
+	'matched' => __( 'Hits', 'ust' ),
 	'edit'    => __( 'Bearbeiten', 'ust' )
 );
 ?>
@@ -148,12 +148,12 @@ $posts_columns = array(
 
 					case 'type':
 						?>
-						<th scope="row">
+						<th scope="row" width="55px">
 							<?php
 							if ( $pattern['type'] == 'title' ) {
-								_e( 'Seitentitel', 'ust' );
+								_e( 'Seiten-Titel', 'ust' );
 							} else if ( $pattern['type'] == 'username' ) {
-								_e( 'Nutzername', 'ust' );
+								_e( 'Nutzer-Name', 'ust' );
 							} else if ( $pattern['type'] == 'email' ) {
 								_e( 'Email', 'ust' );
 							} else {
@@ -166,7 +166,7 @@ $posts_columns = array(
 
 					case 'action':
 						?>
-						<th scope="row">
+						<th scope="row" width="75px">
 							<?php echo ( isset( $pattern['action'] ) && $pattern['action'] == 'block' ) ? __( 'Anmeldung blockieren', 'ust' ) : __( 'Als Splog markieren', 'ust' ); ?>
 						</th>
 						<?php
@@ -174,7 +174,7 @@ $posts_columns = array(
 
 					case 'matched':
 						?>
-						<th scope="row">
+						<th scope="row" width="30px">
 							<?php echo isset( $pattern['matched'] ) ? number_format_i18n( intval( $pattern['matched'] ) ) : 0; ?>
 						</th>
 						<?php
@@ -182,7 +182,7 @@ $posts_columns = array(
 
 					case 'edit':
 						?>
-						<th scope="row">
+						<th scope="row" width="75px">
 							<a href="admin.php?page=ust-patterns<?php echo $page_link; ?>&amp;id=<?php echo $pattern_code; ?>#add_pattern"><?php _e( 'Bearbeiten', 'ust' ) ?>&raquo;</a>
 						</th>
 						<?php
@@ -272,7 +272,7 @@ $posts_columns = array(
 				<tbody>
 				<tr>
 					<td>
-						<input value="<?php echo esc_attr( $regex ); ?>" name="regex" id="regex" type="text" size="50"/>
+						<input type="text" value="<?php echo esc_attr( $regex ); ?>" name="regex" id="regex" size="50"/>
 					</td>
 					<td>
 						<input value="<?php echo esc_attr( $desc ); ?>" name="desc" type="text" size="75"/>
