@@ -157,7 +157,8 @@ switch ( $tab ) {
 				$keywords[] = "`post_content` LIKE '%" . addslashes( trim( $word ) ) . "%'";
 			}
 
-			$keyword_string = implode( $keywords, ' OR ' );
+			//$keyword_string = implode($keywords, ' OR ' );
+			$keyword_string = implode(' OR ', $keywords );
 		}
 
 		//if the Post Indexer plugin is installed and keywords are set
@@ -785,7 +786,7 @@ switch ( $tab ) {
 				}
 			} else {
 				?>
-				<tr style='background-color: <?php echo $bgcolor; ?>'>
+				<tr style='background-color: <?php echo isset($bgcolor); ?>'>
 					<td colspan="8"><?php _e( 'Keine Blogs gefunden.' ) ?></td>
 				</tr>
 			<?php
@@ -1095,7 +1096,7 @@ switch ( $tab ) {
 
 			} else {
 				?>
-				<tr style='background-color: <?php echo $bgcolor; ?>'>
+				<tr style='background-color: <?php echo isset($bgcolor); ?>'>
 					<td colspan="8"><?php _e( 'Keine Blogs gefunden.' ) ?></td>
 				</tr>
 			<?php

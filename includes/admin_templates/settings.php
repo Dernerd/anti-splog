@@ -4,7 +4,7 @@ if ( ! current_user_can( 'manage_network_options' ) ) {
 }
 
 global $current_site;
-/*$domain       = $current_site->domain;
+$domain       = $current_site->domain;
 $register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 function ust_trim_array( $input ) {
@@ -26,7 +26,7 @@ if ( isset( $_GET['dismiss'] ) ) {
 if ( isset( $_POST['ust_settings'] ) ) {
 
 	//check the api key and connection
-	$request["API_KEY"] = $_POST['ust']['api_key'];
+	/*$request["API_KEY"] = $_POST['ust']['api_key'];
 	$api_response       = ust_http_post( 'api_check', $request );
 	if ( $api_response && $api_response != 'Valid' ) {
 		$_POST['ust']['api_key'] = '';
@@ -34,7 +34,8 @@ if ( isset( $_POST['ust_settings'] ) ) {
 	} else if ( ! $api_response ) {
 		$_POST['ust']['api_key'] = '';
 		echo '<div id="message" class="error"><p>' . __( 'There was a problem connecting to the API server. Please try again later.', 'ust' ) . '</p></div>';
-	}
+	}*/
+
 	$_POST['ust']['hide_adminbar'] = isset( $_POST['ust']['hide_adminbar'] ) ? 1 : 0; //handle checkbox
 	if ( isset( $_POST['ust']['keywords'] ) && trim( $_POST['ust']['keywords'] ) ) {
 		$_POST['ust']['keywords'] = explode( "\n", trim( $_POST['ust']['keywords'] ) );
@@ -65,7 +66,7 @@ if ( isset( $_POST['ust_settings'] ) ) {
 	do_action( 'ust_settings_process' );
 
 	echo '<div id="message" class="updated fade"><p>' . __( 'Settings Saved!', 'ust' ) . '</p></div>';
-}*/
+}
 
 $ust_settings  = get_site_option( "ust_settings" );
 $ust_signup    = get_site_option( 'ust_signup' );
@@ -90,11 +91,11 @@ if ( ! get_site_option( "ust_salt" ) ) {
 	update_site_option( "ust_salt", substr( md5( time() ), rand( 0, 15 ), 10 ) );
 }
 
-if ( ! $ust_settings['api_key'] ) {
+/*if ( ! $ust_settings['api_key'] ) {
 	$style = ' style="background-color:#FF7C7C;"';
 } else {
 	$style = ' style="background-color:#ADFFAA;"';
-}
+}*/
 
 ?>
 <div class="wrap">
@@ -145,11 +146,9 @@ if ( ! $ust_settings['api_key'] ) {
 					</em>
 				</th>
 				<td>
-					<label for="ust_signup"><input type="checkbox" name="ust_signup"
-					                               id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e( 'wp-signup.php verschieben', 'ust' ) ?>
+					<label for="ust_signup"><input type="checkbox" name="ust_signup" id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e ( 'wp-signup.php verschieben', 'ust' ) ?>
 					</label>
-					<br/><?php _e( 'Aktuelle Anmelde-URL:', 'ust' ) ?> <strong><a target="_blank"
-					                                                            href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
+					<br/><?php _e( 'Aktuelle Anmelde-URL:', 'ust' ) ?> <strong><a target="_blank" href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
 					<br/><em><?php _e( "Wenn Du diese Option aktivierst, wird das Formular wp-signup.php deaktiviert und die Anmelde-URL automatisch alle 24 Stunden geändert. Es sieht etwa so aus wie <strong>http://$domain/signup-XXX/</strong>. Um dies zu verwenden, musst Du möglicherweise einige geringfügige Änderungen an den Vorlagendateien Deines Hauptthemes vornehmen. Ersetze alle hartcodierten Links zu wp-signup.php durch diese Funktion: <strong>&lt;?php ust_wpsignup_url(); ?&gt;</strong> Im Inhalt eines Beitrags oder einer Seite kannst Du den Shortcode <strong>[ust_wpsignup_url]</strong> einfügen, normalerweise in die href eines Links.", 'ust' ); ?></em>
 				</td>
 				</td>

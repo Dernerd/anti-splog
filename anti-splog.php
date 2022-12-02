@@ -178,7 +178,7 @@ function ust_make_current() {
 				),
 			1 =>
 				array(
-					'regex'   => '/ugg|louboutin|pharma|warez|download|megaupload/i',
+					'regex'   => '/ugg|louboutin|pharma|warez|download|megaupload|porn|viagra/i',
 					'desc'    => __( 'Blockiere beliebte Spam-Wörter', 'ust' ),
 					'type'    => 'domain',
 					'action'  => 'splog',
@@ -210,7 +210,28 @@ function ust_make_current() {
 				),
 			5 =>
 				array(
-					'regex'   => '/\b(actices|afractalreality|autorambler|aquadivingaccessories|asiavirtualsolutions|bangkokhotelhub|bangkokremovals|bettereyesight|browndecorationlights|blurelizer|bk|bizml|brandisdream|carmanial|ce6launch|ceramiccoffecups|cheapgreenteabags|chiefdan|coolyarddecorations|cottonsleepingbags|compaltd|crossandgarlic|dizaer|dobunny|drypipe|dynamailbox|electrostaticdisinfectantsprayers|erpin|extravagandideas|fancycarnavalmasks|feidnepra|freeinvestoradvice|freephotoretouch|freshbreadcrumbs|frienced|genericimages|goinglownow|goodiploms|hamstercage|homeimprovements|italiancarairbags|intained|instambox|japantravel|junkcarsfloridamiami|kellergy|kiyoakari|kogobee|lampartist|leatherdocumentbags|leathermenshoes|linkbuilding|linkbuildingtools|loanme|lowendjunk|m8sbeingm8s|makingdomes|mareinvestment|martinandgang|melverly|menterprise|midmico|mixwi|nestmoon|newpochta|newfishingaccessories|nicewoodenbaskets|nymega|onebyair|onstir|partcafe|pancingqueen|petsplit|plasticvouchercards|phdsearchandselection|psmscientific|portablespeaker|ragnortheblue|raytoy|realbloggroup|relucius|resistingmoney|roastedtastyfood|rowrowleft|scoldly|softtoiletpaper|softhandscream|silkwomenshirts|silkbeachtowels|sfxmailbox|swmail|spicysallads|tastyarabicacoffee|toddard|ualusa|uiscape|usamami|usgeek|universallightkeys|varsidesk|vaulker|vipitv|visagency|warboardplace|wedfb|westrb|wholesalehomefurniture|wikibacklinks|wirelax|wirelesschargers|vyaa5|yandex|yoshisad|zqbld)\b/i',
+					'regex'   => '/\b(actices|afractalreality|autorambler|aquadivingaccessories|asiavirtualsolutions|
+									bangkokhotelhub|bangkokremovals|bettereyesight|browndecorationlights|blurelizer|bk|bizml|brandisdream|
+									carmanial|ce6launch|ceramiccoffecups|cheapgreenteabags|chiefdan|coolyarddecorations|cottonsleepingbags|compaltd|crossandgarlic|
+									dizaer|dobunny|drypipe|dynamailbox|electrostaticdisinfectantsprayers|erpin|extravagandideas|
+									fancycarnavalmasks|feidnepra|freeinvestoradvice|freephotoretouch|freshbreadcrumbs|frienced|
+									genericimages|goinglownow|goodiploms|
+									hamstercage|homeimprovements|
+									italiancarairbags|intained|instambox|
+									japantravel|junkcarsfloridamiami|
+									kellergy|kiyoakari|kogobee|
+									lampartist|leatherdocumentbags|leathermenshoes|linkbuilding|linkbuildingtools|loanme|lowendjunk|
+									m8sbeingm8s|makingdomes|mareinvestment|martinandgang|melverly|menterprise|midmico|mixwi|
+									nestmoon|newpochta|newfishingaccessories|nicewoodenbaskets|nymega|
+									onebyair|onstir|
+									partcafe|pancingqueen|petsplit|plasticvouchercards|phdsearchandselection|psmscientific|portablespeaker|
+									ragnortheblue|raytoy|realbloggroup|relucius|resistingmoney|roastedtastyfood|rowrowleft|
+									scoldly|softtoiletpaper|softhandscream|silkwomenshirts|silkbeachtowels|sfxmailbox|swmail|spicysallads|
+									tastyarabicacoffee|toddard|
+									ualusa|uiscape|usamami|usgeek|universallightkeys|
+									varsidesk|vaulker|vipitv|visagency|
+									warboardplace|wedfb|westrb|wholesalehomefurniture|wikibacklinks|wirelax|wirelesschargers|
+									vyaa5|yandex|yoshisad|zqbld)\b/i',
 					'desc'    => __( 'PSOURCE Killerliste SPAMMAILS:', 'ust' ),
 					'type'    => 'email',
 					'action'  => 'block',
@@ -256,7 +277,7 @@ function ust_global_install() {
 		$wpdb->query( $ust_query2 );
 
 		//default options
-		$ust_settings['api_key']         = '';
+		//$ust_settings['api_key']         = '';
 		$ust_settings['block_certainty'] = '';
 		$ust_settings['certainty']       = 80;
 		$ust_settings['post_certainty']  = 90;
@@ -266,7 +287,7 @@ function ust_global_install() {
 		$ust_settings['paged_blogs']     = 15;
 		$ust_settings['paged_posts']     = 3;
 		$ust_settings['hide_adminbar']   = 0;
-		$ust_settings['keywords']        = array( 'ugg', 'pharma', 'erecti' );
+		$ust_settings['keywords']        = array( 'ugg', 'pharma', 'erecti', viagra, porn, );
 		$ust_settings['signup_protect']  = 'none';
 		update_site_option( "ust_settings", $ust_settings );
 
@@ -446,15 +467,16 @@ function ust_wpsignup_init() {
 	//if on main blog
 	if ( is_main_site() ) {
 		$ust_signup = get_site_option( 'ust_signup' );
-		/*if ( ! $ust_signup['active'] ) {
-			return;*/
+		if ( ! $ust_signup['active'] ) {
+			return;
+		}
 		//Bool-Fix?
 		/*if ( ! $ust_signup['active']??='ust_signup') {
 			return $ust_signup['active'];
-		}*/
-		if ( ! $ust_signup['active'] ??= 'ust_signup') {
-			return $ust_signup['active'];
 		}
+		if ( ! $ust_signup['active'] = 'ust_signup') {
+			return $ust_signup['active'];
+		}*/
 
 		add_filter( 'root_rewrite_rules', 'ust_wpsignup_rewrite' );
 		add_filter( 'query_vars', 'ust_wpsignup_queryvars' );
@@ -1035,9 +1057,9 @@ function ust_http_post( $action = 'api_check', $request = false ) {
 	$ust_settings = get_site_option( "ust_settings" );
 
 	//if api key is not set/valid
-	if ( ! $ust_settings['api_key'] && $action != 'api_check' ) {
+	/*if ( ! $ust_settings['api_key'] && $action != 'api_check' ) {
 		return false;
-	}
+	}*/
 
 	//create the default request
 	if ( ! $request["API_KEY"] ) {
@@ -1096,7 +1118,7 @@ function ust_check_api() {
 
 		//clear API key
 		$ust_settings            = get_site_option( "ust_settings" );
-		$ust_settings['api_key'] = '';
+		//$ust_settings['api_key'] = '';
 		update_site_option( "ust_settings", $ust_settings );
 	}
 }
@@ -1458,7 +1480,7 @@ function ust_wpsignup_url( $echo = true ) {
 	//if ( ! $ust_signup['active'] ) {
 	// Bool Fix?
 	/*if ( ! $ust_signup['active']??='ust_signup') {*/
-	if ( ! $ust_signup['active']<=>'ust_signup') {
+	if ( ! $ust_signup['active'] = 'ust_signup') {
 		if ( $echo ) {
 			echo $original_url;
 		} else {
