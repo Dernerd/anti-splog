@@ -2,7 +2,7 @@
 /*
 Plugin Name: Anti-Splog
 Plugin URI: https://n3rds.work/docs/anti-splog-handbuch/
-Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs in WordPress Multisite und BuddyPress
+Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs und Spam-Registrierungen in WordPress Multisite und BuddyPress
 Author: WMS N@W
 Author URI: https://n3rds.work
 Version: 2.3.0
