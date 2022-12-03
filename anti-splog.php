@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Anti-Splog
+Plugin Name: Multisite Anti-Splog
 Plugin URI: https://n3rds.work/docs/anti-splog-handbuch/
 Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs und Spam-Registrierungen in WordPress Multisite und BuddyPress
 Author: WMS N@W
@@ -1436,19 +1436,6 @@ function ust_trim_title( $title ) {
 
 //------------------------------------------------------------------------//
 
-/*function ust_api_warning() {
-	global $ust_admin_url;
-
-	if ( ! is_super_admin() ) {
-		return;
-	}
-
-	$ust_settings = get_site_option( "ust_settings" );
-	$expire       = get_site_option( "ust_key_dismiss" );
-	if ( ! $ust_settings['api_key'] && ! isset( $_GET['dismiss'] ) && ! ( $expire && $expire > time() ) ) {
-		echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'Anti-Splog ist nicht vollständig aktiviert. Du musst <a href="%1$s">Deinen WMS N@W API-Schlüssel eingeben</a>, um die leistungsstarke Blog- und Registrierungsprüfung zu aktivieren. <a href="%2$s">Mehr Info&raquo;</a>', 'ust' ), "$ust_admin_url-settings", 'http://premium.wpmudev.org/project/anti-splog' ) . ' <a style="float:right;" title="' . __( 'Dismiss this notice for one month', 'ust' ) . '" href="' . $ust_admin_url . '-settings&dismiss=1"><small>' . __( 'Dismiss', 'ust' ) . "</small></a></p></div>";
-	}
-}*/
 
 function ust_wpsignup_url( $echo = true ) {
 	global $current_site;
