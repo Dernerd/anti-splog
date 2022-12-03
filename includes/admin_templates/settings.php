@@ -5,7 +5,7 @@ if ( ! current_user_can( 'manage_network_options' ) ) {
 
 global $current_site;
 $domain       = $current_site->domain;
-$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
+//$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 function ust_trim_array( $input ) {
 	if ( ! is_array( $input ) ) {

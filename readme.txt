@@ -436,3 +436,5 @@ Halte Dich mit unserem [Newsletter](https://n3rds.work/webmasterservice-n3rdswor
 == ChangeLog ==
 
 = 2.3.1 = DerN3rd =
+
+* Fix Cookie Error
