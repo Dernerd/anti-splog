@@ -152,12 +152,13 @@ function ust_localization() {
 	load_plugin_textdomain( 'ust', false, '/anti-splog/languages' );
 }
 
+
 function ust_make_current() {
 
 	global $wpdb, $ust_current_version;
 
 	if ( get_site_option( "ust_version" ) == '' ) {
-		add_site_option( 'ust_version', '0.0.0' );
+		add_site_option( 'ust_version', '2.3.0' );
 	}
 
 	if ( get_site_option( "ust_version" ) == $ust_current_version ) {
@@ -194,7 +195,7 @@ function ust_make_current() {
 				),
 			3 =>
 				array(
-					'regex'   => '/\b(ugg|louboutin|pharma|warez|download|megaupload)\b/i',
+					'regex'   => '/\b(ugg|louboutin|pharma|warez|download|megaupload|porn|viagra)\b/i',
 					'desc'    => __( 'Nur auf vollständige Wörter prüfen', 'ust' ),
 					'type'    => 'title',
 					'action'  => 'splog',
@@ -210,29 +211,8 @@ function ust_make_current() {
 				),
 			5 =>
 				array(
-					'regex'   => '/\b(actices|afractalreality|autorambler|aquadivingaccessories|asiavirtualsolutions|
-									bangkokhotelhub|bangkokremovals|bettereyesight|browndecorationlights|blurelizer|bk|bizml|brandisdream|
-									carmanial|ce6launch|ceramiccoffecups|cheapgreenteabags|chiefdan|coolyarddecorations|cottonsleepingbags|compaltd|crossandgarlic|
-									dizaer|dobunny|drypipe|dynamailbox|electrostaticdisinfectantsprayers|erpin|extravagandideas|
-									fancycarnavalmasks|feidnepra|freeinvestoradvice|freephotoretouch|freshbreadcrumbs|frienced|
-									genericimages|goinglownow|goodiploms|
-									hamstercage|homeimprovements|
-									italiancarairbags|intained|instambox|
-									japantravel|junkcarsfloridamiami|
-									kellergy|kiyoakari|kogobee|
-									lampartist|leatherdocumentbags|leathermenshoes|linkbuilding|linkbuildingtools|loanme|lowendjunk|
-									m8sbeingm8s|makingdomes|mareinvestment|martinandgang|melverly|menterprise|midmico|mixwi|
-									nestmoon|newpochta|newfishingaccessories|nicewoodenbaskets|nymega|
-									onebyair|onstir|
-									partcafe|pancingqueen|petsplit|plasticvouchercards|phdsearchandselection|psmscientific|portablespeaker|
-									ragnortheblue|raytoy|realbloggroup|relucius|resistingmoney|roastedtastyfood|rowrowleft|
-									scoldly|softtoiletpaper|softhandscream|silkwomenshirts|silkbeachtowels|sfxmailbox|swmail|spicysallads|
-									tastyarabicacoffee|toddard|
-									ualusa|uiscape|usamami|usgeek|universallightkeys|
-									varsidesk|vaulker|vipitv|visagency|
-									warboardplace|wedfb|westrb|wholesalehomefurniture|wikibacklinks|wirelax|wirelesschargers|
-									vyaa5|yandex|yoshisad|zqbld)\b/i',
-					'desc'    => __( 'PSOURCE Killerliste SPAMMAILS:', 'ust' ),
+					'regex'   => '/\b(actices|afractalreality|autorambler|aquadivingaccessories|asiavirtualsolutions|bangkokhotelhub|bangkokremovals|bettereyesight|browndecorationlights|bigbucks|bigstring|blurelizer|bigman|bizml|brandisdream|care2|carmanial|ce6launch|ceramiccoffecups|cheapgreenteabags|chestpain|chiefdan|chinatravel|coolyarddecorations|cottonsleepingbags|compaltd|crossandgarlic|dasemana|denphijugico|dietingadvise|dizaer|dobunny|drypipe|dynamailbox|dynainbox|ecorreos|econgate|electrostaticdisinfectantsprayers|erpin|extravagandideas|fancycarnavalmasks|fastmail|feidnepra|freeinvestoradvice|freephotoretouch|freshbreadcrumbs|frienced|forexbinaryoption|gawab|gemmasmith|genericimages|goinglownow|goodiploms|hamstercage|homeimprovements|hidebox|italiancarairbags|intained|instambox|iservmail|japantravel|jooffy|junkcarsfloridamiami|kellergy|kiyoakari|kogobee|lampartist|leatherdocumentbags|leathermenshoes|linkbuilding|linkbuildingtools|loanme|lowendjunk|mailcase|m8sbeingm8s|makingdomes|mareinvestment|martinandgang|melverly|menterprise|midmico|mixwi|nestmoon|newpochta|newfishingaccessories|nicewoodenbaskets|nymega|onebyair|onstir|partcafe|pancingqueen|petsplit|plasticvouchercards|phdsearchandselection|psmscientific|portablespeaker|quelbroker|ragnortheblue|raytoy|realbloggroup|relucius|resistingmoney|roastedtastyfood|roofvent|rowrowleft|savedaday|scoldly|softtoiletpaper|softhandscream|sopharmsn|smilietoys|silkwomenshirts|silkbeachtowels|simichopra|sudeu|sfxmailbox|shavers|swmail|spicysallads|sydrinium|tastyarabicacoffee|travel|toddard|ualusa|uiscape|usamami|usgeek|universallightkeys|varsidesk|vaulker|vipitv|visagency|warboardplace|web20|wedfb|westrb|whatiscryptocurrency|woeishyang|wholesalehomefurniture|wikibacklinks|wirelax|wirelesschargers|vyaa5|yahoo|yandex|yoshisad|yourmail|zqbld|1000welectricscooter)\b/i',
+					'desc'    => __( 'PSOURCE Killerliste SPAMMAILS', 'ust' ),
 					'type'    => 'email',
 					'action'  => 'block',
 					'matched' => 0,

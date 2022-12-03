@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Anti-Splog\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-03 01:04+0000\n"
+"PO-Revision-Date: 2022-12-03 01:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.3; wp-6.1.1\n"
+"X-Domain: anti-splog"
+
+#. Name of the plugin
+msgid "Anti-Splog"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs in "
+"WordPress Multisite und BuddyPress"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://n3rds.work"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://n3rds.work/docs/anti-splog-handbuch/"
+msgstr ""
+
+#. Author of the plugin
+msgid "WMS N@W"
+msgstr ""
+
+msgid "Vergleiche Domains mit Ziffern zwischen Wörtern wie \"some45blog\""
+msgstr "Compare domains with digits between words like \"some45blog\""
