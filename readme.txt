@@ -4,7 +4,7 @@ Donate link: https://n3rds.work/docs/anti-splog-handbuch/
 Tags: spam, splog, multisite, security
 Requires at least: WordPress 4.7
 Tested up to: 5.9.0
-Stable tag: 2.3.0
+Stable tag: 2.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -434,6 +434,10 @@ Mach eine [Spende per Überweisung oder PayPal](https://n3rds.work/spendenaktion
 Halte Dich mit unserem [Newsletter](https://n3rds.work/webmasterservice-n3rdswork-digalize-das-piestingtal/newsletter-management/) über unsere Piestingtal.Source informiert!
 
 == ChangeLog ==
+
+= 2.3.2 = DerN3rd =
+
+* Hotfix Unerwünschte API-Abfrage
 
 = 2.3.1 = DerN3rd =
 

@@ -5,7 +5,7 @@ Plugin URI: https://n3rds.work/docs/anti-splog-handbuch/
 Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs und Spam-Registrierungen in WordPress Multisite und BuddyPress
 Author: WMS N@W
 Author URI: https://n3rds.work
-Version: 2.3.0
+Version: 2.31
 Network: true
 */
 
@@ -41,7 +41,7 @@ $MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.3.0';
+$ust_current_version = '2.31';
 /*$ust_api_url         = 'https://n3rds.work/wp-json/psmitgliedschaften/v1';*/
 
 //------------------------------------------------------------------------//
