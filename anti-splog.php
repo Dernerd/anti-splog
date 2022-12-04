@@ -606,11 +606,11 @@ function ust_blog_spammed( $blog_id ) {
 	update_site_option( 'ust_spam_count', ( $num + 1 ) );
 
 	//don't send splog data if it was spammed automatically
-	$auto_spammed      = get_blog_option( $blog_id, 'ust_auto_spammed' );
+	/*$auto_spammed      = get_blog_option( $blog_id, 'ust_auto_spammed' );
 	$post_auto_spammed = get_blog_option( $blog_id, 'ust_post_auto_spammed' );
 	if ( ! $auto_spammed && ! $post_auto_spammed ) {
 		//collect info
-		/*$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
+		$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
 		if ( ! $api_data ) {
 			$blog                         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A );
 			$api_data['activate_user_ip'] = $wpdb->get_var( "SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
@@ -622,7 +622,7 @@ function ust_blog_spammed( $blog_id ) {
 		$last                        = $wpdb->get_row( "SELECT * FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'" );
 		$api_data['last_user_id']    = $last->last_user_id;
 		$api_data['last_ip']         = $last->last_ip;
-		$api_data['last_user_agent'] = $last->last_user_agent;*/
+		$api_data['last_user_agent'] = $last->last_user_agent;
 
 		//latest post
 		$post = $wpdb->get_row( "SELECT post_title, post_content FROM `{$wpdb->base_prefix}{$blog_id}_posts` WHERE post_status = 'publish' AND post_type = 'post' AND ID != '1' ORDER BY post_date DESC LIMIT 1" );
@@ -632,7 +632,7 @@ function ust_blog_spammed( $blog_id ) {
 
 		//send blog info to API
 		//ust_http_post( 'spam_blog', $api_data );
-	}
+	}*/
 }
 
 function ust_blog_unspammed( $blog_id, $ignored = false ) {
@@ -1032,14 +1032,14 @@ function ust_do_ajax() {
 }
 
 // call with array of additional commands
-function ust_http_post( $action = 'api_check', $request = false ) {
+/*function ust_http_post( $action = 'api_check', $request = false ) {
 	global $wp_version, $ust_current_version, $ust_api_url, $current_site;
 	$ust_settings = get_site_option( "ust_settings" );
 
 	//if api key is not set/valid
-	/*if ( ! $ust_settings['api_key'] && $action != 'api_check' ) {
+	if ( ! $ust_settings['api_key'] && $action != 'api_check' ) {
 		return false;
-	}*/
+	}
 
 	//create the default request
 	if ( ! $request["API_KEY"] ) {
@@ -1076,7 +1076,7 @@ function ust_http_post( $action = 'api_check', $request = false ) {
 	} else {
 		return $response['body'];
 	}
-}
+}*/
 
 /*function ust_check_api() {
 	global $current_site, $ust_admin_url;
