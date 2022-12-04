@@ -88,7 +88,7 @@ add_action( 'bp_before_account_details_fields', 'ust_pre_signup_check_bp_error_d
 add_filter( 'add_signup_meta', 'ust_signup_meta' );
 add_filter( 'bp_signup_usermeta', 'ust_signup_meta' ); //buddypress support
 add_action( 'signup_header', 'ust_signup_css' );
-add_action( 'ust_check_api_cron', 'ust_check_api' ); //cron action
+//add_action( 'ust_check_api_cron', 'ust_check_api' ); //cron action
 add_action( 'plugins_loaded', 'ust_show_widget' );
 add_action( 'wp_ajax_ust_ajax', 'ust_do_ajax' ); //ajax
 add_action( 'wp_ajax_ust_test_regex', 'ust_test_regex' ); //ajax
@@ -610,7 +610,7 @@ function ust_blog_spammed( $blog_id ) {
 	$post_auto_spammed = get_blog_option( $blog_id, 'ust_post_auto_spammed' );
 	if ( ! $auto_spammed && ! $post_auto_spammed ) {
 		//collect info
-		$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
+		/*$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
 		if ( ! $api_data ) {
 			$blog                         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A );
 			$api_data['activate_user_ip'] = $wpdb->get_var( "SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
@@ -622,7 +622,7 @@ function ust_blog_spammed( $blog_id ) {
 		$last                        = $wpdb->get_row( "SELECT * FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'" );
 		$api_data['last_user_id']    = $last->last_user_id;
 		$api_data['last_ip']         = $last->last_ip;
-		$api_data['last_user_agent'] = $last->last_user_agent;
+		$api_data['last_user_agent'] = $last->last_user_agent;*/
 
 		//latest post
 		$post = $wpdb->get_row( "SELECT post_title, post_content FROM `{$wpdb->base_prefix}{$blog_id}_posts` WHERE post_status = 'publish' AND post_type = 'post' AND ID != '1' ORDER BY post_date DESC LIMIT 1" );
@@ -631,7 +631,7 @@ function ust_blog_spammed( $blog_id ) {
 		}
 
 		//send blog info to API
-		ust_http_post( 'spam_blog', $api_data );
+		//ust_http_post( 'spam_blog', $api_data );
 	}
 }
 
@@ -665,7 +665,7 @@ function ust_blog_unspammed( $blog_id, $ignored = false ) {
 	}
 
 	//collect info
-	$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
+	/*$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
 	if ( ! $api_data ) {
 		$blog                         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A );
 		$api_data['activate_user_ip'] = $wpdb->get_var( "SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
@@ -686,7 +686,7 @@ function ust_blog_unspammed( $blog_id, $ignored = false ) {
 	}
 
 	//send blog info to API
-	ust_http_post( 'unspam_blog', $api_data );
+	ust_http_post( 'unspam_blog', $api_data );*/
 }
 
 function ust_blog_created( $blog_id, $user_id ) {
@@ -748,7 +748,7 @@ function ust_blog_created( $blog_id, $user_id ) {
 		$certainty = 0;
 	} else {
 		//send blog info to API
-		$result = ust_http_post( 'check_blog', $api_data );
+		$result = ust_http_post( 'check_blog' );
 		if ( $result ) {
 			$certainty = (int) $result;
 		} else {
@@ -760,7 +760,7 @@ function ust_blog_created( $blog_id, $user_id ) {
 	$wpdb->query( $wpdb->prepare( "INSERT INTO `" . $wpdb->base_prefix . "ust` (blog_id, last_user_id, last_ip, last_user_agent, certainty) VALUES (%d, %d, %s, %s, %d)", $blog_id, $user->ID, $ip, $_SERVER['HTTP_USER_AGENT'], $certainty ) );
 
 	//save data to blog for retrieval in case it's spammed later
-	update_blog_option( $blog_id, 'ust_signup_data', $api_data );
+	update_blog_option( $blog_id, 'ust_signup_data' );
 
 	//spam blog if certainty is met
 	$ust_settings = get_site_option( "ust_settings" );
@@ -782,7 +782,7 @@ function ust_check_post( $tmp_post_ID ) {
 	$api_data = get_option( 'ust_signup_data' );
 
 	//only check the first valid post for blogs that were created after plugin installed
-	if ( get_option( 'ust_first_post' ) || ! $api_data || $tmp_post->post_status != 'publish' || ! in_array( $tmp_post->post_type, array(
+	if ( get_option( 'ust_first_post' ) || $tmp_post->post_status != 'publish' || ! in_array( $tmp_post->post_type, array(
 				'post',
 				'page'
 			) ) || $tmp_post->post_content == ''
@@ -818,12 +818,12 @@ function ust_check_post( $tmp_post_ID ) {
 	}
 
 	//send blog info to API
-	$result = ust_http_post( 'check_post', $api_data );
+	/*$result = ust_http_post( 'check_post', $api_data );
 	if ( $result ) {
 		$certainty = (int) $result;
 	} else {
 		$certainty = 0;
-	}
+	}*/
 
 	//update certainty in table if greater
 	$last_certainty = $wpdb->get_var( "SELECT certainty FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'" );
@@ -1078,7 +1078,7 @@ function ust_http_post( $action = 'api_check', $request = false ) {
 	}
 }
 
-function ust_check_api() {
+/*function ust_check_api() {
 	global $current_site, $ust_admin_url;
 	$ust_url = $ust_admin_url . "-settings";
 
@@ -1101,7 +1101,7 @@ function ust_check_api() {
 		//$ust_settings['api_key'] = '';
 		update_site_option( "ust_settings", $ust_settings );
 	}
-}
+}*/
 
 function ust_signup_errorcheck( $content ) {
 	//skip check if BP
