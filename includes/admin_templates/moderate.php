@@ -131,11 +131,7 @@ switch ( $tab ) {
 		?><h3><?php _e( 'Verdächtige Blogs', 'ust' ) ?></h3><?php
 
 		$ust_settings = get_site_option( "ust_settings" );
-		/*$expire       = get_site_option( "ust_key_dismiss" );
-		if ( ! $ust_settings['api_key'] ) {
-			echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'You must enable the Anti-Splog API by <a href="%1$s">entering your WPMU DEV Premium API key</a> to be able to use this feature of the plugin.', 'ust' ), "$ust_admin_url&tab=settings" ) . "</p></div>";
-		}*/
-
+		
 		_e( '<p>Dies ist die Moderationswarteschlange für verdächtige Blogs. Wenn Du sicher bist, dass es sich bei einem Blog um Spam handelt, markiere ihn als Spam. Wenn es sich definitiv um einen gültigen Blog handelt, solltest Du ihn "ignorieren". Blogs lasse am besten so lange drin, bis Du sicher bist, ob es sich um Spam handelt oder nicht, da das System aus beiden Aktionen lernt.</p>', 'ust' );
 
 		$apage     = isset( $_GET['apage'] ) ? intval( $_GET['apage'] ) : 1;

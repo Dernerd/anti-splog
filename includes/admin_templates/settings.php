@@ -25,17 +25,6 @@ if ( isset( $_GET['dismiss'] ) ) {
 //process form
 if ( isset( $_POST['ust_settings'] ) ) {
 
-	//check the api key and connection
-	/*$request["API_KEY"] = $_POST['ust']['api_key'];
-	$api_response       = ust_http_post( 'api_check', $request );
-	if ( $api_response && $api_response != 'Valid' ) {
-		$_POST['ust']['api_key'] = '';
-		echo '<div id="message" class="error"><p>' . __( sprintf( 'There was a problem with the API key you entered: "%s" <a href="%s" target="_blank">Fix it here&raquo;</a>', $api_response, $register_url ), 'ust' ) . '</p></div>';
-	} else if ( ! $api_response ) {
-		$_POST['ust']['api_key'] = '';
-		echo '<div id="message" class="error"><p>' . __( 'There was a problem connecting to the API server. Please try again later.', 'ust' ) . '</p></div>';
-	}*/
-
 	$_POST['ust']['hide_adminbar'] = isset( $_POST['ust']['hide_adminbar'] ) ? 1 : 0; //handle checkbox
 	if ( isset( $_POST['ust']['keywords'] ) && trim( $_POST['ust']['keywords'] ) ) {
 		$_POST['ust']['keywords'] = explode( "\n", trim( $_POST['ust']['keywords'] ) );
