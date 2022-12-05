@@ -1,6 +1,6 @@
 <?php
 if ( ! current_user_can( 'manage_sites' ) ) {
-	wp_die( 'You dont have permissions for this page' );
+	wp_die( 'Du hast keine Berechtigungen für diese Seite' );
 }
 
 global $wpdb;
@@ -219,7 +219,7 @@ foreach ( $history as $stat ) {
 		}
 
 		var previousPoint = null;
-		$("#blog_stats_month").bind("plothover", function (event, pos, item) {
+		$("#blog_stats_month").on("plothover", function (event, pos, item) {
 			if (item) {
 				if (previousPoint != item.datapoint) {
 					previousPoint = item.datapoint;
@@ -228,7 +228,7 @@ foreach ( $history as $stat ) {
 					var x = item.datapoint[0].toFixed(2),
 						y = item.datapoint[1].toFixed(2);
 
-					var label = (item.series.label == 'Ham') ? 'Total Blogs' : item.series.label;
+					var label = (item.series.label == 'Ham') ? 'Insgesamt Blogs' : item.series.label;
 
 					var dt = new Date(parseInt(x));
 					var monthname = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
@@ -241,7 +241,7 @@ foreach ( $history as $stat ) {
 				previousPoint = null;
 			}
 		});
-		$("#blog_stats_year").bind("plothover", function (event, pos, item) {
+		$("#blog_stats_year").on("plothover", function (event, pos, item) {
 			if (item) {
 				if (previousPoint != item.datapoint) {
 					previousPoint = item.datapoint;
@@ -250,7 +250,7 @@ foreach ( $history as $stat ) {
 					var x = item.datapoint[0].toFixed(2),
 						y = item.datapoint[1].toFixed(2);
 
-					var label = (item.series.label == 'Ham') ? 'Total Blogs' : item.series.label;
+					var label = (item.series.label == 'Ham') ? 'Insgesamt Blogs' : item.series.label;
 
 					var dt = new Date(parseInt(x));
 					var monthname = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
@@ -265,45 +265,45 @@ foreach ( $history as $stat ) {
 	});
 </script>
 <div class="wrap">
-	<h2><?php _e( 'Anti-Splog Statistics', 'ust' ) ?></h2>
+	<h2><?php _e( 'Anti-Splog-Statistiken', 'ust' ) ?></h2>
 
-	<p><?php _e( "These are site creation statistics for your multisite install.", 'ust' ) ?></p>
+	<p><?php _e( "Dies sind Webseiten-Erstellungsstatistiken für Deine Multisite-Installation.", 'ust' ) ?></p>
 
 	<div class="metabox-holder">
 
 		<div class="postbox">
-			<h3 class='hndle'><span><?php _e( 'Week Activity Summary', 'ust' ) ?></span></h3>
+			<h3 class='hndle'><span><?php _e( 'Zusammenfassung der wöchentlichen Aktivitäten', 'ust' ) ?></span></h3>
 
 			<div class="inside">
 				<div id="blog_stats_week"
-				     style="margin:20px;height:300px"><?php _e( 'No data available yet', 'ust' ) ?></div>
+				     style="margin:20px;height:300px"><?php _e( 'Noch keine Daten verfügbar', 'ust' ) ?></div>
 			</div>
 		</div>
 
 		<div class="postbox">
-			<h3 class='hndle'><span><?php _e( 'Month Activity Summary', 'ust' ) ?></span></h3>
+			<h3 class='hndle'><span><?php _e( 'Zusammenfassung der monatlichen Aktivitäten', 'ust' ) ?></span></h3>
 
 			<div class="inside">
 				<div id="blog_stats_month"
-				     style="margin:20px;height:300px"><?php _e( 'No data available yet', 'ust' ) ?></div>
+				     style="margin:20px;height:300px"><?php _e( 'Noch keine Daten verfügbar', 'ust' ) ?></div>
 			</div>
 		</div>
 
 		<div class="postbox">
-			<h3 class='hndle'><span><?php _e( 'Year Activity Summary', 'ust' ) ?></span></h3>
+			<h3 class='hndle'><span><?php _e( 'Zusammenfassung der Jahresaktivitäten', 'ust' ) ?></span></h3>
 
 			<div class="inside">
 				<div id="blog_stats_year"
-				     style="margin:20px;height:300px"><?php _e( 'No data available yet', 'ust' ) ?></div>
+				     style="margin:20px;height:300px"><?php _e( 'Noch keine Daten verfügbar', 'ust' ) ?></div>
 			</div>
 		</div>
 
 		<div class="postbox">
-			<h3 class='hndle'><span><?php _e( 'Hourly Averages (over the last month)', 'ust' ) ?></span></h3>
+			<h3 class='hndle'><span><?php _e( 'Stündliche Durchschnitte (über den letzten Monat)', 'ust' ) ?></span></h3>
 
 			<div class="inside">
 				<div id="blog_stats_hourly"
-				     style="margin:20px;height:300px"><?php _e( 'No data available yet', 'ust' ) ?></div>
+				     style="margin:20px;height:300px"><?php _e( 'Noch keine Daten verfügbar', 'ust' ) ?></div>
 			</div>
 		</div>
 

@@ -90,11 +90,11 @@ if ( ! get_site_option( "ust_salt" ) ) {
 	update_site_option( "ust_salt", substr( md5( time() ), rand( 0, 15 ), 10 ) );
 }
 
-if ( ! $ust_settings['api_key'] ) {
+/*if ( ! $ust_settings['api_key'] ) {
 	$style = ' style="background-color:#FF7C7C;"';
 } else {
 	$style = ' style="background-color:#ADFFAA;"';
-}
+}*/
 
 ?>
 <div class="wrap">

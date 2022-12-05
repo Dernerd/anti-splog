@@ -437,11 +437,8 @@ function ust_wpsignup_init() {
 	//if on main blog
 	if ( is_main_site() ) {
 		$ust_signup = get_site_option( 'ust_signup' );
-		/*if ( ! $ust_signup['active'] ) {
-			return;*/
-		//Bool-Fix?
-		if ( ! $ust_signup['active']??='ust_signup') {
-			return $ust_signup['active'];
+		if ( ! $ust_signup['active'] ) {
+			return;
 		}
 
 		add_filter( 'root_rewrite_rules', 'ust_wpsignup_rewrite' );
