@@ -1434,7 +1434,7 @@ function ust_wpsignup_url( $echo = true ) {
 
 	//if ( ! $ust_signup['active'] ) {
 	// Bool Fix?
-	if ( ! $ust_signup['active']??='ust_signup') {
+	if ( ! $ust_signup['active'] = 'ust_signup') {
 		if ( $echo ) {
 			echo $original_url;
 		} else {
