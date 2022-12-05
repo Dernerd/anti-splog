@@ -3,7 +3,7 @@
  */
 jQuery(document).ready(function ($) {
 	//single ignore
-	$(".row-actions a.ust_ignore").click(function () {
+	$(".row-actions a.ust_ignore").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//single unignore
-	$(".row-actions a.ust_unignore").click(function () {
+	$(".row-actions a.ust_unignore").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -37,7 +37,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//single spam
-	$(".row-actions a.ust_spam").click(function () {
+	$(".row-actions a.ust_spam").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -54,7 +54,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//single unspam
-	$(".row-actions a.ust_unspam").click(function () {
+	$(".row-actions a.ust_unspam").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -71,7 +71,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//ignore multiple blogs
-	$("form#form-blog-list input.allblog_ignore").click(function () {
+	$("form#form-blog-list input.allblog_ignore").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -95,7 +95,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//unignore multiple blogs
-	$("form#form-blog-list input.allblog_unignore").click(function () {
+	$("form#form-blog-list input.allblog_unignore").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -119,7 +119,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//spam multiple blogs
-	$("form#form-blog-list input.allblog_spam").click(function () {
+	$("form#form-blog-list input.allblog_spam").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -143,7 +143,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//unspam multiple blogs
-	$("form#form-blog-list input.allblog_notspam").click(function () {
+	$("form#form-blog-list input.allblog_notspam").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -167,7 +167,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//spam an IP
-	$("a.ust_spamip").click(function () {
+	$("a.ust_spamip").on( "click", function () {
 		//create post data
 		var data = {
 			action: 'ust_ajax',
@@ -177,7 +177,7 @@ jQuery(document).ready(function ($) {
 		//preview results
 		$.post(ajaxurl, data, function (response) {
 			if (response.num) {
-				var answer = confirm("Sie sind dabei, Blog(s) von " + response.num + " als Spam zu markieren! Derzeit sind " + response.numspam + " Blogs für diese IP bereits als Spam markiert (" + response.ip + ").\n\nBist Du sicher, dass Du dies tun möchtest?");
+				var answer = confirm("You are about to mark " + response.num + " blog(s) as spam! There are currently " + response.numspam + " blog(s) already marked as spam for this IP (" + response.ip + ").\n\nAre you sure you want to do this?");
 				if (answer) {
 					//create post data
 					var data2 = {
@@ -200,9 +200,9 @@ jQuery(document).ready(function ($) {
 	});
 
 	//spam a user's blogs
-	$("a.ust_spamuser").click(function () {
+	$("a.ust_spamuser").on( "click", function () {
 
-		var answer = confirm("Du bist dabei, alle Blogs zu spammen, in denen dieser Benutzer Mitglied ist! Bist Du sicher, dass Du dies tun möchtest?");
+		var answer = confirm("You are about to spam all blogs this user is a member of! Are you sure you want to do this?");
 		if (answer) {
 			//create post data
 			var data = {
@@ -224,7 +224,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	//test regex ajax
-	$("#ust-test-regex").click(function () {
+	$("#ust-test-regex").on( "click", function () {
 		if ($("#regex").val().length < 3)
 			return false;
 
@@ -255,7 +255,7 @@ jQuery(document).ready(function ($) {
 
 		return false;
 	});
-	$("#type").change(function () {
+	$("#type").on( "change", function () {
 		if ($(this).val() == 'title') {
 			$("#ust-test-regex").prop('disabled', true);
 		} else {

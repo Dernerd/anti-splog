@@ -5,7 +5,7 @@ Plugin URI: https://n3rds.work/docs/anti-splog-handbuch/
 Description: Das ultimative Plugin und Service zum Stoppen und Beseitigen von Splogs und Spam-Registrierungen in WordPress Multisite und BuddyPress
 Author: WMS N@W
 Author URI: https://n3rds.work
-Version: 2.3.2
+Version: 2.3.3
 Network: true
 */
 
@@ -33,6 +33,21 @@ $MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	__FILE__, 
 	'anti-splog' 
 );
+
+//------------------------------------------------------------------------//
+
+//---Config---------------------------------------------------------------//
+
+//------------------------------------------------------------------------//
+
+$ust_current_version = '2.3.3';
+/*$ust_api_url         = 'https://n3rds.work/wp-json/psmitgliedschaften/v1';*/
+
+//------------------------------------------------------------------------//
+
+//---Hook-----------------------------------------------------------------//
+
+//------------------------------------------------------------------------//
 
 //check for activating
 add_action( 'admin_head', 'ust_make_current' );
@@ -95,8 +110,8 @@ function ust_activate_check() {
 	//force multisite
 	if ( ! is_multisite() ) {
 		die( __( 'Anti-Splog ist nur mit Multisite-Installationen kompatibel.', 'ust' ) );
-	} else if ( version_compare( $wp_version, '4.2', '<' ) ) {
-		die( __( 'Diese Version von Anti-Splog ist nur mit WordPress 4.2 und höher kompatibel.', 'ust' ) );
+	} else if ( version_compare( $wp_version, '4.9', '<' ) ) {
+		die( __( 'Diese Version von Anti-Splog ist nur mit WordPress 4.9 und höher kompatibel.', 'ust' ) );
 	}
 
 }
@@ -125,6 +140,7 @@ function ust_show_widget() {
 	global $current_site, $blog_id;
 
 	if ( $current_site->blog_id == $blog_id ) {
+		//add_action( 'widgets_init', create_function( '', 'return register_widget("UST_Widget");' ) );
 		add_action( 'widgets_init', function() {return register_widget("UST_Widget");} );
 	}
 }
@@ -135,13 +151,12 @@ function ust_localization() {
 	load_plugin_textdomain( 'ust', false, '/anti-splog/languages' );
 }
 
-
 function ust_make_current() {
 
 	global $wpdb, $ust_current_version;
 
 	if ( get_site_option( "ust_version" ) == '' ) {
-		add_site_option( 'ust_version', '2.3.2' );
+		add_site_option( 'ust_version', '2.3.3' );
 	}
 
 	if ( get_site_option( "ust_version" ) == $ust_current_version ) {
@@ -162,7 +177,7 @@ function ust_make_current() {
 				),
 			1 =>
 				array(
-					'regex'   => '/ugg|louboutin|pharma|warez|download|megaupload|porn|viagra/i',
+					'regex'   => '/ugg|louboutin|pharma|warez|download|megaupload/i',
 					'desc'    => __( 'Blockiere beliebte Spam-Wörter', 'ust' ),
 					'type'    => 'domain',
 					'action'  => 'splog',
@@ -178,17 +193,9 @@ function ust_make_current() {
 				),
 			3 =>
 				array(
-					'regex'   => '/\b(ugg|louboutin|pharma|warez|download|megaupload|porn|viagra)\b/i',
+					'regex'   => '/\b(ugg|louboutin|pharma|warez|download|megaupload)\b/i',
 					'desc'    => __( 'Nur auf vollständige Wörter prüfen', 'ust' ),
 					'type'    => 'title',
-					'action'  => 'splog',
-					'matched' => 0,
-				),
-			4 =>
-				array(
-					'regex'   => '/[a-z]+[0-9]{1,3}[a-z]+/',
-					'desc'    => __( 'Vergleiche Benutzernamen mit Ziffern zwischen Wörtern wie "some45blog"', 'ust' ),
-					'type'    => 'username',
 					'action'  => 'splog',
 					'matched' => 0,
 				),
@@ -197,7 +204,7 @@ function ust_make_current() {
 					'regex'   => '/\b(actices|afractalreality|autorambler|aquadivingaccessories|asiavirtualsolutions|bangkokhotelhub|bangkokremovals|bettereyesight|browndecorationlights|bigbucks|bigstring|blurelizer|bigman|bizml|brandisdream|care2|carmanial|ce6launch|ceramiccoffecups|cheapgreenteabags|chestpain|chiefdan|chinatravel|coolyarddecorations|cottonsleepingbags|compaltd|crossandgarlic|dasemana|denphijugico|dietingadvise|dizaer|dobunny|drypipe|dynamailbox|dynainbox|ecorreos|econgate|electrostaticdisinfectantsprayers|erpin|extravagandideas|fancycarnavalmasks|fastmail|feidnepra|freeinvestoradvice|freephotoretouch|freshbreadcrumbs|frienced|forexbinaryoption|gawab|gemmasmith|genericimages|goinglownow|goodiploms|hamstercage|homeimprovements|hidebox|italiancarairbags|intained|instambox|iservmail|japantravel|jooffy|junkcarsfloridamiami|kellergy|kiyoakari|kogobee|lampartist|leatherdocumentbags|leathermenshoes|linkbuilding|linkbuildingtools|loanme|lowendjunk|mailcase|m8sbeingm8s|makingdomes|mareinvestment|martinandgang|melverly|menterprise|midmico|mixwi|nestmoon|newpochta|newfishingaccessories|nicewoodenbaskets|nymega|onebyair|onstir|partcafe|pancingqueen|petsplit|plasticvouchercards|phdsearchandselection|psmscientific|portablespeaker|quelbroker|ragnortheblue|raytoy|realbloggroup|relucius|resistingmoney|roastedtastyfood|roofvent|rowrowleft|savedaday|scoldly|softtoiletpaper|softhandscream|sopharmsn|smilietoys|silkwomenshirts|silkbeachtowels|simichopra|sudeu|sfxmailbox|shavers|swmail|spicysallads|sydrinium|tastyarabicacoffee|travel|toddard|ualusa|uiscape|usamami|usgeek|universallightkeys|varsidesk|vaulker|vipitv|visagency|warboardplace|web20|wedfb|westrb|whatiscryptocurrency|woeishyang|wholesalehomefurniture|wikibacklinks|wirelax|wirelesschargers|vyaa5|yahoo|yandex|yoshisad|yourmail|zqbld|1000welectricscooter)\b/i',
 					'desc'    => __( 'PSOURCE Killerliste SPAMMAILS', 'ust' ),
 					'type'    => 'email',
-					'action'  => 'block',
+					'action'  => 'splog',
 					'matched' => 0,
 				),
 		);
@@ -250,7 +257,7 @@ function ust_global_install() {
 		$ust_settings['paged_blogs']     = 15;
 		$ust_settings['paged_posts']     = 3;
 		$ust_settings['hide_adminbar']   = 0;
-		$ust_settings['keywords']        = array( 'ugg', 'pharma', 'erecti', viagra, porn, );
+		$ust_settings['keywords']        = array( 'ugg', 'pharma', 'erecti' );
 		$ust_settings['signup_protect']  = 'none';
 		update_site_option( "ust_settings", $ust_settings );
 
@@ -281,14 +288,14 @@ function ust_toolbar_menu() {
 	$data = get_blog_details( $blog_id );
 
 	$wp_admin_bar->add_menu( array(
-		'title'  => __( 'Splog', 'ust' ),
+		'title'  => __( 'Anti-Splog', 'ust' ),
 		'href'   => '',
 		'parent' => false,
 		'id'     => 'anti_splog',
 	) );
 
 	$spam_title = $data->spam ? __( 'Unsplog', 'ust' ) : __( 'Splog', 'ust' );
-	$arch_title = $data->archived ? __( 'Freigeben', 'ust' ) : __( 'Archiv', 'ust' );
+	$arch_title = $data->archived ? __( 'Entarchivieren', 'ust' ) : __( 'Archiv', 'ust' );
 	$wp_admin_bar->add_menu( array(
 		'title'  => $spam_title,
 		'href'   => '#' . preg_replace( '/[^a-z]/', '', strtolower( $spam_title ) ),
@@ -430,8 +437,11 @@ function ust_wpsignup_init() {
 	//if on main blog
 	if ( is_main_site() ) {
 		$ust_signup = get_site_option( 'ust_signup' );
-		if ( ! $ust_signup['active'] ) {
-			return;
+		/*if ( ! $ust_signup['active'] ) {
+			return;*/
+		//Bool-Fix?
+		if ( ! $ust_signup['active']??='ust_signup') {
+			return $ust_signup['active'];
 		}
 
 		add_filter( 'root_rewrite_rules', 'ust_wpsignup_rewrite' );
@@ -524,7 +534,7 @@ function ust_wpsignup_kill() {
 	  */
 
 	header( "HTTP/1.0 404 Not Found" );
-	die( __( 'Der Pfad der Anmeldeseite wurde geändert.', 'ust' ) );
+	die( __( 'Der Speicherort der Anmeldeseite wurde geändert.', 'ust' ) );
 }
 
 function ust_wpsignup_filter() {
@@ -581,6 +591,34 @@ function ust_blog_spammed( $blog_id ) {
 	}
 	update_site_option( 'ust_spam_count', ( $num + 1 ) );
 
+	//don't send splog data if it was spammed automatically
+	$auto_spammed      = get_blog_option( $blog_id, 'ust_auto_spammed' );
+	$post_auto_spammed = get_blog_option( $blog_id, 'ust_post_auto_spammed' );
+	if ( ! $auto_spammed && ! $post_auto_spammed ) {
+		//collect info
+		$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
+		if ( ! $api_data ) {
+			$blog                         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A );
+			$api_data['activate_user_ip'] = $wpdb->get_var( "SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
+			$api_data['user_email']       = $wpdb->get_var( "SELECT `email` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
+			$api_data['blog_registered']  = $blog['registered'];
+			$api_data['blog_domain']      = is_subdomain_install() ? str_replace( '.' . $current_site->domain, '', $blog['domain'] ) : trim( $blog['path'], '/' );
+			$api_data['blog_title']       = get_blog_option( $blog_id, 'blogname' );
+		}
+		$last                        = $wpdb->get_row( "SELECT * FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'" );
+		$api_data['last_user_id']    = $last->last_user_id;
+		$api_data['last_ip']         = $last->last_ip;
+		$api_data['last_user_agent'] = $last->last_user_agent;
+
+		//latest post
+		$post = $wpdb->get_row( "SELECT post_title, post_content FROM `{$wpdb->base_prefix}{$blog_id}_posts` WHERE post_status = 'publish' AND post_type = 'post' AND ID != '1' ORDER BY post_date DESC LIMIT 1" );
+		if ( $post ) {
+			$api_data['post_content'] = $post->post_title . "\n" . $post->post_content;
+		}
+
+		//send blog info to API
+		ust_http_post( 'spam_blog', $api_data );
+	}
 }
 
 function ust_blog_unspammed( $blog_id, $ignored = false ) {
@@ -611,9 +649,33 @@ function ust_blog_unspammed( $blog_id, $ignored = false ) {
 			}
 		}
 	}
+
+	//collect info
+	$api_data = get_blog_option( $blog_id, 'ust_signup_data' );
+	if ( ! $api_data ) {
+		$blog                         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A );
+		$api_data['activate_user_ip'] = $wpdb->get_var( "SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
+		$api_data['user_email']       = $wpdb->get_var( "SELECT `email` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
+		$api_data['blog_registered']  = $blog['registered'];
+		$api_data['blog_domain']      = is_subdomain_install() ? str_replace( '.' . $current_site->domain, '', $blog['domain'] ) : trim( $blog['path'], '/' );
+		$api_data['blog_title']       = get_blog_option( $blog_id, 'blogname' );
+	}
+	$last                        = $wpdb->get_row( "SELECT * FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'" );
+	$api_data['last_user_id']    = $last->last_user_id;
+	$api_data['last_ip']         = $last->last_ip;
+	$api_data['last_user_agent'] = $last->last_user_agent;
+
+	//latest post
+	$post = $wpdb->get_row( "SELECT post_title, post_content FROM `{$wpdb->base_prefix}{$blog_id}_posts` WHERE post_status = 'publish' AND post_type = 'post' AND ID != '1' ORDER BY post_date DESC LIMIT 1" );
+	if ( $post ) {
+		$api_data['post_content'] = $post->post_title . "\n" . $post->post_content;
+	}
+
+	//send blog info to API
+	ust_http_post( 'unspam_blog', $api_data );
 }
 
-/*function ust_blog_created( $blog_id, $user_id ) {
+function ust_blog_created( $blog_id, $user_id ) {
 	global $wpdb, $current_site;
 	$ust_signup_data = get_blog_option( $blog_id, 'ust_signup_data' );
 	$user            = new WP_User( (int) $user_id );
@@ -670,13 +732,21 @@ function ust_blog_unspammed( $blog_id, $ignored = false ) {
 	//don't test if a site admin or supporter or blog-user-creator plugin is creating the blog or spammed by pattern matching
 	if ( is_super_admin() || strpos( $_SERVER['REQUEST_URI'], 'blog-user-creator' ) || $matched_pattern ) {
 		$certainty = 0;
-	} 
+	} else {
+		//send blog info to API
+		$result = ust_http_post( 'check_blog', $api_data );
+		if ( $result ) {
+			$certainty = (int) $result;
+		} else {
+			$certainty = 0;
+		}
+	}
 
 	//create new record in ust table
 	$wpdb->query( $wpdb->prepare( "INSERT INTO `" . $wpdb->base_prefix . "ust` (blog_id, last_user_id, last_ip, last_user_agent, certainty) VALUES (%d, %d, %s, %s, %d)", $blog_id, $user->ID, $ip, $_SERVER['HTTP_USER_AGENT'], $certainty ) );
 
 	//save data to blog for retrieval in case it's spammed later
-	update_blog_option( $blog_id, 'ust_signup_data' );
+	update_blog_option( $blog_id, 'ust_signup_data', $api_data );
 
 	//spam blog if certainty is met
 	$ust_settings = get_site_option( "ust_settings" );
@@ -684,7 +754,7 @@ function ust_blog_unspammed( $blog_id, $ignored = false ) {
 		update_blog_option( $blog_id, 'ust_auto_spammed', 1 );
 		update_blog_status( $blog_id, "spam", '1' );
 	}
-}*/
+}
 
 function ust_check_post( $tmp_post_ID ) {
 	global $wpdb, $current_site, $blog_id;
@@ -695,10 +765,10 @@ function ust_check_post( $tmp_post_ID ) {
 
 	$tmp_post = get_post( $tmp_post_ID );
 
-	//$api_data = get_option( 'ust_signup_data' );
+	$api_data = get_option( 'ust_signup_data' );
 
 	//only check the first valid post for blogs that were created after plugin installed
-	if ( get_option( 'ust_first_post' ) || $tmp_post->post_status != 'publish' || ! in_array( $tmp_post->post_type, array(
+	if ( get_option( 'ust_first_post' ) || ! $api_data || $tmp_post->post_status != 'publish' || ! in_array( $tmp_post->post_type, array(
 				'post',
 				'page'
 			) ) || $tmp_post->post_content == ''
@@ -707,7 +777,7 @@ function ust_check_post( $tmp_post_ID ) {
 	}
 
 	//collect info
-	/*if ( ! $api_data ) {
+	if ( ! $api_data ) {
 		$blog                         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A );
 		$api_data['activate_user_ip'] = $wpdb->get_var( "SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
 		$api_data['user_email']       = $wpdb->get_var( "SELECT `email` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'" );
@@ -731,7 +801,15 @@ function ust_check_post( $tmp_post_ID ) {
 				$api_data['post_content'] .= ' ' . $term->name;
 			}
 		}
-	}*/
+	}
+
+	//send blog info to API
+	$result = ust_http_post( 'check_post', $api_data );
+	if ( $result ) {
+		$certainty = (int) $result;
+	} else {
+		$certainty = 0;
+	}
 
 	//update certainty in table if greater
 	$last_certainty = $wpdb->get_var( "SELECT certainty FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'" );
@@ -757,9 +835,9 @@ function ust_blog_ignore( $blog_id, $report = true ) {
 	$wpdb->query( "UPDATE `" . $wpdb->base_prefix . "ust` SET `ignore` = '1' WHERE blog_id = '$blog_id' LIMIT 1" );
 
 	//send info to API for learning
-	/*if ( $report ) {
+	if ( $report ) {
 		ust_blog_unspammed( $blog_id, true );
-	}*/
+	}
 }
 
 function ust_blog_unignore( $blog_id ) {
@@ -787,36 +865,28 @@ function ust_blog_updated( $blog_id ) {
 	}
 }
 
-if ( function_exists( '\add_security_page' ) ) {
-	add_security_page(
-		'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
-		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
-		add_action( 'load-' . $page, 'ust_admin_help' );
-} else {
-	function ust_plug_pages() {
-		global $ust_admin_url, $wp_version;
-	
-		$page = add_menu_page( __( 'Anti-Splog', 'ust' ), __( 'Anti-Splog', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate', 'dashicons-shield' );
-		$page = add_submenu_page( 'ust', __( 'Seiten-Moderation', 'ust' ), __( 'Moderation', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate' );
-	
-		/* Using registered $page handle to hook script load */
-		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
-		add_action( 'admin_print_styles-' . $page, 'ust_admin_style' );
-		add_action( 'load-' . $page, 'ust_admin_help' );
-	
-		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
-		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
-		add_action( 'load-' . $page, 'ust_admin_help' );
-	
-		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Musterabgleich', 'ust' ), __( 'Musterabgleich', 'ust' ), 'manage_network_options', 'ust-patterns', 'ust_admin_patterns' );
-		add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
-		add_action( 'load-' . $page, 'ust_admin_help' );
-	
-		$page = add_submenu_page( 'ust', __( 'Anti-Splog-Einstellungen', 'ust' ), __( 'Einstellungen', 'ust' ), 'manage_network_options', 'ust-settings', 'ust_admin_settings' );
-		add_action( 'load-' . $page, 'ust_admin_help' );
-	}
-}
+function ust_plug_pages() {
+	global $ust_admin_url, $wp_version;
 
+	$page = add_menu_page( __( 'Anti-Splog', 'ust' ), __( 'Anti-Splog', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate', 'dashicons-shield' );
+	$page = add_submenu_page( 'ust', __( 'Seiten-Moderation', 'ust' ), __( 'Moderation', 'ust' ), 'manage_sites', 'ust', 'ust_admin_moderate' );
+
+	/* Using registered $page handle to hook script load */
+	add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
+	add_action( 'admin_print_styles-' . $page, 'ust_admin_style' );
+	add_action( 'load-' . $page, 'ust_admin_help' );
+
+	$page = add_submenu_page( 'ust', __( 'Anti-Splog-Statistiken', 'ust' ), __( 'Statistiken', 'ust' ), 'manage_sites', 'ust-stats', 'ust_admin_stats' );
+	add_action( 'admin_print_scripts-' . $page, 'ust_admin_script_flot' );
+	add_action( 'load-' . $page, 'ust_admin_help' );
+
+	$page = add_submenu_page( 'ust', __( 'Anti-Splog-Musterabgleich', 'ust' ), __( 'Musterabgleich', 'ust' ), 'manage_network_options', 'ust-patterns', 'ust_admin_patterns' );
+	add_action( 'admin_print_scripts-' . $page, 'ust_admin_script' );
+	add_action( 'load-' . $page, 'ust_admin_help' );
+
+	$page = add_submenu_page( 'ust', __( 'Anti-Splog-Einstellungen', 'ust' ), __( 'Einstellungen', 'ust' ), 'manage_network_options', 'ust-settings', 'ust_admin_settings' );
+	add_action( 'load-' . $page, 'ust_admin_help' );
+}
 
 function ust_do_ajax() {
 	global $wpdb, $current_site;
@@ -937,6 +1007,78 @@ function ust_do_ajax() {
 	}
 
 	die();
+}
+
+// call with array of additional commands
+function ust_http_post( $action = 'api_check', $request = false ) {
+	global $wp_version, $ust_current_version, $ust_api_url, $current_site;
+	$ust_settings = get_site_option( "ust_settings" );
+
+	//if api key is not set/valid
+	if ( ! $ust_settings['api_key'] && $action != 'api_check' ) {
+		return false;
+	}
+
+	//create the default request
+	if ( ! $request["API_KEY"] ) {
+		$request["API_KEY"] = $ust_settings['api_key'];
+	}
+	$request["SITE_DOMAIN"] = $current_site->domain;
+	$request["ACTION"]      = $action;
+
+	$query_string = '';
+	if ( is_array( $request ) ) {
+		foreach ( $request as $key => $data ) {
+			$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
+		}
+	}
+
+	//build args
+	$args['user-agent'] = "WordPress/$wp_version | Anti-Splog/$ust_current_version";
+	$args['body']       = $query_string;
+
+	$response = wp_remote_post( $ust_api_url, $args );
+
+	if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) != 200 ) {
+
+		if ( $action != 'api_check' ) {
+			//schedule a check in 24 hours to determine API key is valid (in case it's not a temporary server issue)
+			switch_to_blog( $current_site->blog_id );
+			if ( ! wp_next_scheduled( 'ust_check_api_cron' ) ) {
+				wp_schedule_single_event( time() + 86400, 'ust_check_api_cron' );
+			}
+			restore_current_blog();
+		}
+
+		return false;
+	} else {
+		return $response['body'];
+	}
+}
+
+function ust_check_api() {
+	global $current_site, $ust_admin_url;
+	$ust_url = $ust_admin_url . "-settings";
+
+	//check the api key and connection
+	$api_response = ust_http_post();
+	if ( $api_response && $api_response != 'Valid' ) {
+		$message = __( sprintf( "Es scheint ein Problem mit dem API-Schlüssel des Anti-Splog-Plugins auf Deinem Server unter %s zu geben.\n%s\n\nBehebe es hier: %s", $current_site->domain, $api_response, $ust_url ), 'ust' );
+	} else if ( ! $api_response ) {
+		$message = __( sprintf( "Das Anti-Splog-Plugin auf Deinem Server unter %s hat ein Problem mit der Verbindung zum API-Server.\n\nBehebe es hier: %s", $current_site->domain, $ust_url ), 'ust' );
+	}
+
+	if ( $message ) {
+		//email site admin
+		$admin_email = get_site_option( "admin_email" );
+		$subject     = __( 'Ein Problem mit Deinem Anti-Splog-Plugin', 'ust' );
+		wp_mail( $admin_email, $subject, $message );
+
+		//clear API key
+		$ust_settings            = get_site_option( "ust_settings" );
+		$ust_settings['api_key'] = '';
+		update_site_option( "ust_settings", $ust_settings );
+	}
 }
 
 function ust_signup_errorcheck( $content ) {
@@ -1272,6 +1414,19 @@ function ust_trim_title( $title ) {
 
 //------------------------------------------------------------------------//
 
+/*function ust_api_warning() {
+	global $ust_admin_url;
+
+	if ( ! is_super_admin() ) {
+		return;
+	}
+
+	$ust_settings = get_site_option( "ust_settings" );
+	$expire       = get_site_option( "ust_key_dismiss" );
+	if ( ! $ust_settings['api_key'] && ! isset( $_GET['dismiss'] ) && ! ( $expire && $expire > time() ) ) {
+		echo "<div id='ust-warning' class='error fade'><p>" . sprintf( __( 'Anti-Splog ist nicht vollständig aktiviert. Du musst <a href="%1$s">Deinen WMS N@W API-Schlüssel eingeben</a>, um die leistungsstarke Blog- und Registrierungsprüfung zu aktivieren. <a href="%2$s">Mehr Info&raquo;</a>', 'ust' ), "$ust_admin_url-settings", 'http://premium.wpmudev.org/project/anti-splog' ) . ' <a style="float:right;" title="' . __( 'Dismiss this notice for one month', 'ust' ) . '" href="' . $ust_admin_url . '-settings&dismiss=1"><small>' . __( 'Dismiss', 'ust' ) . "</small></a></p></div>";
+	}
+}*/
 
 function ust_wpsignup_url( $echo = true ) {
 	global $current_site;
@@ -1282,8 +1437,7 @@ function ust_wpsignup_url( $echo = true ) {
 
 	//if ( ! $ust_signup['active'] ) {
 	// Bool Fix?
-	/*if ( ! $ust_signup['active']??='ust_signup') {*/
-	if ( ! $ust_signup['active'] = 'ust_signup') {
+	if ( ! $ust_signup['active']??='ust_signup') {
 		if ( $echo ) {
 			echo $original_url;
 		} else {
@@ -1344,7 +1498,7 @@ function ust_signup_fields( $errors ) {
               return false;
             } else {
               passThroughFormSubmit = true;
-              formElt.submit.click();
+              formElt.submit.on( "click", );
               return true;
             }
           }
@@ -1484,17 +1638,17 @@ function ust_admin_scripts_init() {
 	global $ust_current_version;
 
 	/* Register our scripts. */
-	wp_register_script( 'anti-splog', WP_PLUGIN_URL . '/anti-splog/includes/js/anti-splog.js', array( 'jquery' ), $ust_current_version );
+	wp_register_script( 'anti-splog', WP_PLUGIN_URL . '/anti-splog/includes/anti-splog.js', array( 'jquery' ), $ust_current_version );
 }
 
 function ust_admin_script_flot() {
 	global $ust_current_version;
-	wp_enqueue_script( 'flot', plugins_url( '/anti-splog/includes/js/jquery.flot.min.js' ), array( 'jquery' ), $ust_current_version );
-	wp_enqueue_script( 'flot-excanvas', plugins_url( '/anti-splog/includes/js/excanvas.pack.min.js' ), array(
+	wp_enqueue_script( 'flot', plugins_url( '/anti-splog/includes/jquery.flot.min.js' ), array( 'jquery' ), $ust_current_version );
+	wp_enqueue_script( 'flot-xcanvas', plugins_url( '/anti-splog/includes/excanvas.pack.js' ), array(
 			'jquery',
 			'flot'
 		), $ust_current_version );
-	wp_enqueue_script( 'flot-stack', plugins_url( '/anti-splog/includes/js/jquery.flot.stack.min.js' ), array(
+	wp_enqueue_script( 'flot-stack', plugins_url( '/anti-splog/includes/jquery.flot.stack.min.js' ), array(
 			'jquery',
 			'flot'
 		), $ust_current_version );
@@ -1533,20 +1687,21 @@ function ust_admin_help() {
             </ul>
           <li><b>Die Moderations-Warteschlange</b> - Für bestehende Blogs oder Blogs, die andere Filter umgehen, bietet die Warteschlange eine kontinuierliche Möglichkeit, Blogs und Spam zu überwachen oder sie einfacher als gültig zu kennzeichnen (ignorieren), da sie mit neuen Beiträgen aktualisiert werden. Auch wenn ein Benutzer versucht, einen Spam-Blog zu besuchen, wird jetzt eine benutzerfreundliche Nachricht und ein Formular angezeigt, um den Administrator zur Überprüfung zu kontaktieren, wenn er dies für gültig hält. Die E-Mail enthält Links, um einfach den Spam zu entfernen oder die letzten Beiträge aufzurufen. Die gesamte Warteschlange ist AJAX-basiert, sodass Du Blogs mit unglaublicher Geschwindigkeit moderieren kannst.</li>
             <ul style=\"margin-left:20px;\">
-              <li><b>Verdächtige Blogs</b> - Diese Liste enthält alle Blogs, die das Plugin für Splogs hält. Es zieht Blogs ein, die mindestens 1 Keyword in den letzten Posts aus der von Dir definierten Keyword-Liste enthalten. Die Liste versucht, die am häufigsten verdächtigten Blogs an die Spitze zu bringen, sortiert nach Anzahl der Keyword-Übereinstimmungen und schließlich nach der letzten Aktualisierung. Die Liste enthält eine Reihe von Verbesserungen für die Moderation, einschließlich der letzten Benutzer-ID, der letzten Benutzer-IP, Links zum Suchen oder Spam nach Benutzern und ihren Blogs oder Blogs, die an eine IP-Adresse gebunden sind (seien Sie vorsichtig mit dieser!), Möglichkeit zum Ignorieren (Ablehnen) ) gültige Blogs aus der Warteschlange und eine Liste der letzten Beiträge und eine sofortige Vorschau ihres Inhalts, ohne die Seite zu verlassen (die zeitsparendste Funktion von allen!)</li>
+              <li><b>Verdächtige Blogs</b> - Diese Liste enthält alle Blogs, die das Plugin für Splogs hält. Es zieht Blogs ein, die eine Sicherheit von mehr als 0 % haben, wie sie zuvor von unserer API zurückgegeben wurden, und solche, die mindestens 1 Keyword in den letzten Posts aus der von Dir definierten Keyword-Liste enthalten. Die Liste versucht, die am häufigsten verdächtigten Blogs an die Spitze zu bringen, sortiert nach Anzahl der Keyword-Übereinstimmungen, dann % Splog-Sicherheit (wie von der API zurückgegeben) und schließlich nach der letzten Aktualisierung. Die Liste enthält eine Reihe von Verbesserungen für die Moderation, einschließlich der letzten Benutzer-ID, der letzten Benutzer-IP, Links zum Suchen oder Spam nach Benutzern und ihren Blogs oder Blogs, die an eine IP-Adresse gebunden sind (seien Sie vorsichtig mit dieser!), Möglichkeit zum Ignorieren (Ablehnen) ) gültige Blogs aus der Warteschlange und eine Liste der letzten Beiträge und eine sofortige Vorschau ihres Inhalts, ohne die Seite zu verlassen (die zeitsparendste Funktion von allen!)</li>
               <li><b>Letzte Splogs</b> - Dies ist einfach eine Liste aller Blogs, die jemals auf der Webseite gespamt wurden, in der Reihenfolge der Spam-Zeit. Die Idee hier ist, dass Du, wenn Du einen Fehler machst, hierher zurückkehren kannst, um ihn rückgängig zu machen. Auch wenn sich ein Benutzer beschwert, dass ein gültiger Blog gespammt wurde, kannst Du ihn schnell hier aufrufen und eine Vorschau der neuesten Beiträge zur Bestätigung anzeigen (normalerweise kannst Du den Blog-Inhalt überhaupt nicht sehen).</li>
               <li><b>Ignorierte Blogs</b> - Wenn ein gültiger Blog in der Liste der Verdächtigen auftaucht, markiere ihn einfach als ignoriert, um ihn dort zu entfernen. Es wird dann in der ignorierten Liste angezeigt, nur für den Fall, dass Du es rückgängig machen musst.</li>
             </ul>
-          </ol>", 'ust' ) 
+          </ol>", 'ust' ) .
+		             '<p style="text-align:center;"><img src="' . plugins_url('/includes/anti-splog.gif', __FILE__) . '" /></p>'
 	) );
 
-	//$domain       = $current_site->domain;
-	$spamlist_url = "https://n3rds.work/docs/spamliste-fuer-mail-domains/";
+	$domain       = $current_site->domain;
+	$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 	get_current_screen()->set_help_sidebar(
 		'<p><strong>' . __( 'Für mehr Informationen:' ) . '</strong></p>' .
 		'<p><a href="https://n3rds.work/docs/anti-splog-handbuch/" target="_blank">' . __( 'Handbuch', 'ust' ) . '</a></p>' .
-		'<p><a href="' . $spamlist_url . '" target="_blank">' . __( 'Spamlisten', 'ust' ) . '</a></p>'
+		'<p><a href="' . $register_url . '" target="_blank">' . __( 'Webseite registrieren', 'ust' ) . '</a></p>'
 	);
 }
 
@@ -1727,5 +1882,3 @@ class UST_Widget extends WP_Widget {
 	<?php
 	}
 }
-
-
