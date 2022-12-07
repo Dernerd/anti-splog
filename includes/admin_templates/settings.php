@@ -1,11 +1,11 @@
 <?php
 if ( ! current_user_can( 'manage_network_options' ) ) {
-	wp_die( 'You dont have permissions for this page' );
+	wp_die( 'Du hast keine Berechtigungen für diese Seite' );
 }
 
 global $current_site;
 $domain       = $current_site->domain;
-$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
+//$register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 function ust_trim_array( $input ) {
 	if ( ! is_array( $input ) ) {
@@ -25,16 +25,6 @@ if ( isset( $_GET['dismiss'] ) ) {
 //process form
 if ( isset( $_POST['ust_settings'] ) ) {
 
-	//check the api key and connection
-	$request["API_KEY"] = $_POST['ust']['api_key'];
-	$api_response       = ust_http_post( 'api_check', $request );
-	if ( $api_response && $api_response != 'Valid' ) {
-		$_POST['ust']['api_key'] = '';
-		echo '<div id="message" class="error"><p>' . __( sprintf( 'There was a problem with the API key you entered: "%s" <a href="%s" target="_blank">Fix it here&raquo;</a>', $api_response, $register_url ), 'ust' ) . '</p></div>';
-	} else if ( ! $api_response ) {
-		$_POST['ust']['api_key'] = '';
-		echo '<div id="message" class="error"><p>' . __( 'There was a problem connecting to the API server. Please try again later.', 'ust' ) . '</p></div>';
-	}
 	$_POST['ust']['hide_adminbar'] = isset( $_POST['ust']['hide_adminbar'] ) ? 1 : 0; //handle checkbox
 	if ( isset( $_POST['ust']['keywords'] ) && trim( $_POST['ust']['keywords'] ) ) {
 		$_POST['ust']['keywords'] = explode( "\n", trim( $_POST['ust']['keywords'] ) );
@@ -73,8 +63,8 @@ $ust_recaptcha = get_site_option( "ust_recaptcha" );
 $ust_qa        = get_site_option( "ust_qa" );
 if ( ! $ust_qa ) {
 	$ust_qa = array(
-		array( 'What is the answer to "Ten times Two" in word form?', 'Twenty' ),
-		array( 'What is the last name of the current US president?', 'Obama' )
+		array( 'Was ist die Antwort auf „Zehn mal Zwei“ in Wortform?', 'Zwanzig' ),
+		array( 'Wie lautet der Nachname des aktuellen US-Präsidenten?', 'Biden' )
 	);
 }
 
@@ -145,18 +135,16 @@ if ( ! get_site_option( "ust_salt" ) ) {
 					</em>
 				</th>
 				<td>
-					<label for="ust_signup"><input type="checkbox" name="ust_signup"
-					                               id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e( 'Move wp-signup.php', 'ust' ) ?>
+					<label for="ust_signup"><input type="checkbox" name="ust_signup" id="ust_signup"<?php echo ( $ust_signup['active'] ) ? ' checked="checked"' : ''; ?> /> <?php _e ( 'wp-signup.php verschieben', 'ust' ) ?>
 					</label>
-					<br/><?php _e( 'Aktuelle Anmelde-URL:', 'ust' ) ?> <strong><a target="_blank"
-					                                                            href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
+					<br/><?php _e( 'Aktuelle Anmelde-URL:', 'ust' ) ?> <strong><a target="_blank" href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
 					<br/><em><?php _e( "Wenn Du diese Option aktivierst, wird das Formular wp-signup.php deaktiviert und die Anmelde-URL automatisch alle 24 Stunden geändert. Es sieht etwa so aus wie <strong>http://$domain/signup-XXX/</strong>. Um dies zu verwenden, musst Du möglicherweise einige geringfügige Änderungen an den Vorlagendateien Deines Hauptthemes vornehmen. Ersetze alle hartcodierten Links zu wp-signup.php durch diese Funktion: <strong>&lt;?php ust_wpsignup_url(); ?&gt;</strong> Im Inhalt eines Beitrags oder einer Seite kannst Du den Shortcode <strong>[ust_wpsignup_url]</strong> einfügen, normalerweise in die href eines Links.", 'ust' ); ?></em>
 				</td>
 				</td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Spam/Unspam-Blog-Benutzer', 'ust' ) ?></th>
+				<th scope="row"><?php _e( 'Blog-Benutzer Spam/Unspam', 'ust' ) ?></th>
 				<td>
 					<select name="ust[spam_blog_users]">
 						<?php

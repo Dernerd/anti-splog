@@ -4,7 +4,7 @@ Donate link: https://n3rds.work/docs/anti-splog-handbuch/
 Tags: spam, splog, multisite, security
 Requires at least: WordPress 4.7
 Tested up to: 5.9.0
-Stable tag: 2.3.3
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -435,12 +435,14 @@ Halte Dich mit unserem [Newsletter](https://n3rds.work/webmasterservice-n3rdswor
 
 == ChangeLog ==
 
-= 2.3.3 = DerN3rd =
+= 2.3.2 = DerN3rd =
 
-* Hotfix Unerwünschte API-Abfrage
-* Deprecated Jquery Fixes
-* Patterntabelle CSS 
+* Psource Updater 1.2
 
 = 2.3.2 = DerN3rd =
+
+* Hotfix Unerwünschte API-Abfrage
+
+= 2.3.1 = DerN3rd =
 
 * Fix Cookie Error
